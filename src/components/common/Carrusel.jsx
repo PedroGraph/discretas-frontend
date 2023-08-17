@@ -4,7 +4,7 @@ import { Carousel } from 'react-bootstrap';
 const MyCarousel = () => {
   return (
     <div style={{backgroundColor: "#000"}}>
-        <div className='mb-3 py-5'>
+        {/* <div className='mb-3 py-5'>
             <h2 className='text-center text-white'>Productos más vendidos</h2>
         </div>
         <Carousel style={{ width: '100%', backgroundColor: "#000"}}>
@@ -42,7 +42,7 @@ const MyCarousel = () => {
                 </Carousel.Caption>
                 </div>
             </Carousel.Item>
-    </Carousel>
+    </Carousel> */}
     </div>
   );
 }
