@@ -1,0 +1,195 @@
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
+import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import "../css/style_products.css"
+import Currency from './CurrencyFormater';
+import axios from 'axios'
+
+const ProductDetail = ({product}) => {
+
+  const { _id, name, price, description, image, rating } = product;
+
+  const [currentRating, setCurrentRating] = useState(Math.floor(rating));
+  const [hasHalfStar, setHasHalfStar] = useState(rating - Math.floor(rating) >= 0.25);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+
+  useEffect(() => {
+    setSelectedImage(image[0]);
+    const url = 'http://127.0.0.1:3000/rating/2323';
+    const data = {
+      stars: 5
+    };
+
+    axios.put(url, data)
+      .then(response => {
+        console.log('Respuesta del servidor:', response.data);
+      })
+      .catch(error => {
+        console.error('Error en la petición:', error);
+      });
+  }, []);
+  
+  const handleImageClick = (image) => {
+    console.log(image)
+    setSelectedImage(image);
+  };
+ 
+  const [zoomStyle, setZoomStyle] = useState({
+    transform: 'scale(1) translate(0, 0)',
+  });
+
+  const handleMouseMove = (e) => {
+    const container = e.currentTarget;
+    const rect = container.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+
+    const scaleRatio = 1.8; 
+
+    const translateX = offsetX * (scaleRatio - 1);
+    const translateY = offsetY * (scaleRatio - 1);
+
+    setZoomStyle({
+      transform: `scale(${scaleRatio}) translate(${-translateX}px, ${-translateY}px)`,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setZoomStyle({
+      transform: 'scale(1) translate(0, 0)',
+      maxWidth: "600px"
+    });
+  };
+
+  const generateRatingStars = (rating) => {
+    const stars = [];
+
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(
+          <FaStar
+            key={i}
+            onClick={() => handleStarClick(i + 1)}
+            style={{ cursor: 'pointer' }}
+          />
+        );
+      } else if (i === Math.floor(rating) && hasHalfStar) {
+        stars.push(
+          <FaStarHalfAlt
+            key={i}
+            onClick={() => handleStarClick(i + 0.5)}
+            style={{ cursor: 'pointer' }}
+          />
+        );
+      } else {
+        stars.push(
+          <FaRegStar
+            key={i}
+            onClick={() => handleStarClick(i + 1)}
+            style={{ cursor: 'pointer' }}
+          />
+        );
+      }
+    }
+
+    return stars;
+  };
+
+  const handleStarClick = (selectedRating) => {
+    setCurrentRating(Math.floor(selectedRating));
+    setHasHalfStar(selectedRating - Math.floor(selectedRating) >= 0.25);
+  };
+
+  const handleAddStore = () => {
+    let store = JSON.parse(localStorage.getItem('store')) || [] ;
+    const addProduct = {
+      id: _id,
+      name: name,
+      total: price,
+      quantity: 1,
+      imageUrl: image[0],
+    }
+    // console.log(addProduct)
+    if(!store) localStorage.setItem('store',JSON.stringify(addProduct))
+    else{
+      const isItemExist = store.some(item => item.name === addProduct.name);
+      if (!isItemExist) {
+        localStorage.setItem('store',JSON.stringify([...store, addProduct]));
+      } else {
+        console.log('Aquí sale un modal bien chikiluki');
+      }
+    }
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsComplete(true);
+
+      setTimeout(() => {
+        setIsComplete(false);
+      }, 1000);
+    }, 1000);
+  }
+
+  return (
+    <>
+      <Row className='m-5' style={{minHeight: "600px"}}>
+      <Col md={3}>
+          <div className='image-section'>
+            {image.map((images, index) => (
+              <Row
+                key={index}
+                className={selectedImage === images ? 'image-thumbnail m-3 image-bordered' : 'image-thumbnail m-3'}
+                onClick={() => handleImageClick(images)}
+              >
+                <img src={images} alt={`Image ${index}`} style={{width: "13em"}}/>
+              </Row>
+            ))}
+          </div>
+        </Col>
+        <Col md={6} style={{maxWidth: "35%"}}
+        className="image-container"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        >
+          {selectedImage && (
+            <div className="selected-image">
+              <img src={selectedImage} alt={name} 
+                className="zoom-image"
+                style={zoomStyle} />
+            </div>
+          )}
+        </Col>
+        <Col md={3} >
+          <div style={{marginLeft: "30%"}}>
+            <h2>{name}</h2>
+            <div className="rating">{generateRatingStars(currentRating)}</div>
+            <br></br>
+            <h4 className="text-muted">Precio: $<Currency amount={price}/></h4>
+            <br></br>
+            <p>{description}</p>
+            <Button 
+              variant={isComplete ? 'success' : 'primary'}
+              disabled={isLoading} 
+              onClick={handleAddStore}
+            >
+              {isLoading ? (
+                <Spinner animation="border" size="sm" />
+              ) : isComplete ? (
+                'Añadido ✅'
+              ) : (
+                'Añadir a la lista de pedidos 🛒'
+              )}
+            </Button>
+          </div>
+        </Col>
+      </Row>
+    </>
+  );
+};
+
+export default ProductDetail;

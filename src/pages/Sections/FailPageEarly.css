@@ -1,0 +1,262 @@
+
+
+.text-green {
+  color: #40ff65 !important;
+}
+
+.note-font-maintitle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0 auto;
+  white-space: pre-wrap;
+  text-align: center;
+  padding-bottom: 1%;
+  font-family: Lato, Helvetica, sans-serif;
+  
+}
+
+.note-font-title {
+  font-size: 2rem;
+  font-weight: bold;
+  width: 64vw;
+  margin: 0 auto;
+  white-space: pre-wrap;
+  text-align: center;
+  line-height: 120%;
+  font-family: Lato, Helvetica, sans-serif;
+}
+
+.note-font-subtitle {
+  font-weight: bold;
+  width: 47vw;
+  margin: 0 auto;
+  white-space: pre-wrap;
+  text-align: center;
+  padding: 1%;
+  font-family: Lato, Helvetica, sans-serif;
+
+}
+
+.cards-background {
+  background-color: #30354b;
+  height: 30rem;
+}
+
+.text-cards-background {
+  width: 38%;
+  margin: 0 auto;
+  white-space: pre-wrap;
+  text-align: center;
+  font-family: Lato, Helvetica, sans-serif;
+}
+
+.final-cards {
+  margin-bottom: 10%;
+  height: 4rem;
+  background-color: #ffffff;
+}
+
+.main-container-cards {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.container-cards {
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  width: calc(33.33%);
+  background-color: #ffffff;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-picture {
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 100%;
+  height: 40%;
+}
+
+.text {
+  width: 100%;
+  padding: 3%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  white-space: pre-wrap;
+  font-family: Lato, Helvetica, sans-serif;
+}
+
+.text-box-read {
+  width: 25vh;
+  display: flex;
+  justify-content: space-evenly;
+  font-family: Lato, Helvetica, sans-serif;
+}
+
+.text-box-read > a {
+  text-decoration: none;
+  padding: 2%;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #2caae4;
+  margin: 1%;
+}
+.text-box-title {
+  padding: 2%;
+  font-weight: bold;
+  margin: 1%;
+}
+
+likebutton{
+  background-color: #40ff65;
+}
+
+@media screen and (max-width: 768px) {
+  .cards-background {
+    margin: 0%;
+    background-color: #30354b;
+    height: 100%;
+  }
+
+  .note-font-maintitle {
+    font-size: 1.7rem;
+    font-weight: bold;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .note-font-title {
+    font-size: 1.9rem;
+    font-weight: bold;
+    width: 85%;
+    margin: 0 auto;
+    white-space: pre-wrap;
+    text-align: center;
+  }
+
+  .note-font-subtitle {
+    font-weight: bold;
+    width: 85%;
+    margin: 5% auto;
+    white-space: pre-wrap;
+    text-align: center;
+    padding: 1%;
+  }
+
+  .final-cards {
+    display: none;
+  }
+
+  .text-cards-background {
+    width: 100%;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    text-align: center;
+  }
+
+  .final-cards {
+    margin: -5%;
+    height: 50px;
+  }
+
+  .main-container-cards {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-cards {
+    margin-left: 0%;
+    margin-right: 40%;
+    margin-bottom: 15%;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    width: calc(100%);
+    background-color: #ffffff;
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-picture {
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+    height: 40%;
+  }
+
+  .text {
+    width: 300px;
+    padding: 3%;
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    white-space: pre-wrap;
+  }
+
+  .text-box-read {
+    width: 45%;
+    margin-bottom: 5%;
+  }
+
+  .text-box-read > a {
+    font-size: 18px;
+    color: #2caae4;
+  }
+
+  .text-box-title {
+    padding: 2%;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 1%;
+  }
+}
+
+
+.section-comment{
+  border: '1px solid #ccc'; 
+  border-radius: '10px';
+  width: '90%';
+  height: '90%';
+  padding: '10px'; 
+  margin: "0 2em 0 2em"; 
+  background-color: "#FFFFFF";
+}
+
+.universidad{
+  flex: '1';
+  display: 'flex';
+  justify-content: 'center';
+  align-items: 'center' ;
+}
+
+/* App.css */
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 100px auto;
+  top: 50;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
