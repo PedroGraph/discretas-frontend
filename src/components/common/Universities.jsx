@@ -15,7 +15,7 @@ export default function University() {
   
   async function showUniversities() {
     await axios
-      .get(`http://127.0.0.1:3000/json-uni/universidad`)
+      .get(`http://https://discretas-backend.onrender.com/json-uni/universidad`)
       .then((response) => {
         setcartas(response.data);
       })

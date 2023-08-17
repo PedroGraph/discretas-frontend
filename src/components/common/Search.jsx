@@ -45,7 +45,7 @@ export const SearchBar = () => {
   
   // async function showCities() {
   //   await axios
-  //     .get(`http://127.0.0.1:3000/json-uni/cities`)
+  //     .get(`http://https://discretas-backend.onrender.com/json-uni/cities`)
   //     .then((response) => {
   //       setCities(response.data);
   //       console.log(response.data);

@@ -25,7 +25,7 @@ export const Login = ({setUser}) => {
     setError({})
 
     await axios
-        .post(`http://127.0.0.1:3000/json-usr/usuario`,{
+        .post(`http://https://discretas-backend.onrender.com/json-usr/usuario`,{
             user: email,
             pass: password,
         })
