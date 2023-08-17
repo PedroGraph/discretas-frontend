@@ -51,7 +51,7 @@ export default function University() {
         
         <div>
           <MainLenceria/>
-          <MostSold/>
+          {/* <MostSold/> */}
           <Footer/>
         </div>
     
