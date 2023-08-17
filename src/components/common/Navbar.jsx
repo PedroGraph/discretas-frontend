@@ -33,8 +33,8 @@ export default function Navbar() {
           </div>
         </div>
         <div className="d-flex mt-4 options-navbar">
-          <div style={{paddingLeft: "3em", marginLeft: "1em"}}> <p className="text-white"> <a href="/Lubricantes" style={{textDecoration:"none", color: "white"}}>Lubricantes</a></p></div>
-          <div style={{paddingLeft: "3em"}}> <p className="text-white"><a href="/Lenceria" style={{textDecoration:"none", color: "white"}}>Lencería</a> </p></div>
+          <div style={{paddingLeft: "3em", marginLeft: "1em"}}> <p className="text-white"> <a href="/lubricantes" style={{textDecoration:"none", color: "white"}}>Lubricantes</a></p></div>
+          <div style={{paddingLeft: "3em"}}> <p className="text-white"><a href="/lenceria" style={{textDecoration:"none", color: "white"}}>Lencería</a> </p></div>
           <div style={{paddingLeft: "3em"}}> <p className="text-white"> Sobre nosotros </p></div>
         </div>
           <div className='d-flex' >

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import logo from "../../../public/assets/logo.svg"
+import logo from "/assets/logo.svg"
 import { FaFacebook, FaTiktok } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
 
