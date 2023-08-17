@@ -7,10 +7,10 @@ import axios from 'axios';
 
 const Products = () => {
 
-    const [products, setProducts] = useState([]);
-    const [filters, setFilters] = useState([]);
-    const [sortAlphabetically, setSortAlphabetically] = useState(false); 
-    const [sortType, setSortType] = useState('default'); 
+  const [products, setProducts] = useState([]);
+  const [filters, setFilters] = useState([]);
+  const [sortAlphabetically, setSortAlphabetically] = useState(false); 
+  const [sortType, setSortType] = useState('default'); 
     
   const [lowestPriceProduct, setLowestPriceProduct] = useState(null);
   const [highestPriceProduct, setHighestPriceProduct] = useState(null);
