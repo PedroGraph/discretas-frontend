@@ -26,7 +26,7 @@ const Characteristics = ({product, purchase}) => {
 
   const selectedColorItem = items.find(item => item.color === selectedColor);
   const disabled = {
-    opacity: "0.5",
+    opacity: "0.1",
     pointerEvents: "none"
   }
 
