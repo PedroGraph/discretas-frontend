@@ -21,7 +21,7 @@ const ProductList = ({ products }) => {
   return (
     <Row>
       {products.map((product, index) => (
-        <Col key={index} md={resolution > 340 && resolution < 1250 ? 6 : resolution > 1250 && resolution < 1500 ? 4 : 3}>
+        <Col key={index} md={resolution >= 340 && resolution < 1366 ? 6 : resolution >= 1366 && resolution < 1760 ? 6 : 3}>
           <Card className="mb-4" style={{width: "19em"}}>
             <a href={"/products/"+product._id} style={{textDecoration:"none", color: "black"}}>
             <Card.Img variant="top" src={product.image[0]} />

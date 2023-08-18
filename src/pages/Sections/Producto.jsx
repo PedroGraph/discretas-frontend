@@ -17,7 +17,7 @@ const Producto = () => {
 
   useEffect(() => {
     const source = axios.CancelToken.source();
-    axios.get(`https://discretas-backend.onrender.com/products/${productId[2]}`, { cancelToken: source.token })
+    axios.get(`${__BACKEND_URL__}products/${productId[2]}`, { cancelToken: source.token })
       .then((response) => {
        setData(true);
        setProduct(response.data);

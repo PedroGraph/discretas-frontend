@@ -37,10 +37,10 @@ const OrderSection = () => {
         <Row>
         <Col md={8} style={{padding: "0 0 0 3rem"}}>
           {orderItems.map((item, index) => (
-            <Card key={item.id} className="mb-3 custom-card" style={{width: "55%"}}>
+            <Card key={item.id} className="mb-3 custom-card" style={{width: "80%"}}>
               <div className="d-flex">
               <div className="image-container">
-                <Card.Img variant="top" src={item.imageUrl} style={{maxWidth: "15em"}} />
+                <Card.Img variant="top" src={item.imageUrl} style={{maxWidth: "200px"}} />
                 <div className="image-overlay">
                 <Button variant="danger" onClick={()=> handleDeleteItem(index)}>🗑️</Button>
                 </div>
@@ -48,7 +48,7 @@ const OrderSection = () => {
                 <div className="flex-grow-1 d-flex flex-column justify-content-between">
                   <Card.Body className="d-flex flex-column justify-content-between">
                     <div>
-                      <Card.Title>{item.name}</Card.Title>
+                      <Card.Title>{item.name} {item.color ? `- Color: ${item.color}` : ''} {item.size ? `- Talla: ${item.size}` : ''}</Card.Title>
                     </div>
                     <div className="text-right">
                       <Card.Text>$<Currency amount={item.total}/></Card.Text>

@@ -16,7 +16,7 @@ const Products = () => {
   const [highestPriceProduct, setHighestPriceProduct] = useState(null);
 
     useEffect(() => {
-      axios.get(`https://discretas-backend.onrender.com/products/`)
+      axios.get(`${__BACKEND_URL__}products/`)
         .then((response) => {
           setProducts(response.data);
           setFilters(response.data);

@@ -16,7 +16,7 @@ const Payment = ({orderItems, setOrdered}) =>{
 
    
     
-  const phoneNumber = 573108894326;
+  const phoneNumber = 573196584661;
 
   const totalAmount = orderItems.reduce((total, item) => total + item.total * item.quantity, 0);
 
@@ -24,8 +24,11 @@ const Payment = ({orderItems, setOrdered}) =>{
 
   for (let i = 0; i < orderItems.length; i++) {
 
+    const color = orderItems[i].color ? `- Color: ${orderItems[i].color}` : '';
+    const size = orderItems[i].size ? `- Talla: ${orderItems[i].size}` : '';
+
     message[i] = `
-*${orderItems[i].name}* // Cantidad *${orderItems[i].quantity}*
+*${orderItems[i].name} ${color} ${size}* // Cantidad *${orderItems[i].quantity}*
     `
   }
 
@@ -43,10 +46,9 @@ const Payment = ({orderItems, setOrdered}) =>{
 ${message}
 
 Método de pago: *${selectedPayment}*
-----------------------------
+-----------------------------------------
 Total a pagar: $${formatCurrency.format(totalAmount)}
-----------------------------
-Esto es una prueba jasjasjas rico el vicio y las tetas
+-----------------------------------------
   `)
 
 

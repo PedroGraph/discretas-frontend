@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
-import "../css/style_products.css"
+import Characteristics from './Characteristics'
 import Currency from './CurrencyFormater';
 import axios from 'axios'
+import "../css/style_products.css"
 
 const ProductDetail = ({product}) => {
 
@@ -13,23 +14,27 @@ const ProductDetail = ({product}) => {
   const [hasHalfStar, setHasHalfStar] = useState(rating - Math.floor(rating) >= 0.25);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [characteristics, setCharacteristics] = useState(product.characteristics);
+  const [purchaseWithCharacteristics, setPurchaseWithCharacteristics] = useState(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     setSelectedImage(image[0]);
-    const url = 'http://https://discretas-backend.onrender.com/rating/2323';
-    const data = {
-      stars: 5
-    };
+    // console.log(__BACKEND_URL__)
+    // const url = `${__BACKEND_URL__}rating/2323`;
+    // const data = {
+    //   stars: 5
+    // };
 
-    axios.put(url, data)
-      .then(response => {
-        console.log('Respuesta del servidor:', response.data);
-      })
-      .catch(error => {
-        console.error('Error en la petición:', error);
-      });
+    // axios.put(url, data)
+    //   .then(response => {
+    //     console.log('Respuesta del servidor:', response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error en la petición:', error);
+    //   });
   }, []);
   
   const handleImageClick = (image) => {
@@ -111,16 +116,16 @@ const ProductDetail = ({product}) => {
       total: price,
       quantity: 1,
       imageUrl: image[0],
+      ...(purchaseWithCharacteristics)
     }
-    // console.log(addProduct)
+
+      
     if(!store) localStorage.setItem('store',JSON.stringify(addProduct))
     else{
-      const isItemExist = store.some(item => item.name === addProduct.name);
-      if (!isItemExist) {
-        localStorage.setItem('store',JSON.stringify([...store, addProduct]));
-      } else {
-        console.log('Aquí sale un modal bien chikiluki');
-      }
+
+      const isItemExist   = !store.find(item => item.size === addProduct.size && item.color == addProduct.color && item.name === addProduct.name) || !store.find(item =>item.name === addProduct.name) ? false : true ;
+      if(!isItemExist) localStorage.setItem('store',JSON.stringify([...store, addProduct]));
+     
     }
 
     setIsLoading(true);
@@ -135,6 +140,7 @@ const ProductDetail = ({product}) => {
     }, 1000);
   }
 
+
   return (
     <>
       <Row className='m-5' style={{minHeight: "600px"}}>
@@ -143,10 +149,11 @@ const ProductDetail = ({product}) => {
             {image.map((images, index) => (
               <Row
                 key={index}
-                className={selectedImage === images ? 'image-thumbnail m-3 image-bordered' : 'image-thumbnail m-3'}
+                className={selectedImage === images ? 'image-thumbnail m-1 image-bordered' : 'image-thumbnail m-1'}
                 onClick={() => handleImageClick(images)}
+                style={{minWidth: "90%"}}
               >
-                <img src={images} alt={`Image ${index}`} style={{width: "13em"}}/>
+                <img src={images} alt={`Image ${index}`} style={{minWidth: "90%"}}/>
               </Row>
             ))}
           </div>
@@ -172,6 +179,11 @@ const ProductDetail = ({product}) => {
             <h4 className="text-muted">Precio: $<Currency amount={price}/></h4>
             <br></br>
             <p>{description}</p>
+            {
+              characteristics && (
+                <Characteristics product={characteristics} purchase={setPurchaseWithCharacteristics}/>
+              )
+            }
             <Button 
               variant={isComplete ? 'success' : 'primary'}
               disabled={isLoading} 

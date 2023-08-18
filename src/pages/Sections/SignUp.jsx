@@ -26,7 +26,7 @@ export const SignUp = () => {
     const handleSubmit = async (event) => {
       event.preventDefault();
         await axios
-        .post(`http://https://discretas-backend.onrender.com/json-usr/newuser`,{
+        .post(`${__BACKEND_URL__}json-usr/newuser`,{
             usuario: nombre,
             email: email,
             pass: contrasena,
