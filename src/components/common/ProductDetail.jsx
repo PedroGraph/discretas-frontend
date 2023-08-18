@@ -22,8 +22,8 @@ const ProductDetail = ({product}) => {
 
   useEffect(() => {
     setSelectedImage(image[0]);
-    // console.log(__BACKEND_URL__)
-    // const url = `${__BACKEND_URL__}rating/2323`;
+    console.log(__BACKEND_URL__)
+    // const url = `https://discretas-backend.onrender.com/rating/2323`;
     // const data = {
     //   stars: 5
     // };

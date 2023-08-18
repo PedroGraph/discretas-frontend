@@ -5,7 +5,7 @@ import { Button, Modal, Col } from 'react-bootstrap';
 import { Slider } from './Recomendations';
 
 const showComments = async (universityId) => {
-    return await axios.post(`${__BACKEND_URL__}json-com/comentarios`,{
+    return await axios.post(`https://discretas-backend.onrender.com/json-com/comentarios`,{
           universityId: universityId
         })
         .then((response) => {
@@ -17,7 +17,7 @@ const showComments = async (universityId) => {
 };
 
 async function updatedLike(comentarioId, info, action) {
-  await axios.post(`${__BACKEND_URL__}json-com/comentarios/updatelikes`,{
+  await axios.post(`https://discretas-backend.onrender.com/json-com/comentarios/updatelikes`,{
         comentarioId: comentarioId,
         info: info,
         action: action
@@ -31,7 +31,7 @@ async function updatedLike(comentarioId, info, action) {
 };
 
 async function deleteComment(comentarioId) {
-  await axios.post(`${__BACKEND_URL__}json-com/comentarios/deletecomment`,{
+  await axios.post(`https://discretas-backend.onrender.com/json-com/comentarios/deletecomment`,{
     commentId: comentarioId,
       })
       .then((response) => {

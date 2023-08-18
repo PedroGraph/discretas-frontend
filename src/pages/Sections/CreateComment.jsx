@@ -22,7 +22,7 @@ export const CommentForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await axios.post('${__BACKEND_URL__}json-com/comentarios/createcomemnt',{
+    await axios.post('https://discretas-backend.onrender.com/json-com/comentarios/createcomemnt',{
         comment: comment,
         user: usuario,
         universityId: uid

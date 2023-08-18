@@ -6,7 +6,7 @@ import { Carousel } from 'react-bootstrap';
 
 async function showUniversities() {
     return await axios
-      .get(`${__BACKEND_URL__}json-uni/universidad`)
+      .get(`https://discretas-backend.onrender.com/json-uni/universidad`)
       .then((response) => {
         return(response.data);
       })

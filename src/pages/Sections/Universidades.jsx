@@ -17,7 +17,7 @@ export const University = (props) => {
   const [info, setInfo] = useState({});
 
   async function aboutUniversity(universityId) {
-     await axios.post(`${__BACKEND_URL__}json-uni/universidad`,{
+     await axios.post(`https://discretas-backend.onrender.com/json-uni/universidad`,{
           universityId: universityId
         })
         .then((response) => {
