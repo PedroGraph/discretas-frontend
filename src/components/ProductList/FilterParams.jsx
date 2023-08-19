@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { Range } from "react-range";
 import "../css/style_products.css"
-import Currency from './CurrencyFormater'
+import Currency from '../common/CurrencyFormater'
 
 const  FilterParams = ({ onFilter, lower, higher }) => {
   const [nameFilter, setNameFilter] = useState('');

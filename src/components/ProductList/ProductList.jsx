@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Row, Col, Card, Button } from 'react-bootstrap';
-import Currency from './CurrencyFormater';
-import StarRating from './StarRating';
+import Currency from '../common/CurrencyFormater';
 
 const ProductList = ({ products }) => {
 
@@ -29,7 +28,16 @@ const ProductList = ({ products }) => {
               <Card.Title style={{fontWeight: "600"}}>{product.name}</Card.Title>
               <Card.Text>{product.description}</Card.Text>
               <Card.Text>Precio: $<Currency amount={product.price}/></Card.Text>
-              <StarRating rating={product.stars} /> 
+              <div className="star-options">
+                {[1, 2, 3, 4, 5].map(stars => (
+                  <span
+                    key={stars}
+                    className={`star ${stars <= product.stars ? 'selected' : ''}`}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
             </Card.Body> 
             <div className='p-3'>
               <Button className='p-2 w-100'>Echar un vistazo</Button>

@@ -5,7 +5,6 @@ import MainPage from "./pages/mainPage/MainPage.jsx";
 import Lubricantes  from "./pages/Sections/Lubricants.jsx";
 import Producto  from "./pages/Sections/Producto.jsx";
 import Store  from "./pages/Sections/Store.jsx";
-import {SignUp} from './pages/Sections/SignUp.jsx'
 
 function App() {
   return (
@@ -16,7 +15,6 @@ function App() {
         <Route path="/Lenceria/" element={<Lubricantes />} />
         <Route path="/products/:id" element={<Producto />} />
         <Route path="/store/" element={<Store />} />
-        <Route path="/register" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );

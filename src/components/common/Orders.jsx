@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Card, Form, Row, Col, Button, Dropdown  } from 'react-bootstrap';
+import { Container, Card, Form, Row, Col, Button } from 'react-bootstrap';
 import '../css/style_products.css';
 import Currency from './CurrencyFormater'
 import Payment from './Payment'
@@ -8,11 +8,9 @@ import '../css/style_products.css'
 const OrderSection = () => {
 
   const shopping = JSON.parse(localStorage.getItem('store')) || [];
-
   const [orderItems, setOrderItems] = useState(shopping);
-
   const [ordered, setOrdered] = useState(false);
-
+  
 
   const handleQuantityChange = (id, newQuantity) => {
     setOrderItems(prevItems =>
@@ -24,12 +22,11 @@ const OrderSection = () => {
     setOrderItems(prevItems =>{
       const newArray = [...prevItems]; // Crear una copia del array existente
       newArray.splice(id, 1); 
+      localStorage.setItem('store', JSON.stringify(newArray));
       return newArray; 
     });
   };
   
-
-
   return (
     <Container className="mt-4 mb-5" style={{minHeight: "800px", borderRadius: "2%", backgroundColor: "#ffffff"}}>
       <h2 className="m-5 p-5">{orderItems.length > 0 ? 'Mis Productos' : ''}</h2>
@@ -57,20 +54,23 @@ const OrderSection = () => {
                         <div className="d-flex align-items-center">
                           <Button
                             variant="outline-secondary"
+                            className='ds-buttons'
                             onClick={() => handleQuantityChange(item.id, Math.max(1, item.quantity - 1))}
                           >
                             -
                           </Button>
                           <Form.Control
-                            type="number"
+                            type="text"
                             value={item.quantity}
                             onChange={e => handleQuantityChange(item.id, parseInt(e.target.value))}
                             min={1}
-                            className="mx-2 input-quantity"
+                            className="mx-2 input-quantity ds-buttons"
+                            disabled="disabled"
                           />
                           <Button
                             variant="outline-secondary"
                             onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                            className='ds-buttons'
                           >
                             +
                           </Button>

@@ -42,7 +42,7 @@
 }
 
 .input-quantity{
-  width: 25%;
+  width: 3em;
 }
 
 /* Estilos para la tarjeta */
@@ -175,6 +175,10 @@
   display: inline-block;
 }
 
+.product-stars{
+  color: gold;
+}
+
 .star {
   cursor: pointer;
   font-size: 24px;
@@ -187,3 +191,8 @@
 .star.selected {
   color: gold; /* o cualquier otro color que desees para las estrellas seleccionadas */
 }
+
+.ds-buttons{
+  height: 35px;
+}
+

@@ -101,7 +101,9 @@ Total a pagar: $${formatCurrency.format(totalAmount)}
               ) : isComplete ? (
                 '✅'
               ) : (
-                <BsWhatsapp/>+" Comprar por Whatsapp"
+                <span>
+                   Comprar por Whatsapp <BsWhatsapp/>
+                </span>
               )}
             </Button>
           </Row>

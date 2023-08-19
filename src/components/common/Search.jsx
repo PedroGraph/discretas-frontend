@@ -59,7 +59,7 @@ export const SearchBar = () => {
 
   return (
     <div>
-      <Form style={{width: "90%"}}>
+      <Form style={{width: "100%"}}>
         <FormControl
           type="text"
           placeholder="Buscar productos"
@@ -68,7 +68,7 @@ export const SearchBar = () => {
         />
       </Form>
 
-      <ListGroup ref={listGroupRef} style={{position: "absolute", width: "11%"}}>
+      <ListGroup ref={listGroupRef} style={{position: "absolute", width: "12%"}}>
         {searchResults.map((item, index) => (
           <ListGroup.Item key={index} onClick={() => handleOptionClick(item)}>{item}</ListGroup.Item>
         ))}

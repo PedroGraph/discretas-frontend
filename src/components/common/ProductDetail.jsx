@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Button, Spinner, Form } from 'react-bootstrap';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 import Characteristics from './Characteristics'
 import Currency from './CurrencyFormater';
@@ -8,11 +8,13 @@ import "../css/style_products.css"
 
 const ProductDetail = ({product}) => {
 
-  const { _id, name, price, description, image, rating } = product;
+  const { _id, name, price, description, image, rating, stars } = product;
 
   const [currentRating, setCurrentRating] = useState(Math.floor(rating));
   const [hasHalfStar, setHasHalfStar] = useState(rating - Math.floor(rating) >= 0.25);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const [quantity, setQuantity] = useState(1);
 
   const [characteristics, setCharacteristics] = useState(product.characteristics);
   const [purchaseWithCharacteristics, setPurchaseWithCharacteristics] = useState(null);
@@ -22,23 +24,26 @@ const ProductDetail = ({product}) => {
 
   useEffect(() => {
     setSelectedImage(image[0]);
-    console.log(__BACKEND_URL__)
-    // const url = `https://discretas-backend.onrender.com/rating/2323`;
-    // const data = {
-    //   stars: 5
-    // };
+    // console.log(__BACKEND_URL__)
+    // // const url = `https://discretas-backend.onrender.com/rating/2323`;
+    // // const data = {
+    // //   stars: 5
+    // // };
 
-    // axios.put(url, data)
-    //   .then(response => {
-    //     console.log('Respuesta del servidor:', response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error('Error en la petición:', error);
-    //   });
+    // // axios.put(url, data)
+    // //   .then(response => {
+    // //     console.log('Respuesta del servidor:', response.data);
+    // //   })
+    // //   .catch(error => {
+    // //     console.error('Error en la petición:', error);
+    // //   });
   }, []);
+
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
+  };
   
   const handleImageClick = (image) => {
-    console.log(image)
     setSelectedImage(image);
   };
  
@@ -114,12 +119,12 @@ const ProductDetail = ({product}) => {
       id: _id,
       name: name,
       total: price,
-      quantity: 1,
       imageUrl: image[0],
+      quantity: quantity,
       ...(purchaseWithCharacteristics)
+      
     }
 
-      
     if(!store) localStorage.setItem('store',JSON.stringify(addProduct))
     else{
 
@@ -171,10 +176,13 @@ const ProductDetail = ({product}) => {
             </div>
           )}
         </Col>
-        <Col md={3} >
+        <Col md={4} >
           <div style={{marginLeft: "30%"}}>
             <h2>{name}</h2>
-            <div className="rating">{generateRatingStars(currentRating)}</div>
+            <div >
+              <div className="rating">{generateRatingStars(currentRating)}</div>
+              <div style={{marginLeft: "5px"}}>Calificaciones ({stars})</div>
+            </div>
             <br></br>
             <h4 className="text-muted">Precio: $<Currency amount={price}/></h4>
             <br></br>
@@ -184,18 +192,51 @@ const ProductDetail = ({product}) => {
                 <Characteristics product={characteristics} purchase={setPurchaseWithCharacteristics}/>
               )
             }
+            <Form.Group>
+              <Form.Label>Cantidad:</Form.Label>
+              <div className="d-flex align-items-center">
+                <Button
+                  variant="outline-secondary"
+                  className='ds-buttons'
+                  onClick={() => handleQuantityChange(quantity - 1)}
+                >
+                  -
+                </Button>
+                <Form.Control
+                  type="text"
+                  value={quantity}
+                  onChange={e => handleQuantityChange(e.target.value)}
+                  min={1}
+                  className="mx-2 input-quantity ds-buttons"
+                  disabled="disabled"
+                />
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => handleQuantityChange(Math.max(1, quantity + 1))}
+                  className='ds-buttons'
+                >
+                  +
+                </Button>
+              </div>
+            </Form.Group>
             <Button 
               variant={isComplete ? 'success' : 'primary'}
               disabled={isLoading} 
               onClick={handleAddStore}
+              className='w-100 mt-4'
             >
               {isLoading ? (
                 <Spinner animation="border" size="sm" />
               ) : isComplete ? (
                 'Añadido ✅'
               ) : (
-                'Añadir a la lista de pedidos 🛒'
+                'Añadir al carrito 🛒'
               )}
+            </Button>
+            <Button
+              variant='success'
+              className='mt-2 w-100'>
+              Comprar Ahora
             </Button>
           </div>
         </Col>

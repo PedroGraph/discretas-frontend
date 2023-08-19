@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 
 const Characteristics = ({product, purchase}) => {
 
@@ -30,7 +30,6 @@ const Characteristics = ({product, purchase}) => {
     pointerEvents: "none"
   }
 
-  
   return (
     <div className="mb-3">
       {items.length > 3 ? (
@@ -50,9 +49,6 @@ const Characteristics = ({product, purchase}) => {
           </select>
           {selectedColorItem && (
             <div>
-              <div>
-                <span>Cantidad disponible: {selectedColorItem.quantity}</span>
-              </div>
               <label htmlFor="sizeSelect" className='mt-3'>Selecciona una talla:</label>
               <select
                 id="sizeSelect"
@@ -60,10 +56,16 @@ const Characteristics = ({product, purchase}) => {
                 onChange={(e) => handleSizeSelection(e.target.value)}
                 value={selectedSize || 0}
               >
-                {items.map((item, index) => (
-                  <option key={index} value={item.size}>
-                    {item.size}
-                  </option>
+                {items.map((item) => (
+                  item.color === selectedColorItem.color && (
+                    item.size.map((size, index)=> (
+                      <option key={index} value={size}>
+                        {size}
+                      </option>
+                    ))
+                    
+                    )
+                  
                 ))}
               </select>
             </div>
@@ -91,9 +93,6 @@ const Characteristics = ({product, purchase}) => {
           ))}
           {selectedColorItem && (
             <div>
-              <div>
-                <span >Cantidad disponible: <span style={{fontWeight: "700"}}>{selectedColorItem.quantity}</span></span>
-              </div>
               <label htmlFor="sizeSelect" className='mt-3'>Selecciona una talla:</label>
               <select
                 id="sizeSelect"
