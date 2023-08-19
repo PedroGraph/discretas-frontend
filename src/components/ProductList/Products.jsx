@@ -93,7 +93,6 @@ const Products = () => {
           <div className='d-flex align-items-center mb-5' style={{ justifyContent: 'flex-end' }}>
             <span className='mr-2'>Ordenar por: </span>
             <select className='form-control' style={{'display': 'flex', width: '10em', marginLeft: '1em'}} value={sortType} onChange={(e) => setSortType(e.target.value)}>
-              <option value='default'>Normal</option>
               <option value='asc'>Nombre A-Z</option>
               <option value='desc'>Nombre Z-A</option>
               <option value='priceAsc'>Menor Precio</option>
