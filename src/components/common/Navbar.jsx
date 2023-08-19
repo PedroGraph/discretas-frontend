@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <div className='container-fluid' style={{backgroundColor: "#000"}}>
-      <div className='row w-90 mx-auto navbar'  style={{ display: 'flex', flexWrap: "nowrap" }}>
+      <div className='w-90 mx-auto navbar'  style={{ display: 'flex', flexWrap: "nowrap" }}>
         <div className='d-flex align-items-center '>
         <a href="/">
           <img className='me-2 ' src={logo} width="80%" height="55px" alt='Logo'></img>

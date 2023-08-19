@@ -225,7 +225,7 @@ const ProductDetail = ({product}) => {
               variant={isComplete ? 'success' : 'primary'}
               disabled={isLoading} 
               onClick={handleAddStore}
-              className='w-100 mt-4'
+              className='mt-3 me-2 w-50'
             >
               {isLoading ? (
                 <Spinner animation="border" size="sm" />
@@ -237,7 +237,8 @@ const ProductDetail = ({product}) => {
             </Button>
             <Button
               variant='success'
-              className='mt-2 w-100'>
+              className='mt-2 w-50'
+              >
               Comprar Ahora
             </Button>
           </div>
