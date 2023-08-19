@@ -196,3 +196,16 @@
   height: 35px;
 }
 
+/* CustomModal.css */
+
+.modal-content {
+  background-color: #f7f7f7; /* Cambia este color según tus preferencias */
+  border-radius: 0;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+  max-width: 600px;
+}
+

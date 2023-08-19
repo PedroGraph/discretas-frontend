@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Spinner, Form } from 'react-bootstrap';
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 import Characteristics from './Characteristics'
 import Currency from './CurrencyFormater';
+import InfoUser from './ProductDetails/FormModal'
 import axios from 'axios'
 import "../css/style_products.css"
 
@@ -219,6 +220,7 @@ const ProductDetail = ({product}) => {
                 </Button>
               </div>
             </Form.Group>
+            <InfoUser/>
             <Button 
               variant={isComplete ? 'success' : 'primary'}
               disabled={isLoading} 
