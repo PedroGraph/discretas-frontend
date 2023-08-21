@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import useProductContext from '../hooks/useProductContext';
 
-const Characteristics = ({product, purchase}) => {
+const Characteristics = ({product}) => {
 
-  const [selectedColor, setSelectedColor] = useState(product.length > 0 ? product[0].color : null);
-  const [selectedSize, setSelectedSize] = useState(product.length > 0 ? product[0].size[0] : null);
-  const [items, setItems] = useState(product);
+  const { productPurchased, setProductPurchased } = useProductContext() ?? {};
+
+  const [selectedColor, setSelectedColor] = useState(product ? product.characteristics[0].color : null);
+  const [selectedSize, setSelectedSize] = useState(product ? product.characteristics[0].size[0] : null);
+  const [items, setItems] = useState(product.characteristics);
 
   useEffect(() => {
-    if (items.length > 0 && selectedColor === null) {
-      setSelectedColor(items[0].color);
+    if (productPurchased) {
+      productPurchased.size = selectedSize;
+      productPurchased.color = selectedColor;
+      setProductPurchased(productPurchased);
     }
-    purchase({ color: selectedColor, size: selectedSize});
-  }, [items, selectedColor]);
+  }, [items, selectedColor, productPurchased]);
+  
 
   const handleColorSelection = (color) => {
     setSelectedColor(color);
-    purchase({ color, size: items.find(item => item.color === color).size[0] }); // Set color and current selected size to purchase
+    setProductPurchased({ ...productPurchased, color, size: items.find(item => item.color === color).size[0] });
   };
 
   const handleSizeSelection = (size) => {
     setSelectedSize(size);
-    purchase({ color: selectedColor, size }); // Set color and selected size to purchase
+    setProductPurchased({ ...productPurchased, size });
   };
 
   const selectedColorItem = items.find(item => item.color === selectedColor);

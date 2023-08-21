@@ -58,7 +58,7 @@ export const SearchBar = () => {
 
 
   return (
-    <div>
+    <div className='mt-2 me-5'>
       <Form style={{width: "100%"}}>
         <FormControl
           type="text"

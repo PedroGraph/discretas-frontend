@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import { Container, Card, Form, Row, Col, Button } from 'react-bootstrap';
-import '../css/style_products.css';
+import useProductContext from '../hooks/useProductContext';
 import Currency from './CurrencyFormater'
 import Payment from './Payment'
+import InfoUser from './FormModal'
 import '../css/style_products.css'
 
 const OrderSection = () => {
 
+  const { modalPayment, setModalPayment } = useProductContext()
   const shopping = JSON.parse(localStorage.getItem('store')) || [];
   const [orderItems, setOrderItems] = useState(shopping);
   const [ordered, setOrdered] = useState(false);
   
 
   const handleQuantityChange = (id, newQuantity) => {
+    console.log(id, newQuantity)
     setOrderItems(prevItems =>
-      prevItems.map(item => (item.id === id ? { ...item, quantity: newQuantity } : item))
+      prevItems.map(item => (item._id === id ? { ...item, quantity: newQuantity } : item))
     );
+  };
+
+  const handleShowModal = () => {
+    setModalPayment(true);
   };
 
   const handleDeleteItem = (id) => {
@@ -26,6 +33,8 @@ const OrderSection = () => {
       return newArray; 
     });
   };
+
+  const totalAmount = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
   
   return (
     <Container className="mt-4 mb-5" style={{minHeight: "800px", borderRadius: "2%", backgroundColor: "#ffffff"}}>
@@ -33,48 +42,48 @@ const OrderSection = () => {
       {orderItems.length > 0  && !ordered ?
         <Row>
         <Col md={8} style={{padding: "0 0 0 3rem"}}>
-          {orderItems.map((item, index) => (
-            <Card key={item.id} className="mb-3 custom-card" style={{width: "80%"}}>
-              <div className="d-flex">
-              <div className="image-container">
-                <Card.Img variant="top" src={item.imageUrl} style={{maxWidth: "200px"}} />
+        {orderItems.map(item => (
+          <Card key={item._id} className="mb-3 custom-card" style={{width: "80%"}}>
+              <div className="d-flex card-shopping" id={item._id}>
+              <div className="image-shopping">
+                <Card.Img variant="top" src={item.image[0]} style={{maxWidth: "200px"}} />
                 <div className="image-overlay">
                 <Button variant="danger" onClick={()=> handleDeleteItem(index)}>🗑️</Button>
                 </div>
               </div>
-                <div className="flex-grow-1 d-flex flex-column justify-content-between">
-                  <Card.Body className="d-flex flex-column justify-content-between">
+                <div>
+                  <Card.Body className="d-flex flex-column justify-content-between ">
                     <div>
                       <Card.Title>{item.name} {item.color ? `- Color: ${item.color}` : ''} {item.size ? `- Talla: ${item.size}` : ''}</Card.Title>
                     </div>
                     <div className="text-right">
-                      <Card.Text>$<Currency amount={item.total}/></Card.Text>
+                      <Card.Text>$<Currency amount={item.price}/></Card.Text>
                       <Form.Group>
                         <Form.Label>Cantidad:</Form.Label>
                         <div className="d-flex align-items-center">
                           <Button
                             variant="outline-secondary"
                             className='ds-buttons'
-                            onClick={() => handleQuantityChange(item.id, Math.max(1, item.quantity - 1))}
+                            onClick={() => handleQuantityChange(item._id, Math.max(1, item.quantity - 1))}
                           >
                             -
                           </Button>
                           <Form.Control
                             type="text"
                             value={item.quantity}
-                            onChange={e => handleQuantityChange(item.id, parseInt(e.target.value))}
+                            onChange={e => handleQuantityChange(item._id, parseInt(e.target.value))}
                             min={1}
                             className="mx-2 input-quantity ds-buttons"
                             disabled="disabled"
                           />
                           <Button
                             variant="outline-secondary"
-                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                            onClick={() => handleQuantityChange(item._id, item.quantity + 1)}
                             className='ds-buttons'
                           >
                             +
                           </Button>
-                          <Button variant="danger" onClick={()=> handleDeleteItem(index)} style={{ marginLeft: "2em" }}>🗑️</Button>
+                          <Button variant="danger" onClick={()=> handleDeleteItem(item._id)} style={{ marginLeft: "2em" }}>🗑️</Button>
                         </div>
                       </Form.Group>
                     </div>
@@ -84,7 +93,22 @@ const OrderSection = () => {
             </Card>
           ))}
         </Col>
-        <Payment orderItems={orderItems} setOrdered={setOrdered}/>
+        <Col md={4} className="justify-content-center total-shopping" style={{padding: "0 3rem 0 0"}}>
+          <div className="image-bordered" style={{width: "100%", backgroundColor:"#eaeded"}}>
+            <Row className="text-center">
+              <h4 className="p-5">Total a Pagar: $<Currency amount={totalAmount}/></h4>
+            </Row>
+            <Row md={3} className="text-md-right p-4 justify-content-center" >
+            <Button 
+              onClick={handleShowModal}
+            style={{width: "80%"}}  
+            > 
+              Realizar compra
+            </Button>
+          </Row>
+          </div>
+          {modalPayment && <InfoUser product={orderItems} />}
+        </Col>
         </Row>
         :
         <Row md={12}>
