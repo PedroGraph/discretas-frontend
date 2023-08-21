@@ -128,3 +128,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#firebase files
+firebase.js
+.firebase
+firebase.json
+.firebaserc
