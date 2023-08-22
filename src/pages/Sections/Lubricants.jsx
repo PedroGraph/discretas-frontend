@@ -10,9 +10,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Navbar/>
-        <Products/>
-      <Footer/>
+      <Products/>
     </>
   );
 };

@@ -9,11 +9,11 @@ const ProductImage = ({image}) => {
         transform: 'scale(1) translate(0, 0)',
     });
 
+
     useEffect(()=>{
         setSelectedImage(image[0]);
     },[])
     
-
     const handleImageClick = (image) => {
         setSelectedImage(image);
     };
@@ -40,38 +40,40 @@ const ProductImage = ({image}) => {
             maxWidth: "600px"
         });
     };
+
+    const isMobile = window.innerWidth <= 400;
  
-      return(
-        <>
-           <div className='image-section col'>
-                <div className='image-selected-section'>
-                {image.map((images, index) => (
-                    <Row
-                    key={index}
-                    className={selectedImage === images ? 'm-1 image-bordered image-section' : 'm-1 image-section'}
-                    onClick={() => handleImageClick(images)}
-                    style={{minWidth: "80px"}}
-                    >
-                    <img src={images} alt={`Image ${index}`} style={{minWidth: "80px"}}/>
-                    </Row>
-                ))}
-                </div>
-            </div>
-            <div md={6} 
-                className="image-container col"
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
+    return(
+    <>
+        <div className='col'>
+            <div className='image-selected-section'>
+            {image.map((images, index) => (
+                <Row
+                key={index}
+                className={selectedImage === images ? 'm-1 image-bordered image-section' : 'm-1 image-section'}
+                onClick={() => handleImageClick(images)}
+                style={{minWidth: "80px"}}
                 >
-                    {selectedImage && (
-                    <div className="selected-image">
-                        <img src={selectedImage}
-                        className="zoom-image"
-                        style={zoomStyle} />
-                    </div>
-                    )}
+                <img src={images} alt={`Image ${index}`} style={{minWidth: "80px"}}/>
+                </Row>
+            ))}
             </div>
-        </>
-      )
+        </div>
+        <div md={6} 
+            className="image-container col"
+            onMouseMove={!isMobile ? handleMouseMove : ''}
+            onMouseLeave={handleMouseLeave}
+            >
+                {selectedImage && (
+                <div className="selected-image">
+                    <img src={selectedImage}
+                    className="zoom-image"
+                    style={zoomStyle} />
+                </div>
+                )}
+        </div>
+    </>
+    )
 
 }
 

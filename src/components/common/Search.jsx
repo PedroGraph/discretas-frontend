@@ -1,8 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Form, FormControl, ListGroup } from 'react-bootstrap';
+import useProductContext from '../hooks/useProductContext';
+import search from '../../../image/buscar.svg'
 import axios from 'axios';
+import Currency from './CurrencyFormater'
 
 export const SearchBar = () => {
+
+  const { products } = useProductContext();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [cities, setCities] = useState(['Condones', 'Lubricantes']);
@@ -13,16 +18,16 @@ export const SearchBar = () => {
     const term = e.target.value;
     setSearchTerm(term);
 
-    const results = cities.filter(item =>
-      item.toLowerCase().includes(term.toLowerCase())
-    ).slice(0, 5); // Limitamos los resultados a 5 opciones
+    const results = products.filter(item =>
+      item.name.toLowerCase().includes(term.toLowerCase())
+    ).slice(0, 3); // Limitamos los resultados a 5 opciones
 
     setSearchResults(results);
   };
 
   const handleOptionClick = (option) => {
-    // Aquí puedes hacer algo con la opción seleccionada, como almacenarla en el estado o enviarla a otro componente
-    console.log('Opción seleccionada:', option);
+    const productId = products.find(product => product.name === option)._id
+    window.location.href = '/products/' + productId;
   };
 
   const handleOutsideClick = (e) => {
@@ -39,38 +44,30 @@ export const SearchBar = () => {
 
   }, []);
 
-  useEffect(() => {
-    // showCities()
-  }, [])
-  
-  // async function showCities() {
-  //   await axios
-  //     .get(`https://discretas-backend.onrender.com/json-uni/cities`)
-  //     .then((response) => {
-  //       setCities(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-
-
   return (
-    <div className='mt-2 me-5'>
-      <Form style={{width: "100%"}}>
-        <FormControl
+    <div className='input-seacher mt-2 me-5' style={{ position: 'relative' }}>
+      <div style={{width: "100%"}}>
+        <label className='input-label'>
+          <img src={search} alt='Imagen de ejemplo' />
+        </label>
+        <input
           type="text"
-          placeholder="Buscar productos"
+          placeholder=""
           value={searchTerm}
           onChange={handleInputChange}
+          className='input-with-image text-search'
         />
-      </Form>
+      </div>
 
-      <ListGroup ref={listGroupRef} style={{position: "absolute", width: "12%"}}>
+      <ListGroup ref={listGroupRef} className='list-group-container'>
         {searchResults.map((item, index) => (
-          <ListGroup.Item key={index} onClick={() => handleOptionClick(item)}>{item}</ListGroup.Item>
+          <ListGroup.Item key={index} onClick={() => handleOptionClick(item.name)} className='item-group-container'>
+            <div className='d-flex justify-content-center'>
+              <div><img src={item.image[0]} alt="" style={{maxWidth: "65px", maxHeight: "65px"}}/></div>
+              <div className='p-3'><strong>{item.name}</strong></div>
+              <div className='p-3'><span>$<Currency amount={item.price}/></span></div>
+            </div>
+          </ListGroup.Item>
         ))}
       </ListGroup>
     </div>

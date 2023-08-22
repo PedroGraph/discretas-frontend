@@ -17,7 +17,6 @@ const MainPage = () => {
 
   return (
     <>
-      <Navbar user={user} setUser={setUser}/>
         <University/>
     </>
   );

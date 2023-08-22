@@ -65,7 +65,7 @@ const ProductDetail = ({product}) => {
 
   return (
     <>
-      <Row className='m-5 product-details-columns' style={{minHeight: "600px"}}>
+      <Row className='p-3 product-details-columns' >
         <ProductImages image={image} />
         <Col md={4} >
           <div className='purchase-info'>

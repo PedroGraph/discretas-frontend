@@ -11,7 +11,7 @@ export default function University() {
         <div>
           <MainLenceria/>
           {/* <MostSold/> */}
-          <Footer/>
+          
         </div>
     
       );

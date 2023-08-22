@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import Currency from '../common/CurrencyFormater';
 import '../css/style_products.css';
+import { Link } from 'react-router-dom';
 
 const ProductList = ({ products }) => {
 
@@ -10,7 +11,7 @@ const ProductList = ({ products }) => {
       {products.map((product, index) => (
         <Col key={index} className='product-col'>
           <Card className="cards-list" >
-            <a href={"/products/"+product._id} style={{textDecoration:"none", color: "black"}}>
+            <Link to={"/products/"+product._id} className='product-link' style={{textDecoration:"none", color: "black"}}>
             <Card.Img variant="top" src={product.image[0]} />
             <Card.Body>
               <Card.Title style={{fontWeight: "600"}}>{product.name}</Card.Title>
@@ -30,7 +31,7 @@ const ProductList = ({ products }) => {
             <div className='p-3 look-product-button'>
               <Button className='p-2 w-100'>Echar un vistazo</Button>
             </div>
-            </a>
+            </Link>
           </Card>
         </Col>
       ))}

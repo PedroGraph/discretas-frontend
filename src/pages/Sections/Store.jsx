@@ -8,9 +8,9 @@ const Producto = () => {
   return (
     <>
      <div style={{backgroundColor: "#f7f7f7"}}>
-      <Navbar />
+      
           <Orders/>
-      <Footer/>
+      
        </div>
     </>
   );

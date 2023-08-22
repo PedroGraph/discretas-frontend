@@ -10,21 +10,20 @@ import { BsWhatsapp } from 'react-icons/bs';
 const Payment = ({orderItems}) =>{
 
   const {
-    isLoadingForm, setIsLoadingForm, 
+    isLoadingForm, 
     isCompleteForm, setIsCompleteForm, 
     errorSelectedPayment, setErrorSelectedPayment,
-    formData, canSubmit
+    formData, canSubmit,
+    selectedPayment, setSelectedPayment,
+    handlePayment,
   } = useProductContext();
 
-  const [selectedPayment, setSelectedPayment] = useState('Metodo de Pago');
-
-  console.log(orderItems)
-    
+  
   const phoneNumber = 573196584661;
-
   const totalAmount = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
   let message = [];
+  const currency = { style: 'currency', currency: 'COP' }
+  const formatCurrency = new Intl.NumberFormat('es-ES', currency);
 
   for (let i = 0; i < orderItems.length; i++) {
 
@@ -35,15 +34,6 @@ const Payment = ({orderItems}) =>{
 *${orderItems[i].name} ${color} ${size}* // Cantidad *${orderItems[i].quantity}*
     `
   }
-
-  const currency = {
-    style: 'currency',
-    currency: 'COP'
-  }
-
-  const formatCurrency = new Intl.NumberFormat('es-ES', currency);
-
-  
 
   const encodedMessage = encodeURIComponent(`
 ¡Nuevo pedido!
@@ -75,22 +65,9 @@ Correo: ${formData.correo}
         setSelectedPayment(payment);
     };;
 
-    const hnadlePayment = () => {
-
-        if(selectedPayment === 'Metodo de Pago') {
-            setErrorSelectedPayment(true);
-            return;
-        }
-
-        setIsLoadingForm(true);
-        setTimeout(() => {
-            setIsLoadingForm(false);
-            setIsCompleteForm(true);
-            setTimeout(() => {
-               window.open(`https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`, '_blank');
-                localStorage.clear();
-            }, 1000);
-        }, 1000);
+    const handlePurchase = () => {
+        setIsCompleteForm(false);
+        handlePayment(phoneNumber, encodedMessage)
     };
 
     return(
@@ -99,12 +76,12 @@ Correo: ${formData.correo}
           <Row className="text-center">
             <h4 className="p-5 total-amount">Total a Pagar: $<Currency amount={totalAmount}/></h4>
           </Row>
-          <Row md={3} className="text-md-right p-4 justify-content-center" >
+          <Row md={3} className="text-md-right p-5 justify-content-center" >
             <Button 
             variant={isCompleteForm ? 'success' : 'primary'} 
-            style={{width: "80%"}}  
+            style={{width: "94%"}}  
             disabled={errorSelectedPayment || !canSubmit} 
-            onClick={hnadlePayment}
+            onClick={handlePurchase}
             > {isLoadingForm ? (
                 <Spinner animation="border" size="sm" />
               ) : isCompleteForm ? (

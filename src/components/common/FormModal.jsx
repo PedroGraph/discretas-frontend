@@ -8,8 +8,8 @@ import store from '../../../image/store.png';
 const UserInfo = ({product}) => {
 
   const {  
-    isCompleteForm, setIsCompleteForm, 
-    isLoadingForm, setIsLoadingForm,
+    isCompleteForm, 
+    isLoadingForm, 
     modalPayment, setModalPayment,
     formData, setFormData,
     canSubmit
@@ -17,7 +17,7 @@ const UserInfo = ({product}) => {
 
   const productPurchased = Array.isArray(product) ? product : [product];
 
-  const handleCloseModal = () =>{
+  const handleCloseModal = () => {
     setModalPayment(false);
   }
 
@@ -29,21 +29,7 @@ const UserInfo = ({product}) => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoadingForm(true);
-    setTimeout(() => {
-      setIsLoadingForm(false);
-      setIsCompleteForm(true);
-      setTimeout(() => {
-        setModalPayment(false);
-        setIsCompleteForm(false);
-      }, 3000);
-    }, 1000);
-  };
-
-  console.log(productPurchased)
-
+  
   return (
     <Modal show={modalPayment} onHide={handleCloseModal} centered animation={true}>
       <Modal.Header closeButton></Modal.Header>
@@ -54,14 +40,14 @@ const UserInfo = ({product}) => {
           </div>
         ) : isCompleteForm ? (
           <div className="text-center">
-            <img src={store} alt="" />
+            <img src={store} alt=""  className='store-image'/>
             <h3>Tu compra se ha procesado exitosamente.</h3>
             <h6>Te vamos a redirigir a nuestro whatsapp {':)'}</h6>
           </div>
         ) : (
           <div className='d-flex modal-payment'>
             <Col md={6} className='me-5 form-info'>
-              <Form onSubmit={handleSubmit}>
+              <Form>
                 <Row>
                   <Col>
                     <Form.Group>
@@ -71,7 +57,8 @@ const UserInfo = ({product}) => {
                         name="nombre"
                         value={formData.nombre}
                         onChange={handleChange}
-                        placeHolder="Nombre(s)"
+                        placeholder="Nombre(s)"
+                        style={{border: !formData.nombre ? '1px solid red' : ''}}
                         required
                       />
                     </Form.Group>
@@ -84,7 +71,8 @@ const UserInfo = ({product}) => {
                         name="apellido"
                         value={formData.apellido}
                         onChange={handleChange}
-                        placeHolder="Apellido(s)"
+                        placeholder="Apellido(s)"
+                        style={{border: !formData.apellido ? '1px solid red' : ''}}
                         required
                       />
                     </Form.Group>
@@ -99,7 +87,8 @@ const UserInfo = ({product}) => {
                           name="cedula"
                           value={formData.cedula}
                           onChange={handleChange}
-                          placeHolder="Cedula"
+                          placeholder="Cedula"
+                          style={{border: !formData.cedula ? '1px solid red' : ''}}
                           required
                         />
                       </Form.Group>
@@ -112,7 +101,8 @@ const UserInfo = ({product}) => {
                           name="telefono"
                           value={formData.telefono}
                           onChange={handleChange}
-                          placeHolder="Telefono"
+                          placeholder="Telefono"
+                          style={{border: !formData.telefono ? '1px solid red' : ''}}
                           required
                         />
                       </Form.Group>
@@ -123,9 +113,10 @@ const UserInfo = ({product}) => {
                       type="email"
                       className='mt-2'
                       name="correo"
-                      placeHolder="Correo electrónico"
+                      placeholder="Correo electrónico"
                       value={formData.correo}
                       onChange={handleChange}
+                      style={{border: !formData.correo ? '1px solid red' : ''}}
                       required
                     />
                   </Form.Group>

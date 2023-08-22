@@ -78,7 +78,7 @@ const relatedProducts = () => {
 
   return (
     <>
-    <div className='text-center'><h3>Productos Relacionados</h3></div>
+    <div className='text-center mt-5'><h3>Productos Relacionados</h3></div>
      <Carousel className='m-5'  prevIcon={<BsArrowLeftCircleFill />} // Usar el ícono de flecha izquierda
       nextIcon={<BsFillArrowRightCircleFill />} // Usar el ícono de flecha derecha
       >

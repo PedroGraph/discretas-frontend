@@ -39,6 +39,9 @@ export const ShopProvider = ({ children }) => {
     correo: '',
   });
 
+  //Payment Options
+  const [selectedPayment, setSelectedPayment] = useState('Metodo de Pago');
+
   const canSubmit = [...Object.values(formData)].every(Boolean) ;
 
   useEffect(() => {
@@ -105,6 +108,24 @@ export const ShopProvider = ({ children }) => {
     });
     setProducts(filteredProducts);
   };
+
+  const handlePayment = (phoneNumber, encodedMessage) => {
+    if(selectedPayment === 'Metodo de Pago') {
+        setErrorSelectedPayment(true);
+          return;
+      }
+      setIsLoadingForm(true);
+      setTimeout(() => {
+          setIsLoadingForm(false);
+          setIsCompleteForm(true);
+          setTimeout(() => {
+            setModalPayment(false);
+            setIsCompleteForm(false);
+            window.open(`https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`, '_blank');
+            localStorage.clear();
+          }, 1000);
+      }, 1000);
+  };
   
   return (
     <ShoppingProvider.Provider
@@ -132,6 +153,9 @@ export const ShopProvider = ({ children }) => {
 
         formData, setFormData,
         canSubmit,
+
+        handlePayment,
+        selectedPayment, setSelectedPayment,
 
       }}
     >

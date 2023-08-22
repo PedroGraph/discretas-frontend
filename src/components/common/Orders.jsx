@@ -37,8 +37,8 @@ const OrderSection = () => {
   const totalAmount = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
   
   return (
-    <Container className="mt-4 mb-5" style={{minHeight: "800px", borderRadius: "2%", backgroundColor: "#ffffff"}}>
-      <h2 className="m-5 p-5">{orderItems.length > 0 ? 'Mis Productos' : ''}</h2>
+    <Container className=" mb-5" style={{minHeight: "800px", borderRadius: "2%", backgroundColor: "#ffffff"}}>
+      <h2 className="text-shopping p-5">{orderItems.length > 0 ? 'Mis Productos' : ''}</h2>
       {orderItems.length > 0  && !ordered ?
         <Row>
         <Col md={8} style={{padding: "0 0 0 3rem"}}>
@@ -48,7 +48,7 @@ const OrderSection = () => {
               <div className="image-shopping">
                 <Card.Img variant="top" src={item.image[0]} style={{maxWidth: "200px"}} />
                 <div className="image-overlay">
-                <Button variant="danger" onClick={()=> handleDeleteItem(index)}>🗑️</Button>
+                <Button variant="danger" onClick={()=> handleDeleteItem(item._id)}>🗑️</Button>
                 </div>
               </div>
                 <div>
@@ -74,7 +74,6 @@ const OrderSection = () => {
                             onChange={e => handleQuantityChange(item._id, parseInt(e.target.value))}
                             min={1}
                             className="mx-2 input-quantity ds-buttons"
-                            disabled="disabled"
                           />
                           <Button
                             variant="outline-secondary"

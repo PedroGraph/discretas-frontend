@@ -16,7 +16,7 @@ export default function Navbar() {
         <img className='logo' src={logo} alt='Logo'></img>
       </a>
       <SearchBar />
-      <nav className='d-flex'>
+      <nav className='d-flex ms-5'>
         <div className='nav-links'>
           <a href="/lubricantes">Lubricantes</a>
         </div>

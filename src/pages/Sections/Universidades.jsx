@@ -52,7 +52,6 @@ export const University = (props) => {
 export const Universidades = () => {
   return (
     <>
-      <Navbar></Navbar>
       <University></University>
       <CommentForm/>
       <CommentComponent/>
