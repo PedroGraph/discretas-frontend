@@ -1,0 +1,69 @@
+.not-found-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .not-found-content {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .not-found-content h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .not-found-content p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .not-found-content button {
+    font-size: 1rem;
+  }
+  
+  .plane {
+    width: 200px;
+    height: 20px;
+    position: absolute;
+    top: calc(79% - 20px);
+    left: calc(50% - 50px);
+    animation: fly 5.5s linear infinite;
+  }
+  
+  @keyframes fly {
+    from { transform: rotate(0deg)  translate(-50px) rotate(0deg); }
+    to { transform: rotate(360deg) translate(-50px) rotate(-360deg); }
+  }
+
+@media (min-width: 769px) {
+
+    .not-found-container {
+        height: 95vh;
+      }
+
+    .not-found-container .row{
+        top: 0 !important;
+        width: 70%;
+        height: 400px !important;
+    }
+    .not-found-content{
+        height: 300px;
+        display: grid;
+        align-items: center;
+    }
+
+    .not-found-content button {
+        width: 300px;
+      }
+    
+}
+  

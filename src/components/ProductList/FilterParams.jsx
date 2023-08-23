@@ -20,13 +20,14 @@ const  FilterParams = ({ onFilter, lower, higher }) => {
   }, [lower.price]);
 
   const handleNameChange = (e) => {
+    console.log(e)
     setNameFilter(e.target.value);
-    onFilter({ name: e.target.value, price: priceFilter >= lower.price ? priceFilter : '', stars: starFilter});
+    onFilter({ name: e.target.value, price: priceFilter === lower.price ? '' : priceFilter, stars: starFilter > 0 ? starFilter : ''});
   };
 
   const handlePriceChange = values => {
     const value = values[0] > lower.price ? values[0] : '';
-    const filter = { name: nameFilter, price: value, stars: starFilter};
+    const filter = { name: nameFilter, price: value, stars: starFilter > 0 ? starFilter : ''};
     setPriceFilter(value > 0 ? value : lower.price);
     if(priceFilter > 0) setPriceFiltered(value)
     onFilter(filter);
@@ -34,7 +35,7 @@ const  FilterParams = ({ onFilter, lower, higher }) => {
 
   const handleStarChange = value => {
     setStarFilter(value);
-    onFilter({ name: nameFilter, price: priceFilter > lower.price ? priceFilter : '', stars: value });
+    onFilter({ name: nameFilter, price: priceFilter === lower.price ? '' : priceFilter, stars: value > 0 ? value : '' });
   };
 
   const handleStarClick = selectedStars => {

@@ -17,52 +17,52 @@ const relatedProducts = () => {
           imageSrc: 'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/373/669/products/26ba47b56d6071509a7fa778b6aa4c082fa2493133afc1099aa7457578bbfcbd1-3db44a82b6eaa9ffd816498778275835-1024-1024.webp',
         },
         {
-            title: 'Card 1',
+            title: 'Card 3',
             text: 'This is the content of card 1.',
             imageSrc: 'https://cdn.shopify.com/s/files/1/0690/5662/6962/products/193620-1600-auto.webp?v=1677561869&width=600',
         },
         {
-        title: 'Card 2',
+        title: 'Card 4',
         text: 'This is the content of card 2.',
         imageSrc: 'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/373/669/products/26ba47b56d6071509a7fa778b6aa4c082fa2493133afc1099aa7457578bbfcbd1-3db44a82b6eaa9ffd816498778275835-1024-1024.webp',
         },
         {
-            title: 'Card 1',
+            title: 'Card 5',
             text: 'This is the content of card 1.',
             imageSrc: 'https://cdn.shopify.com/s/files/1/0690/5662/6962/products/193620-1600-auto.webp?v=1677561869&width=600',
         },
         {
-        title: 'Card 2',
+        title: 'Card 6',
         text: 'This is the content of card 2.',
         imageSrc: 'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/373/669/products/26ba47b56d6071509a7fa778b6aa4c082fa2493133afc1099aa7457578bbfcbd1-3db44a82b6eaa9ffd816498778275835-1024-1024.webp',
         },
         {
-            title: 'Card 1',
+            title: 'Card 7',
             text: 'This is the content of card 1.',
             imageSrc: 'https://cdn.shopify.com/s/files/1/0690/5662/6962/products/193620-1600-auto.webp?v=1677561869&width=600',
         },
         {
-        title: 'Card 2',
+        title: 'Card 8',
         text: 'This is the content of card 2.',
         imageSrc: 'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/373/669/products/26ba47b56d6071509a7fa778b6aa4c082fa2493133afc1099aa7457578bbfcbd1-3db44a82b6eaa9ffd816498778275835-1024-1024.webp',
         },
         {
-            title: 'Card 1',
+            title: 'Card 9',
             text: 'This is the content of card 1.',
             imageSrc: 'https://cdn.shopify.com/s/files/1/0690/5662/6962/products/193620-1600-auto.webp?v=1677561869&width=600',
         },
         {
-        title: 'Card 2',
+        title: 'Card 11',
         text: 'This is the content of card 2.',
         imageSrc: 'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/373/669/products/26ba47b56d6071509a7fa778b6aa4c082fa2493133afc1099aa7457578bbfcbd1-3db44a82b6eaa9ffd816498778275835-1024-1024.webp',
         },
         {
-            title: 'Card 1',
+            title: 'Card 12',
             text: 'This is the content of card 1.',
             imageSrc: 'https://cdn.shopify.com/s/files/1/0690/5662/6962/products/193620-1600-auto.webp?v=1677561869&width=600',
         },
         {
-        title: 'Card 2',
+        title: 'Card 13',
         text: 'This is the content of card 2.',
         imageSrc: 'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/373/669/products/26ba47b56d6071509a7fa778b6aa4c082fa2493133afc1099aa7457578bbfcbd1-3db44a82b6eaa9ffd816498778275835-1024-1024.webp',
         },
@@ -74,13 +74,15 @@ const relatedProducts = () => {
     for (let i = 0; i < cardData.length; i += 4) {
         groupedCards.push(cardData.slice(i, i + 4));
     }
-    
 
+    const isMobile = window.innerWidth <= 400;
+  
   return (
     <>
-    <div className='text-center mt-5'><h3>Productos Relacionados</h3></div>
-     <Carousel className='m-5'  prevIcon={<BsArrowLeftCircleFill />} // Usar el ícono de flecha izquierda
-      nextIcon={<BsFillArrowRightCircleFill />} // Usar el ícono de flecha derecha
+    <div className='text-center mt-5 mobile-carousel'><h3>Productos Relacionados</h3></div>
+    {!isMobile ? (
+      <Carousel className='m-5'  prevIcon={<BsArrowLeftCircleFill />} 
+      nextIcon={<BsFillArrowRightCircleFill />} 
       >
       {groupedCards.map((group, groupIndex) => (
         <Carousel.Item key={groupIndex}>
@@ -102,6 +104,25 @@ const relatedProducts = () => {
         </Carousel.Item>
       ))}
     </Carousel>
+    ):(
+      <Carousel className='m-5' >
+        {cardData.map((card, cardIndex) => (
+          <Carousel.Item key={cardIndex}>
+          <Col key={cardIndex} sm={3}>
+            <Card className='text-center'>
+              <Card.Img variant="top" src={card.imageSrc} />
+              <Card.Body>
+                <Card.Title>{card.title}</Card.Title>
+                <Card.Text>
+                  {card.text}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          </Carousel.Item>
+        ))}
+    </Carousel>
+    )}
     </>
   );
 };

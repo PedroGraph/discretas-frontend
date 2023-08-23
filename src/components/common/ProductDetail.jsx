@@ -6,6 +6,7 @@ import Currency from './CurrencyFormater';
 import InfoUser from './FormModal'
 import Rating from './ProductDetails/Rating'
 import ProductImages from './ProductDetails/ProductImage'
+import Share from './ShareProduct';
 import "../css/style_products.css"
 
 const ProductDetail = ({product}) => {
@@ -65,7 +66,7 @@ const ProductDetail = ({product}) => {
 
   return (
     <>
-      <Row className='p-3 product-details-columns' >
+      <Row className='p-3 product-details-columns'>
         <ProductImages image={image} />
         <Col md={4} >
           <div className='purchase-info'>
@@ -103,6 +104,7 @@ const ProductDetail = ({product}) => {
                 >
                   +
                 </Button>
+                <Share/>
               </div>
             </Form.Group>
               {modalPayment && <InfoUser product={productPurchased}/>}

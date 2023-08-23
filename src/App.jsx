@@ -7,6 +7,7 @@ import Producto  from "./pages/Sections/Producto.jsx";
 import Store  from "./pages/Sections/Store.jsx";
 import Navbar from "./components/common/Navbar.jsx";
 import Footer from "./components/common/Footer.jsx";
+import PageNotFound from './pageNotFound/PageNotFound.jsx';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/Lenceria" element={<Lubricantes />} />
           <Route path="/products/:productId" element={<Producto />} />
           <Route path="/store" element={<Store />} />
-          <Route path="*" element={<h1 className="text-center" style={{minHeight: "900px"}}>Here will be a page not found. Come back soon.</h1>} />
+          <Route path="*" element={<PageNotFound/>} />
         </Routes>
       <Footer/>
     </BrowserRouter>

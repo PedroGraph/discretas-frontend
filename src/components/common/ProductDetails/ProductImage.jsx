@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Carousel, Card } from 'react-bootstrap';
+import { BsArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs';
 import '../../css/style_products.css'
 
 const ProductImage = ({image}) => {
@@ -46,18 +47,36 @@ const ProductImage = ({image}) => {
     return(
     <>
         <div className='col'>
-            <div className='image-selected-section'>
-            {image.map((images, index) => (
-                <Row
-                key={index}
-                className={selectedImage === images ? 'm-1 image-bordered image-section' : 'm-1 image-section'}
-                onClick={() => handleImageClick(images)}
-                style={{minWidth: "80px"}}
-                >
-                <img src={images} alt={`Image ${index}`} style={{minWidth: "80px"}}/>
-                </Row>
-            ))}
-            </div>
+            {!isMobile ? (
+                <div className='image-selected-section'>
+                {image.map((images, index) => (
+                    <Row
+                    key={index}
+                    className={selectedImage === images ? 'm-1 image-bordered image-section' : 'm-1 image-section'}
+                    onClick={() => handleImageClick(images)}
+                    style={{minWidth: "80px"}}
+                    >
+                    <img src={images} alt={`Image ${index}`} style={{minWidth: "80px"}}/>
+                    </Row>
+                ))}
+                </div>
+                ):(
+                <Carousel className='image-selected-section'>
+                {image.map((images, index) => (
+                    <Carousel.Item key={index}>
+                    <Row onClick={() => handleImageClick(images)}>
+                        <Col key={index} sm={3}>
+                        <Card className='text-center'>
+                            <Card.Img variant="top" src={images} />
+                        </Card>
+                        </Col>
+                    </Row>
+                </Carousel.Item>
+                ))}
+                </Carousel>
+                )
+            }
+          
         </div>
         <div md={6} 
             className="image-container col"

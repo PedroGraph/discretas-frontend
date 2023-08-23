@@ -31,7 +31,7 @@ const UserInfo = ({product}) => {
 
   
   return (
-    <Modal show={modalPayment} onHide={handleCloseModal} centered animation={true}>
+    <Modal show={modalPayment} onHide={handleCloseModal} centered animation={true} style={{'left': "0%"}}>
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
         {isLoadingForm ? (

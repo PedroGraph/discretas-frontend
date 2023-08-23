@@ -99,11 +99,12 @@ export const ShopProvider = ({ children }) => {
   const handleFilter = ({ name, price, stars }) => {
     console.log(name, price, stars);
     const filteredProducts = filters.filter((product) => {
+    // console.log(product.stars)
       return (
         (name === '' ||
           product.name.toLowerCase().includes(name.toLowerCase())) &&
         (price === '' || product.price <= parseInt(price)) &&
-        (stars === 0 || product.stars === stars)
+        (stars === '' || product.stars == stars)
       );
     });
     setProducts(filteredProducts);
@@ -121,7 +122,7 @@ export const ShopProvider = ({ children }) => {
           setTimeout(() => {
             setModalPayment(false);
             setIsCompleteForm(false);
-            window.open(`https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`, '_blank');
+            window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`, '_blank');
             localStorage.clear();
           }, 1000);
       }, 1000);

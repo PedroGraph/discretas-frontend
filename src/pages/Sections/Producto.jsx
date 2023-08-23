@@ -16,9 +16,8 @@ const Producto = () => {
   }, [product]);
 
   return (
-    <div style={{ backgroundColor: "#f7f7f7" }}>
-      
-      <div style={{ minHeight: "600px" }}>
+    <div className='container-detail' style={{ backgroundColor: "#f7f7f7" }}>
+      <div style={{ }}>
         {!product ? (
           <div className="loader"></div>
         ) : (

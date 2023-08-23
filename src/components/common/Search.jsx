@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, FormControl, ListGroup } from 'react-bootstrap';
+import { Form, FormControl, ListGroup, Spinner } from 'react-bootstrap';
 import useProductContext from '../hooks/useProductContext';
 import search from '../../../image/buscar.svg'
 import axios from 'axios';
@@ -10,8 +10,9 @@ export const SearchBar = () => {
   const { products } = useProductContext();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [cities, setCities] = useState(['Condones', 'Lubricantes']);
   const listGroupRef = useRef(null);
+
+  const searching = null;
 
 
   const handleInputChange = (e) => {
@@ -20,8 +21,8 @@ export const SearchBar = () => {
 
     const results = products.filter(item =>
       item.name.toLowerCase().includes(term.toLowerCase())
-    ).slice(0, 3); // Limitamos los resultados a 5 opciones
-
+    ).slice(0, 3); 
+    
     setSearchResults(results);
   };
 
@@ -32,7 +33,7 @@ export const SearchBar = () => {
 
   const handleOutsideClick = (e) => {
     if (listGroupRef.current && !listGroupRef.current.contains(e.target)) {
-      setSearchResults([]); // Ocultar el ListGroup cuando se hace clic fuera de él
+      setSearchResults([]); 
     }
   };
 
@@ -58,18 +59,26 @@ export const SearchBar = () => {
           className='input-with-image text-search'
         />
       </div>
-
-      <ListGroup ref={listGroupRef} className='list-group-container'>
-        {searchResults.map((item, index) => (
-          <ListGroup.Item key={index} onClick={() => handleOptionClick(item.name)} className='item-group-container'>
+        <ListGroup ref={listGroupRef} className='list-group-container'>
+        {
+        searchResults.length > 0  ? (
+            searchResults.map((item, index) => (
+              <ListGroup.Item key={index} onClick={() => handleOptionClick(item.name)} className='item-group-container'>
+                <div className='d-flex justify-content-center'>
+                  <div><img src={item.image[0]} alt="" style={{maxWidth: "65px", maxHeight: "65px"}}/></div>
+                  <div className='p-3'><strong>{item.name}</strong></div>
+                  <div className='p-3'><span>$<Currency amount={item.price}/></span></div>
+                </div>
+              </ListGroup.Item>
+            ))
+        ): searchResults.length === 0 && searchTerm && (
+          <ListGroup.Item  className='item-group-container'>
             <div className='d-flex justify-content-center'>
-              <div><img src={item.image[0]} alt="" style={{maxWidth: "65px", maxHeight: "65px"}}/></div>
-              <div className='p-3'><strong>{item.name}</strong></div>
-              <div className='p-3'><span>$<Currency amount={item.price}/></span></div>
+              <div className='p-3'><strong>No encontramos un producto con ese nombre :(</strong></div>
             </div>
           </ListGroup.Item>
-        ))}
-      </ListGroup>
+        )}
+        </ListGroup>
     </div>
   );
 };

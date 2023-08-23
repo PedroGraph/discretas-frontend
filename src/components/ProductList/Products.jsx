@@ -35,9 +35,12 @@ const Products = () => {
         <div
           className='p-5 product-list'
         >
-          <div className='d-flex align-items-center mt-2 me-5 product-list-filter' style={{ justifyContent: 'flex-end' }}>
+          <div 
+            className='d-flex align-items-center mt-2 me-5 product-list-filter' 
+            style={{ justifyContent: 'flex-end' }}
+            >
             <div className='button-filter'>
-              <Button onClick={handleShow}>
+              <Button onClick={handleShow}  disabled={!highestPriceProduct && !lowestPriceProduct ? 'disabled' : ''}>
                 <img src={Filter} alt="" />
               </Button>
             </div>
@@ -59,7 +62,13 @@ const Products = () => {
               </Modal>
             </div>
             <span className='mr-2 order-by'>Ordenar por: </span>
-            <select className='form-control' style={{'display': 'flex', width: '10em', marginLeft: '1em'}} value={sortType} onChange={(e) => setSortType(e.target.value)}>
+            <select 
+              className='form-control' 
+              style={{'display': 'flex', width: '10em', marginLeft: '1em'}} 
+              value={sortType} 
+              onChange={(e) => setSortType(e.target.value)}
+              disabled={!highestPriceProduct && !lowestPriceProduct ? 'disabled' : ''}
+              >
               <option value='asc'>Nombre A-Z</option>
               <option value='desc'>Nombre Z-A</option>
               <option value='priceAsc'>Menor Precio</option>
@@ -69,8 +78,8 @@ const Products = () => {
             </select>
           </div>
           {
-            !products ? (
-              <Spinner animation='border' size='sm' />
+            !highestPriceProduct && !lowestPriceProduct ? (
+              <Spinner animation='border' size='sm' style={{marginTop: "15em", marginLeft: "12em", width: '4rem', height: '4rem', position: "absolute", top: "0%", left: "40%"}}/>
             ):(
               <ProductList products={products} />
             )
