@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import { Row, Col, Carousel, Card } from 'react-bootstrap';
-import { BsArrowLeftCircleFill, BsFillArrowRightCircleFill } from 'react-icons/bs';
 import '../../css/style_products.css'
 
 const ProductImage = ({image}) => {
@@ -24,16 +23,26 @@ const ProductImage = ({image}) => {
         const rect = container.getBoundingClientRect();
         const offsetX = e.clientX - rect.left;
         const offsetY = e.clientY - rect.top;
-    
-        const scaleRatio = 1.8; 
-    
-        const translateX = offsetX * (scaleRatio - 1);
-        const translateY = offsetY * (scaleRatio - 1);
-    
+      
+        const scaleRatio = 2.1;
+      
+        // Calcular el factor de escala máximo permitido para evitar salir del div
+        const maxScaleX = container.clientWidth / (container.clientWidth * scaleRatio);
+        const maxScaleY = container.clientHeight / (container.clientHeight * scaleRatio);
+      
+        // Asegurarse de que no se exceda el factor de escala máximo permitido
+        const actualScaleX = Math.max(scaleRatio, maxScaleX);
+        const actualScaleY = Math.max(scaleRatio, maxScaleY);
+      
+        // Calcular la traslación en función del factor de escala actual
+        const translateX = offsetX * (actualScaleX - 1);
+        const translateY = offsetY * (actualScaleY - 1);
+      
         setZoomStyle({
-          transform: `scale(${scaleRatio}) translate(${-translateX}px, ${-translateY}px)`,
+          transform: `scale(${actualScaleX}, ${actualScaleY}) translate(${-translateX}px, ${-translateY}px)`,
         });
-    };
+      };
+      
 
     const handleMouseLeave = () => {
         setZoomStyle({
@@ -46,7 +55,7 @@ const ProductImage = ({image}) => {
  
     return(
     <>
-        <div className='col'>
+        <div className='col-md-7 d-flex mt-5'>
             {!isMobile ? (
                 <div className='image-selected-section'>
                 {image.map((images, index) => (
@@ -76,21 +85,21 @@ const ProductImage = ({image}) => {
                 </Carousel>
                 )
             }
-          
+            <div  
+                className="image-container col"
+                onMouseMove={!isMobile ? handleMouseMove : ''}
+                onMouseLeave={handleMouseLeave}
+                >
+                    {selectedImage && (
+                    <div className="selected-image">
+                        <img src={selectedImage}
+                        className="zoom-image"
+                        style={zoomStyle} />
+                    </div>
+                    )}
+            </div>
         </div>
-        <div md={6} 
-            className="image-container col"
-            onMouseMove={!isMobile ? handleMouseMove : ''}
-            onMouseLeave={handleMouseLeave}
-            >
-                {selectedImage && (
-                <div className="selected-image">
-                    <img src={selectedImage}
-                    className="zoom-image"
-                    style={zoomStyle} />
-                </div>
-                )}
-        </div>
+        
     </>
     )
 

@@ -78,8 +78,8 @@ const relatedProducts = () => {
     const isMobile = window.innerWidth <= 400;
   
   return (
-    <>
-    <div className='text-center mt-5 mobile-carousel'><h3>Productos Relacionados</h3></div>
+    <div className='d-grid justify-content-center'>
+    <div className='text-center mt-5 mobile-carousel 2'><h3>Productos Relacionados</h3></div>
     {!isMobile ? (
       <Carousel className='m-5'  prevIcon={<BsArrowLeftCircleFill />} 
       nextIcon={<BsFillArrowRightCircleFill />} 
@@ -123,7 +123,7 @@ const relatedProducts = () => {
         ))}
     </Carousel>
     )}
-    </>
+    </div>
   );
 };
 

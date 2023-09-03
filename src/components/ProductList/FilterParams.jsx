@@ -56,7 +56,7 @@ const  FilterParams = ({ onFilter, lower, higher }) => {
           type="text"
           value={nameFilter}
           onChange={handleNameChange}
-          style={{width: "100%", borderRadius: "5px"}}
+          style={{width: "100%", borderRadius: "5px", height: "25px"}}
         />
       </div>
       <div className="number-control mt-2">

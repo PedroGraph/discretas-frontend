@@ -1,0 +1,13 @@
+.users-modal{
+    top: 0;
+    left:0; 
+    max-width: 100% !important;
+}
+
+.users-modal > div {
+    justify-content: center;
+}
+
+.users-modal > div > div{
+    width: 50%
+}

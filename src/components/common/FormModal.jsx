@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
- import useProductContext from '../hooks/useProductContext';
-import { Modal, Button, Form, Row, Col, Spinner } from 'react-bootstrap';
+import React from 'react';
+import useProductContext from '../hooks/useProductContext';
+import { Modal, Form, Row, Col, Spinner } from 'react-bootstrap';
 import '../css/style_products.css';
-import Payment from './Payment'
+import Payment from './Payment';
+import Auth from '../User/Auth';
 import store from '../../../image/store.png';
 
 const UserInfo = ({product}) => {
@@ -12,6 +13,7 @@ const UserInfo = ({product}) => {
     isLoadingForm, 
     modalPayment, setModalPayment,
     formData, setFormData,
+    userLogged,
     canSubmit
   } = useProductContext();
 
@@ -47,7 +49,7 @@ const UserInfo = ({product}) => {
         ) : (
           <div className='d-flex modal-payment'>
             <Col md={6} className='me-5 form-info'>
-              <Form>
+              <div>
                 <Row>
                   <Col>
                     <Form.Group>
@@ -58,7 +60,8 @@ const UserInfo = ({product}) => {
                         value={formData.nombre}
                         onChange={handleChange}
                         placeholder="Nombre(s)"
-                        style={{border: !formData.nombre ? '1px solid red' : ''}}
+                        style={{border: !formData.nombre && userLogged.length > 0 ? '1px solid red' : ''}}
+                        disabled={userLogged.length === 0 ? 'disabled' : ''}
                         required
                       />
                     </Form.Group>
@@ -72,7 +75,8 @@ const UserInfo = ({product}) => {
                         value={formData.apellido}
                         onChange={handleChange}
                         placeholder="Apellido(s)"
-                        style={{border: !formData.apellido ? '1px solid red' : ''}}
+                        style={{border: !formData.apellido && userLogged.length > 0 ? '1px solid red' : ''}}
+                        disabled={userLogged.length === 0 ? 'disabled' : ''}
                         required
                       />
                     </Form.Group>
@@ -88,7 +92,8 @@ const UserInfo = ({product}) => {
                           value={formData.cedula}
                           onChange={handleChange}
                           placeholder="Cedula"
-                          style={{border: !formData.cedula ? '1px solid red' : ''}}
+                          style={{border: !formData.cedula && userLogged.length > 0 ? '1px solid red' : ''}}
+                          disabled={userLogged.length === 0 ? 'disabled' : ''}
                           required
                         />
                       </Form.Group>
@@ -102,7 +107,8 @@ const UserInfo = ({product}) => {
                           value={formData.telefono}
                           onChange={handleChange}
                           placeholder="Telefono"
-                          style={{border: !formData.telefono ? '1px solid red' : ''}}
+                          style={{border: !formData.telefono&& userLogged.length > 0  ? '1px solid red' : ''}}
+                          disabled={userLogged.length === 0 ? 'disabled' : ''}
                           required
                         />
                       </Form.Group>
@@ -116,16 +122,27 @@ const UserInfo = ({product}) => {
                       placeholder="Correo electrónico"
                       value={formData.correo}
                       onChange={handleChange}
-                      style={{border: !formData.correo ? '1px solid red' : ''}}
+                      style={{border: !formData.correo && userLogged.length > 0 ? '1px solid red' : ''}}
+                      disabled={userLogged.length === 0 ? 'disabled' : ''}
                       required
                     />
                   </Form.Group>
-                  {!canSubmit && <h6 className='text-danger text-center mt-2'>Todos los campos son obligatorios</h6>}
-              </Form>
+                  {!canSubmit && userLogged.length > 0 && <h6 className='text-danger text-center mt-2'>Todos los campos son obligatorios</h6>}
+                  {
+                    userLogged.length === 0 && (
+                      <>
+                        <div className='text-center mt-3'>
+                          Inicia sesión para realizar una compra :)
+                        </div>
+                        <div className='d-flex justify-content-center mt-3'>
+                          <Auth form={true}/>
+                        </div>
+                      </>
+                    )
+                  }
+              </div>
             </Col>
-            <div className='mt-5'>
               <Payment orderItems={productPurchased} userInfomation={formData}/>
-            </div>
           </div>
           
         )}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Row, Col, Button, Dropdown, Spinner } from 'react-bootstrap';
+import React from 'react';
+import { Row, Button, Dropdown, Spinner } from 'react-bootstrap';
 import useProductContext from '../hooks/useProductContext';
 import paypal from '../../../image/paypal.png';
 import nequi from '../../../image/nequi.png';

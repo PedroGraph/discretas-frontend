@@ -28,7 +28,7 @@ export const SearchBar = () => {
 
   const handleOptionClick = (option) => {
     const productId = products.find(product => product.name === option)._id
-    window.location.href = '/products/' + productId;
+    window.location.href = '/lubricantes/' + productId;
   };
 
   const handleOutsideClick = (e) => {

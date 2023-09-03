@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import useProductContext from '../hooks/useProductContext';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import logo from "/assets/logo.svg"
 import { FaFacebook, FaTiktok } from 'react-icons/fa';
 import { BsInstagram } from 'react-icons/bs';
+import { useLocation } from 'react-router-dom';
+
 
 const Footer = () => {
+
+  const { hideFooter, isMobile } = useProductContext();
+ 
+  useEffect(() => {
+
+  },[hideFooter, isMobile]);
+
 
     const style = {
         height: "5em",
     }
 
   return (
-    <footer className=" text-white py-5" style={{backgroundColor: "#000"}}>
+    <footer className={hideFooter && isMobile <= 1364 ? 'd-none' : 'text-white py-5'} style={{backgroundColor: "#000"}}>
       <Container>
         <Row>
           <Col >
             {/* Logo de la empresa */}
             <img style={style} src={logo} alt="Logo de la empresa" />
-            <Col className="py-3" style={{marginLeft: "1em"}}>
+            <Col className="py-3 d-none" style={{marginLeft: "1em"}}>
                 <a href="https://www.facebook.com/profile.php?id=100092280625219" target="_blank"  style={{marginRight: "1em"}}><FaFacebook size={30} color="white" /></a>
                 <a href="https://www.instagram.com/discretaseduccionbga" target="_blank"  style={{marginRight: "1em", textDecoration: "none"}}> <BsInstagram  size={30} color="white" /> </a>
                 <a href="https://www.tiktok.com/@discretaseduccionbga" target="_blank" > <FaTiktok size={30} color="white" /></a>

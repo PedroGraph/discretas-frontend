@@ -1,0 +1,145 @@
+html, body{
+    height:100%;
+}
+
+.login{
+    background-color: #000;
+    height: 900px;
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    padding: 10px;
+}
+
+.logo-login{
+    display: flex;
+    align-items: center;
+}
+
+.login-form{
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login-button{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.login-form-section{
+    display: flex;
+    background-color: #eceaea;
+    width: 50%;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+}
+
+
+.form-group > input{
+    border-radius: 10px;
+}
+
+.products {
+    display:flex;
+    width: 100px;
+    position: relative;
+    animation: fly 5.5s linear infinite;
+    margin-bottom: 0.5em;
+}
+
+.logo-gif{
+    display: none;
+}
+  
+@keyframes fly {
+    0%, 100% {
+      left: 0%;
+    }
+    50% {
+      left: calc(85% - 50px);
+    }
+}
+
+@media (min-width: 340px) and (max-width: 1365px) {
+
+    .login{
+        display: grid;
+        padding: 0;
+        align-items: start;
+    }
+
+    .logo-login{
+        display: none
+    }
+
+    .login-form-section{
+        width: 100%;
+        background-color: #000000;
+        padding-top: 0 !important;
+    }
+
+    .login-button > div > button{
+        font-size: 12px;
+        width: 17em;
+    }
+
+    .login-button > div:first-child > button{
+        background-color: aliceblue !important;
+        color: black;
+    }
+
+     .login-button > div:last-child > button{
+        background-color: aliceblue !important;
+        color: black;
+    }
+
+    /* .navbar-container{
+        display:none;
+    } 
+ 
+    footer{
+        display: none;
+    } */
+
+    .login-form{
+        margin-bottom: 2em;
+        width: 90%;
+        justify-content: unset;
+    }
+
+    .products{
+        display:none
+    }
+
+    .login-form > div > img{
+        color: white
+    }
+
+    @keyframes fly {
+        0%, 100% {
+          left: 0%;
+        }
+        50% {
+          left: calc(80% - 50px);
+        }
+    }
+
+    .logo-gif{
+        display: contents;
+        margin-bottom: 50em;
+    }
+
+    .logo-gif > img{
+        width: 100% !important;
+    }
+    
+}

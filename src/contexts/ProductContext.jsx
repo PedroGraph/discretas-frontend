@@ -1,9 +1,13 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import firebaseConfig from '../../firebase';
 
 const ShoppingProvider = createContext({});
 
 export const ShopProvider = ({ children }) => {
+
+  //Login User
+  const [userLogged, setUserLogged] = useState([]);
 
   const [products, setProducts] = useState([]); //Get all products
   const [filters, setFilters] = useState([]); //Filter al products in products list
@@ -12,6 +16,7 @@ export const ShopProvider = ({ children }) => {
   const [highestPriceProduct, setHighestPriceProduct] = useState(null); //Set default highest price in products list
   const [productDetail, setProductDetail] = useState(null); //Set selected product detail
   const [productPurchased, setProductPurchased] = useState(null); //Set default product purchase in product details
+  const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('store')) || []); //Set default product purchase in product details
   
   const [isLoading, setIsLoading] = useState(false); //Spinner for loading
   const [isComplete, setIsComplete] = useState(false); //Verify if product purchase is complete
@@ -42,12 +47,45 @@ export const ShopProvider = ({ children }) => {
   //Payment Options
   const [selectedPayment, setSelectedPayment] = useState('Metodo de Pago');
 
+  const [hideFooter, setHideFooter] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const [imageModal, setImageModal] = useState('');
+
+  const openImageModal = (image) => {
+    console.log(image);
+    setImageModal(image);
+  };
+
+  const closeImageModal = () => {
+    setImageModal(false);
+  };
+  
+
+  useEffect(() => {
+    
+    const loginRouter = ['/login', '/register'];
+    setIsMobile(window.innerWidth);
+    loginRouter.map(router => {
+      if(router === window.location.pathname) setHideFooter(true);
+    });
+
+  },[hideFooter, isMobile]);
+
   const canSubmit = [...Object.values(formData)].every(Boolean) ;
 
   useEffect(() => {
+    firebaseConfig.auth().onAuthStateChanged((user) =>{
+      if(user) setUserLogged(user.uid)
+      // else setUserLogged([])
+    })
+  },[userLogged]);
+
+  useEffect(() => {
      axios
-      .get(`https://discretas-backend.onrender.com/products/`)
+      .get(`${__BACKEND_URL__}products/`)
       .then((response) => {
+
         setProducts(response.data);
         setFilters(response.data);
 
@@ -110,6 +148,32 @@ export const ShopProvider = ({ children }) => {
     setProducts(filteredProducts);
   };
 
+  const handleAddStore = (product) => {
+    let store = JSON.parse(localStorage.getItem('store')) || [] ;
+    const shoppingCart = !product._id ? productPurchased : product;
+    if(!store || store.length === 0) {
+      localStorage.setItem('store',JSON.stringify([shoppingCart]));
+      setOrderList([shoppingCart]);
+      return;
+    }else{
+      const isItemExist   = !store.find(item => item.size === shoppingCart.size && item.color == shoppingCart.color && item.name === shoppingCart.name) || !store.find(item =>item.name === shoppingCart.name) ? false : true ;
+      if(!isItemExist) {
+        localStorage.setItem('store',JSON.stringify([...store, shoppingCart]));
+        setOrderList([...store, shoppingCart]);
+      }
+    }
+
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsComplete(true);
+
+      setTimeout(() => {
+        setIsComplete(false);
+      }, 1000);
+    }, 1000);
+  }
+
   const handlePayment = (phoneNumber, encodedMessage) => {
     if(selectedPayment === 'Metodo de Pago') {
         setErrorSelectedPayment(true);
@@ -128,9 +192,28 @@ export const ShopProvider = ({ children }) => {
       }, 1000);
   };
   
+
+  const userDatabase = async (data) =>{
+
+    //If the user id exists in data object, it creates a new user otherwise login to the portal
+    const url = !data.uid ? `${__BACKEND_URL__}users/login` : `${__BACKEND_URL__}users/register`;
+
+    return await axios.post(url,data)
+    .then((response) =>{
+      return response;
+    })
+    .catch((err) =>{
+      console.log(err);
+    });
+
+  }
+
+
   return (
     <ShoppingProvider.Provider
       value={{
+        userLogged, setUserLogged,
+
         products, setProducts,
         filters, setFilters,
         sortType, setSortType,
@@ -155,8 +238,20 @@ export const ShopProvider = ({ children }) => {
         formData, setFormData,
         canSubmit,
 
-        handlePayment,
+        handlePayment, 
         selectedPayment, setSelectedPayment,
+
+        orderList, setOrderList,
+        handleAddStore,
+
+        userDatabase,
+
+        isMobile,
+        hideFooter,
+
+        imageModal,
+        closeImageModal,
+        openImageModal
 
       }}
     >

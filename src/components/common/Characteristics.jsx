@@ -45,7 +45,6 @@ const Characteristics = ({product}) => {
             className="form-select"
             onChange={(e) => handleColorSelection(e.target.value)}
             value={selectedColor}
-            style={{width: '50%'}}
           >
             {items.map((item, index) => (
               <option key={index} value={item.color}>
@@ -61,7 +60,6 @@ const Characteristics = ({product}) => {
                 className="form-select"
                 onChange={(e) => handleSizeSelection(e.target.value)}
                 value={selectedSize || 0}
-                style={{width: '50%'}}
                 setItems
               >
                 {items.map((item) => (

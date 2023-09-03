@@ -13,7 +13,7 @@ const Products = () => {
     sortType, setSortType,
     lowestPriceProduct,
     highestPriceProduct, 
-    handleFilter
+    handleFilter,
   } = useProductContext();
 
   const [menuOpen, setMenuOpen] = useState(false);

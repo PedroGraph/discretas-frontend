@@ -1,0 +1,51 @@
+.total-shopping-mobile{
+    display:none;
+}
+
+
+@media (min-width: 340px) and (max-width: 1365px) {
+
+
+    .total-shopping-mobile{
+        display: block;
+        width: 100%;
+        position: fixed;
+        right: 1em;
+        bottom: 5em;
+    }
+
+    .total-shopping-mobile > div:first-child > svg{
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        right: 0;
+        background-color: rgb(0, 0, 0);
+        fill: rgb(255, 255, 255);
+        border-radius: 50%;
+        padding: 0.5em;
+    }
+
+    .shopping-button-mobile > button{
+        display: block;
+        width: 70px;
+        position: absolute;
+        right: 5.5em;
+        text-align: center;
+        top: 1em;
+        padding: 0.5em 1em;
+        background-color: rgb(9, 172, 9);
+        color: white;
+        font-size: 12px;
+    }       
+
+    .total-shopping-mobile > div:last-child > span{
+        width: 25px;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: -0.7em;
+        background-color: brown;
+        border-radius: 50%;
+        color: white
+    }
+}

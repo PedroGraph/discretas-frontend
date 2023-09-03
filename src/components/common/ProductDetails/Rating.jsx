@@ -1,56 +1,50 @@
-import React, {useState} from "react";
-import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import React from "react";
+import { Modal } from 'react-bootstrap';
+import { RatingStates } from "../../hooks/Rating/RatingStates";
+import Auth from "../../User/Auth";
 import '../../css/style_products.css'
+import '../../css/rating.css'
 
 
-const Rating = ({stars}) =>{
+const Rating = ({product}) =>{
 
-    const [currentRating, setCurrentRating] = useState(Math.floor(1));
-    const [hasHalfStar, setHasHalfStar] = useState(stars - Math.floor(0) >= 0.25);
-
-    const handleStarClick = (selectedRating) => {
-        setCurrentRating(Math.floor(selectedRating));
-        setHasHalfStar(selectedRating - Math.floor(selectedRating) >= 0.25);
-    };
-
-
-    const generateRatingStars = (stars) => {
-        const rating = [];
-        for (let i = 0; i < 5; i++) {
-            if (i < stars) {
-            rating.push(
-                <FaStar
-                key={i}
-                onClick={() => handleStarClick(i + 1)}
-                style={{ cursor: 'pointer' }}
-                />
-            );
-            } else if (i === Math.floor(rating) && hasHalfStar) {
-            rating.push(
-                <FaStarHalfAlt
-                key={i}
-                onClick={() => handleStarClick(i + 0.5)}
-                style={{ cursor: 'pointer' }}
-                />
-            );
-            } else {
-            rating.push(
-                <FaRegStar
-                key={i}
-                onClick={() => handleStarClick(i + 1)}
-                style={{ cursor: 'pointer' }}
-                />
-            );
-            }
-        }
-
-        return rating;
-    };
+    const {
+        userStars, 
+        totalRating, 
+        totalStars, 
+        setRatingStars, 
+        generateRatingStars, 
+        loginModal, 
+        handleCloseLoginModal
+    } = RatingStates({productID:product});
 
     return(
         <>
-            <div className="rating">{generateRatingStars(currentRating)}</div>
-            <div style={{marginLeft: "5px"}} className='mb-3'>Calificaciones ({stars})</div>
+            {/* <div className="d-flex">
+                <div className="rating-user">{generateRatingStars(userStars)}</div>
+            </div>
+          */}
+            <div className="d-flex justify-content-center align-items-center">
+                <div style={{marginLeft: "5px"}} className='mb-3 pt-1 me-3'>Calificaciones ({totalRating})</div>
+                <div className="rating me-3" style={{marginTop: '-1rem'}}>
+                    {setRatingStars(totalStars)}
+                </div> <div className="">
+                    <span style={{fontSize: "12px", marginTop: '-0.3rem'}}>
+                        {userStars > 0 ? '✅ Has calificado este producto' : ''}
+                    </span>
+                </div>
+            </div>
+            {
+                 <Modal show={loginModal} onHide={handleCloseLoginModal} centered animation={true} className="users-modal">
+                    <Modal.Header closeButton></Modal.Header>
+                    <Modal.Body> 
+                        <div className="d-flex justify-content-center">
+                            <Auth form={true}/>
+                        </div>
+                    </Modal.Body>
+                 </Modal>
+            }
+            
         </>
     )
     
