@@ -6,4 +6,7 @@ env.config()
 export default defineConfig({
   define:{__BACKEND_URL__:`"${process.env.BACKEND_URL}"`},
   plugins: [react()],
+  build: {
+    chunkSizeWarningLimit: 1600,
+  }
 })

@@ -6,6 +6,7 @@ import firebaseConfig from '../../../firebase.js';
 import '../css/register.css'; 
 
 const Register = () => {
+  console.log()
   const {
     register,
     handleSubmit,
@@ -19,6 +20,10 @@ const Register = () => {
   useEffect(()=>{
     if(userLogged.length > 0) window.location.href="/";
   },[userLogged])
+
+  const verifyPassword = (e) =>{
+
+  }
 
   const onSubmit = async (data) => {
     setUserRegistered(false)
@@ -50,23 +55,23 @@ const Register = () => {
       <h1>Registrarse</h1>
       <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
-          <label htmlFor="name">Nombre</label>
           <input type="text" id="name" {...register('name', { required: true })} />
           {errors.name && <span className="error-message">El nombre es obligatorio</span>}
         </div>
         <div className="form-group">
-          <label htmlFor="last_name">Apellido</label>
           <input type="text" id="last_name" {...register('last_name', { required: true })} />
-          {errors.name && <span className="error-message">El nombre es obligatorio</span>}
+          {errors.last_name && <span className="error-message">El nombre es obligatorio</span>}
         </div>
         <div className="form-group">
-          <label htmlFor="email">Correo</label>
           <input type="email" id="email" {...register('email', { required: true })} />
-          {errors.name && <span className="error-message">El correo es obligatorio</span>}
+          {errors.email && <span className="error-message">El correo es obligatorio</span>}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password</label>
           <input type="password" id="password" {...register('password', { required: true })} />
+          {errors.password && <span className="error-message">La contraseña es obligatoria</span>}
+        </div>
+        <div className="form-group">
+          <input type="password" id="same_password" />
           {errors.name && <span className="error-message">La contraseña es obligatoria</span>}
         </div>
         {

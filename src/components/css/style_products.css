@@ -326,7 +326,7 @@
 }
 
 .modal-dialog {
-  max-width: 96%;
+  max-width: 95%;
 }
 
 .modal-content {
@@ -515,8 +515,29 @@
   font-size: 13px;
 }
 
+.price-rating > div:last-child > div:last-child {
+  margin-top: -0.8em;
+}
+
 /* ProductList.css */
 @media (min-width: 340px) and (max-width: 1365px) {
+
+  .image-bordered > div{
+    padding: 0.3em 3em !important;
+  }
+
+  .image-bordered > div:nth-child(3) > div {
+    padding: 0 !important;
+  }
+
+  .image-bordered > div:nth-child(3) > div > div {
+    
+    width: 100%;
+  }
+
+  .image-bordered > div:last-child > p {
+    margin: 0 !important;
+  }
 
   .quantity-section {
     display: contents;
@@ -528,8 +549,12 @@
 
   .price-rating > div:last-child{
     justify-content: unset !important;
+    flex-wrap: wrap;
   }
 
+  .price-rating > div:last-child > div:last-child > span{
+    margin-top: -1em;
+  }
 
   .quantity-section > div:last-child > button{
     margin-left: 0 !important;
@@ -781,14 +806,12 @@
 
   .modal-dialog{
     top: 10%;
+    width: 100% !important;
+    height: 200px;
   }
 
   .modal-payment{
     display: unset !important;
-  }
-
-  .modal-dialog{
-    width: 100% !important;
   }
 
   .form-info{

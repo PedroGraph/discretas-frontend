@@ -110,6 +110,14 @@ html, body{
         display: none;
     } */
 
+    .home-login{
+        display: inline !important;
+    }
+    .home-login > svg{
+        margin-top: 1em;
+    }
+
+
     .login-form{
         margin-bottom: 2em;
         width: 90%;

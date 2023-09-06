@@ -1,27 +1,41 @@
+.image-modal > .modal-dialog{
+  max-width: 50%;
+}
+  
+@media (min-width: 340px) and (max-width: 1365px) {
 
-  /* Add Animation */
-  .modal-content{
-    -webkit-animation-name: zoom;
-    -webkit-animation-duration: 0.6s;
-    animation-name: zoom;
-    animation-duration: 0.6s;
+  .image-modal > .modal-dialog{
+    max-width: 95%;
+
   }
+    
+
+}
+
   
-  @-webkit-keyframes zoom {
-    from {
-      -webkit-transform: scale(0);
-    }
-    to {
-      -webkit-transform: scale(1);
-    }
+/* Add Animation */
+.modal-content{
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {
+    -webkit-transform: scale(0);
   }
-  
-  @keyframes zoom {
-    from {
-      transform: scale(0);
-    }
-    to {
-      transform: scale(1);
-    }
+  to {
+    -webkit-transform: scale(1);
   }
-  
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+

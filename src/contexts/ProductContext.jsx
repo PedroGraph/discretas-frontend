@@ -37,11 +37,11 @@ export const ShopProvider = ({ children }) => {
 
   //User Information
   const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    telefono: '',
-    cedula: '',
-    correo: '',
+    name: '',
+    last_name: '',
+    phone: '',
+    email: '',
+    idt: ''
   });
 
   //Payment Options
@@ -60,6 +60,20 @@ export const ShopProvider = ({ children }) => {
   const closeImageModal = () => {
     setImageModal(false);
   };
+
+  const userInfo = async() => {
+
+    return await axios
+      .post(`${__BACKEND_URL__}users/userinfo`,{
+        userId : userLogged
+      })
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }
   
 
   useEffect(() => {
@@ -135,14 +149,12 @@ export const ShopProvider = ({ children }) => {
   }, [sortType]);
 
   const handleFilter = ({ name, price, stars }) => {
-    console.log(name, price, stars);
-    const filteredProducts = filters.filter((product) => {
-    // console.log(product.stars)
+    const filteredProducts = filters.filter((product, index) => {
       return (
         (name === '' ||
           product.name.toLowerCase().includes(name.toLowerCase())) &&
         (price === '' || product.price <= parseInt(price)) &&
-        (stars === '' || product.stars == stars)
+        (stars === '' || Math.ceil(parseInt(product.stars)) === stars)
       );
     });
     setProducts(filteredProducts);
@@ -251,7 +263,9 @@ export const ShopProvider = ({ children }) => {
 
         imageModal,
         closeImageModal,
-        openImageModal
+        openImageModal,
+
+        userInfo
 
       }}
     >

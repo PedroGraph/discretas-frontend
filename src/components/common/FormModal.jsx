@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import useProductContext from '../hooks/useProductContext';
 import { Modal, Form, Row, Col, Spinner } from 'react-bootstrap';
 import '../css/style_products.css';
@@ -14,10 +14,18 @@ const UserInfo = ({product}) => {
     modalPayment, setModalPayment,
     formData, setFormData,
     userLogged,
-    canSubmit
+    canSubmit, 
+    userInfo
   } = useProductContext();
 
   const productPurchased = Array.isArray(product) ? product : [product];
+
+  useEffect(() => {
+    userInfo().then((response) => {
+      response.idt = '';
+      setFormData(response)
+    })
+  },[])
 
   const handleCloseModal = () => {
     setModalPayment(false);
@@ -33,7 +41,7 @@ const UserInfo = ({product}) => {
 
   
   return (
-    <Modal show={modalPayment} onHide={handleCloseModal} centered animation={true} style={{'left': "0%"}}>
+    <Modal show={modalPayment} onHide={handleCloseModal} centered animation={true}>
       <Modal.Header closeButton></Modal.Header>
       <Modal.Body>
         {isLoadingForm ? (
@@ -56,11 +64,11 @@ const UserInfo = ({product}) => {
                       <Form.Control
                         type="text"
                         className='mt-2'
-                        name="nombre"
-                        value={formData.nombre}
+                        name="name"
+                        value={formData.name}
                         onChange={handleChange}
                         placeholder="Nombre(s)"
-                        style={{border: !formData.nombre && userLogged.length > 0 ? '1px solid red' : ''}}
+                        style={{border: !formData.name && userLogged.length > 0 ? '1px solid red' : ''}}
                         disabled={userLogged.length === 0 ? 'disabled' : ''}
                         required
                       />
@@ -71,11 +79,11 @@ const UserInfo = ({product}) => {
                       <Form.Control
                         type="text"
                         className='mt-2'
-                        name="apellido"
-                        value={formData.apellido}
+                        name="last_name"
+                        value={formData.last_name}
                         onChange={handleChange}
                         placeholder="Apellido(s)"
-                        style={{border: !formData.apellido && userLogged.length > 0 ? '1px solid red' : ''}}
+                        style={{border: !formData.last_name && userLogged.length > 0 ? '1px solid red' : ''}}
                         disabled={userLogged.length === 0 ? 'disabled' : ''}
                         required
                       />
@@ -88,11 +96,11 @@ const UserInfo = ({product}) => {
                         <Form.Control
                           type="text"
                           className='mt-2'
-                          name="cedula"
-                          value={formData.cedula}
+                          name="idt"
+                          value={formData.idt}
                           onChange={handleChange}
                           placeholder="Cedula"
-                          style={{border: !formData.cedula && userLogged.length > 0 ? '1px solid red' : ''}}
+                          style={{border: !formData.idt && userLogged.length > 0 ? '1px solid red' : ''}}
                           disabled={userLogged.length === 0 ? 'disabled' : ''}
                           required
                         />
@@ -103,11 +111,11 @@ const UserInfo = ({product}) => {
                         <Form.Control
                           type="tel"
                           className='mt-2'
-                          name="telefono"
-                          value={formData.telefono}
+                          name="phone"
+                          value={formData.phone}
                           onChange={handleChange}
                           placeholder="Telefono"
-                          style={{border: !formData.telefono&& userLogged.length > 0  ? '1px solid red' : ''}}
+                          style={{border: !formData.phone && userLogged.length > 0  ? '1px solid red' : ''}}
                           disabled={userLogged.length === 0 ? 'disabled' : ''}
                           required
                         />
@@ -118,11 +126,11 @@ const UserInfo = ({product}) => {
                     <Form.Control
                       type="email"
                       className='mt-2'
-                      name="correo"
+                      name="email"
                       placeholder="Correo electrónico"
-                      value={formData.correo}
+                      value={formData.email}
                       onChange={handleChange}
-                      style={{border: !formData.correo && userLogged.length > 0 ? '1px solid red' : ''}}
+                      style={{border: !formData.email && userLogged.length > 0 ? '1px solid red' : ''}}
                       disabled={userLogged.length === 0 ? 'disabled' : ''}
                       required
                     />

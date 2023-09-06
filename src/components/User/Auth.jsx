@@ -11,7 +11,7 @@ import dsGif from '../../../image/logo-login.gif'
 
 const Auth = ({form}) => {
 
-    console.log(form)
+    console.log(__BACKEND_URL__)
 
     const {
         register,
@@ -23,6 +23,8 @@ const Auth = ({form}) => {
     const [loginError, setLoginError] = useState('');
     const [registerSection, setRegisterSection] = useState(false);
     const [isRegistered, setIsRegistered] = useState('');
+    const [passwordMismatchError, setPasswordMismatchError] = useState(false);
+
 
     useEffect(() => {
         if (userLogged.length > 0)window.location.href="/";
@@ -76,9 +78,15 @@ const Auth = ({form}) => {
     }
 
     const onSubmitRegister = async (data) => {
-        setIsRegistered(false)
-        setIsLoading(true)
+
+        if(data.confirmed_password !== data.password) {
+            setPasswordMismatchError(true);
+            return;
+        }
+
         try {
+            setIsRegistered(false)
+            setIsLoading(true)
             await firebaseConfig.auth().createUserWithEmailAndPassword(data.email, data.password)
                 .then((response) => {
                     const userId = response.user.uid;
@@ -110,9 +118,19 @@ const Auth = ({form}) => {
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
                 {
                     !form && (
-                        <div className='logo-gif'>
-                            <img src={dsGif} alt="" />
+                        <div>
+                            <div className='home-login d-none' onClick={(e)=>{ window.location.href="/" }}>
+                                <svg viewBox="0 0 21 21" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+                                    <g fill="#fff" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(1 1)">
+                                        <path d="m.5 9.5 9-9 9 9"/><path d="m2.5 7.5v8c0 .5522847.44771525 1 1 1h3c.55228475 0 1-.4477153 1-1v-4c0-.5522847.44771525-1 1-1h2c.5522847 0 1 .4477153 1 1v4c0 .5522847.4477153 1 1 1h3c.5522847 0 1-.4477153 1-1v-8"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div className='logo-gif'>
+                                <img src={dsGif} alt="" />
+                            </div>
                         </div>
+                      
                     )
                 }
                 <div className="products">
@@ -154,8 +172,17 @@ const Auth = ({form}) => {
             </form>
         ) : (
             <form className="register-form" onSubmit={handleSubmit(onSubmitRegister)}>
-                <div className='logo-gif'>
-                    <img src={dsGif} alt="" />
+                {!form && (
+                    <div className='logo-gif'>
+                        <img src={dsGif} alt="" />
+                    </div>
+                )}
+                <div>
+                    <button type="submit" className='mb-2 p-0' onClick={()=>{setRegisterSection(false)}}>
+                        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+                            <path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z"/>
+                        </svg>
+                    </button> 
                 </div>
                 <div className="form-group">
                     <input type="text" placeholder="Nombre(s)" id="name" {...register('name', { required: true })} />
@@ -163,15 +190,23 @@ const Auth = ({form}) => {
                 </div>
                 <div className="form-group">
                     <input type="text" placeholder="Apellido(s)" id="last_name" {...register('last_name', { required: true })} />
-                    {errors.name && <span className="error-message">El apellido es obligatorio</span>}
+                    {errors.last_name && <span className="error-message">El apellido es obligatorio</span>}
                 </div>
                 <div className="form-group">
                     <input type="email" placeholder="Correo electrónico" id="email" {...register('email', { required: true })} />
-                    {errors.name && <span className="error-message">El correo es obligatorio</span>}
+                    {errors.email && <span className="error-message">El correo es obligatorio</span>}
+                </div>
+                <div className="form-group">
+                    <input type="phone" placeholder="Teléfono (opcional)" id="phone" {...register('phone', { required: false })} />
                 </div>
                 <div className="form-group">
                     <input type="password" placeholder='Contraseña' id="password" {...register('password', { required: true })} />
-                    {errors.name && <span className="error-message">La contraseña es obligatoria</span>}
+                    {errors.password && <span className="error-message">La contraseña es obligatoria</span>}
+                </div>
+                <div className="form-group">
+                    <input type="password" placeholder='Confirmar contraseña' id="confirmed_password" {...register('confirmed_password', { required: true })} />
+                    {errors.confirmed_password && <span className="error-message">Escribe la misma contraseña</span>}
+                    {passwordMismatchError && <span className="error-message">La contraseña debe ser la misma</span>}
                 </div>
                 <div className='d-flex justify-content-center'>
                     {
@@ -183,8 +218,8 @@ const Auth = ({form}) => {
                         <button type="submit" className='success'>✅</button>
                     ) : (
                         <>
-                          <button type="submit" className='bg-black me-2' onClick={()=>{setRegisterSection(false)}}>Inicar Sesión</button> 
-                          <button type="submit" >Registrarse</button>
+                          
+                          <button type="submit" style={{padding: "1em"}}>Registrarse</button>
                         </>
                     )}
                 </div>
