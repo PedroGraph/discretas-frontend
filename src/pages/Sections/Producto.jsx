@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductDetail from '../../components/common/ProductDetail';
-import RelatedProducts from '../../components/common/RelatedProducts';
 import useProductContext from '../../components/hooks/useProductContext';
 import './FailPageEarly.css'
 
@@ -14,14 +13,13 @@ const Producto = () => {
   }, [product]);
 
   return (
-    <div className='container-detail' style={{ backgroundColor: "#f7f7f7", minHeight: "900px" }}>
+    <div className='container-detail'>
       <div className=''>
         {!product ? (
-          <div className="loader mt-5"></div>
+          <div className="loader"></div>
         ) : (
           <>
             <ProductDetail product={product} />
-            <RelatedProducts />
           </>
         )}
       </div>

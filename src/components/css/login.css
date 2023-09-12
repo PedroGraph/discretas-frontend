@@ -18,6 +18,21 @@ html, body{
     align-items: center;
 }
 
+.logo-login > img:first-child{
+    width: 100%;
+    max-height: 160%;
+    overflow: hidden;
+    position: relative; 
+}
+
+.logo-login >svg{ 
+    position: absolute;
+    left: 0;
+    width: 30%;
+    margin-left: 10%;
+}
+
+
 .login-form{
     display: flex;
     width: 50%;
@@ -150,4 +165,20 @@ html, body{
         width: 100% !important;
     }
     
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+  
+
+.register-button{
+    background-color: #000 !important;
+}
+
+.register-button:hover{
+    background-color: #525252 !important;
 }

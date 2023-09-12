@@ -4,7 +4,7 @@ function CurrencyFormatter({ amount }) {
   const formattedAmount = amount.toLocaleString('es-ES', {
     style: 'currency',
     currency: 'COP', 
-    maximumFractionDigits: 2, 
+    maximumFractionDigits: 0, 
   });
 
   return <span>{formattedAmount.replace("COP", "")}</span>;

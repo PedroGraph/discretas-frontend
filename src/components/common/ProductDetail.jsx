@@ -20,7 +20,9 @@ const ProductDetail = ({product}) => {
       modalPayment, setModalPayment,
       productPurchased, setProductPurchased,
       handleAddStore,
-      imageModal
+      imageModal,
+      handleAddWishList,
+      isAddedToWishList
     } = useProductContext();
 
     
@@ -48,6 +50,11 @@ const ProductDetail = ({product}) => {
     setModalPayment(true);
   };
 
+  const handleAddProductToWishList = (event) =>{
+    event.preventDefault();
+    handleAddWishList(product)
+  }
+
   return (
     <>
       <div className='p-3 product-details-columns'>
@@ -57,7 +64,15 @@ const ProductDetail = ({product}) => {
         
         <div className='col-md-5'>
           <div className='purchase-info'>
-            <h3>{name}</h3>
+            <div className='d-flex '>
+              <h3>{name}</h3> 
+              <svg className={!isAddedToWishList(product._id) ? 'wishlist-details' : 'wishlist-details-activated'} onClick={(e) => {handleAddProductToWishList(e)}} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"/>
+              </svg> 
+              <span>
+                {!isAddedToWishList(product._id) ? 'Añadir a la lista de deseos' : 'Añadido a tu lista de deseos'}
+              </span>
+            </div>
             <p>{description}</p>
              <div className=' price-rating d-flex'>
               <div>

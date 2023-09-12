@@ -17,7 +17,8 @@ export const ShopProvider = ({ children }) => {
   const [productDetail, setProductDetail] = useState(null); //Set selected product detail
   const [productPurchased, setProductPurchased] = useState(null); //Set default product purchase in product details
   const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('store')) || []); //Set default product purchase in product details
-  
+  const [wishList, setWishList] = useState(JSON.parse(localStorage.getItem('wishList')) || [])
+
   const [isLoading, setIsLoading] = useState(false); //Spinner for loading
   const [isComplete, setIsComplete] = useState(false); //Verify if product purchase is complete
 
@@ -161,29 +162,61 @@ export const ShopProvider = ({ children }) => {
   };
 
   const handleAddStore = (product) => {
+
     let store = JSON.parse(localStorage.getItem('store')) || [] ;
     const shoppingCart = !product._id ? productPurchased : product;
-    if(!store || store.length === 0) {
-      localStorage.setItem('store',JSON.stringify([shoppingCart]));
-      setOrderList([shoppingCart]);
-      return;
-    }else{
-      const isItemExist   = !store.find(item => item.size === shoppingCart.size && item.color == shoppingCart.color && item.name === shoppingCart.name) || !store.find(item =>item.name === shoppingCart.name) ? false : true ;
-      if(!isItemExist) {
-        localStorage.setItem('store',JSON.stringify([...store, shoppingCart]));
-        setOrderList([...store, shoppingCart]);
-      }
-    }
+    let newCart = JSON.parse(localStorage.getItem('store'));
 
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsComplete(true);
+    if(store.length === 0) {
+
+      newCart = [shoppingCart];
+
+    }else{
+
+      const isItemExist = store.find(item => item.size === shoppingCart.size && item.color == shoppingCart.color && item.name === shoppingCart.name) || store.find(item =>item.name === shoppingCart.name);
+      if(!isItemExist) newCart = [...store, shoppingCart];
+
+      setIsLoading(true);
 
       setTimeout(() => {
-        setIsComplete(false);
+
+        setIsLoading(false);
+        setIsComplete(true);
+
+        setTimeout(() => {
+          setIsComplete(false);
+        }, 1000);
       }, 1000);
-    }, 1000);
+    }
+
+    localStorage.setItem('store',JSON.stringify(newCart));
+    setOrderList(newCart);
+  }
+
+  const handleAddWishList = (product) => {
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [] ;
+    const list = !product._id ? productPurchased : product;
+    let newWishList = null;
+
+    if(!wishlist || wishlist.length === 0) {
+      newWishList = [list];
+    }else{
+      const isItemExist = wishlist.find(item => item._id === list._id);
+      if(!isItemExist) {
+        newWishList = [...wishlist, list];
+      }else{
+        const index = wishlist.findIndex(item => item._id === list._id);
+        wishlist.splice(index, 1);
+        newWishList = wishlist;
+      }
+    }
+    localStorage.setItem('wishlist',JSON.stringify(newWishList));
+    setWishList(newWishList);
+  }
+
+  const isAddedToWishList = (productId) =>{
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [] ;
+    return wishlist.find(item => item._id === productId)
   }
 
   const handlePayment = (phoneNumber, encodedMessage) => {
@@ -254,7 +287,10 @@ export const ShopProvider = ({ children }) => {
         selectedPayment, setSelectedPayment,
 
         orderList, setOrderList,
+        wishList, setWishList,
         handleAddStore,
+        handleAddWishList,
+        isAddedToWishList,
 
         userDatabase,
 

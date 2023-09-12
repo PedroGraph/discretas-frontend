@@ -8,7 +8,6 @@ import Store  from "./pages/Sections/Store.jsx";
 import Navbar from "./components/common/Navbar.jsx";
 import Footer from "./components/common/Footer.jsx";
 import PageNotFound from './pageNotFound/PageNotFound.jsx';
-import Register from './components/User/Register.jsx';
 import Login from './components/User/Login.jsx';
 
 function App() {
@@ -21,7 +20,7 @@ function App() {
           <Route path="/Lenceria" element={<Lubricantes />} />
           <Route path="/lubricantes/:productId" element={<Producto />} />
           <Route path="/store" element={<Store />} />
-          <Route path="/register" element={<Register/>} />
+          <Route path="/wishlist" element={<Store />} />
           <Route path="/login" element={<Login/>} />
           <Route path="*" element={<PageNotFound/>} />
         </Routes>

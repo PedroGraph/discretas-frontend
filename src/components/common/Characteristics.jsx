@@ -60,7 +60,6 @@ const Characteristics = ({product}) => {
                 className="form-select"
                 onChange={(e) => handleSizeSelection(e.target.value)}
                 value={selectedSize || 0}
-                setItems
               >
                 {items.map((item) => (
                   item.color === selectedColorItem.color && (

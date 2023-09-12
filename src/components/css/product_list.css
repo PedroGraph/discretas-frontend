@@ -1,0 +1,81 @@
+.wishlist{
+    position: absolute;
+    top: 42%;
+    right: 0.5em;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.2em;
+}
+
+.wishlist-activated{
+    position: absolute;
+    top: 42%;
+    right: 0.5em;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.2em;
+    fill: rgb(255, 90, 90);
+}
+
+.wishlist > svg{
+    fill: rgb(192, 192, 192);
+}
+
+.wishlist > svg:hover{
+    fill: red;
+}
+
+.wishlist-notify{
+   display: none;
+}
+
+.wishlist:hover + .wishlist-notify{
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -7em;
+    z-index: 500;
+    background-color: rgba(0, 0, 0, 0.705);
+    color: aliceblue;
+    padding: 0.5em;
+    border-radius: 10px;
+}
+
+.wishlist-activated:hover + .wishlist-notify{
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: -7em;
+    z-index: 500;
+    background-color: rgba(0, 0, 0, 0.705);
+    color: aliceblue;
+    padding: 0.5em;
+    border-radius: 10px;
+}
+
+@media (min-width: 340px) and (max-width: 1365px) {
+
+    .wishlist > svg:hover{
+        fill: rgb(192, 192, 192);
+    }
+
+    .wishlist{
+        top: 0%;
+        right: 0.5em;
+        background-color: unset;
+    }
+
+    .wishlist-activated{
+        top: 0%;
+        right: 0.5em;
+        background-color: unset;
+    }
+    
+    .wishlist:hover + .wishlist-notify{
+        display: none !important;
+    }
+    
+    .wishlist-activated:hover + .wishlist-notify{
+        display: none !important;
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import mainLenceria from "../../images/mainlenceria.jpg"
+import mainLenceria from "../../images/mainlenceria.webp"
 
 const ImageComponent = () => {
 
@@ -20,7 +20,7 @@ const ImageComponent = () => {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          filter: 'brightness(30%)',
+          filter: 'brightness(70%)',
         }}
       />
       <h1
@@ -35,7 +35,7 @@ const ImageComponent = () => {
           zIndex: 1,
         }}
       >
-        Seasonal Seduction <h5>Unveiling the Hottest Lingerie Trends</h5>
+        Seasonal Seduction <span style={{fontSize: "28px"}}>Unveiling the Hottest Lingerie Trends</span>
         </h1>
     </div>
   );

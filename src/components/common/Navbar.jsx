@@ -13,7 +13,6 @@ export default function Navbar() {
 
 
   useEffect(()=>{
-
     function changeToggleStatus(event){
       if(event.target.className==='menu-button' || event.target.className==='menu-button-desktop') {
         setMenuOpen(!menuOpen);
@@ -22,9 +21,7 @@ export default function Navbar() {
         setMenuOpen(false);
       }
     }
-
     document.addEventListener('click', changeToggleStatus);
-
   },[orderList, menuOpen, hideFooter, isMobile])
 
   const handleLogOut = () => {
@@ -48,6 +45,9 @@ export default function Navbar() {
         </div>
         <div className='nav-links'>
             <a href="/about">Sobre nosotros</a>
+        </div>
+        <div className='nav-links'>
+            <a href="/wishlist">Lista de deseos</a>
         </div>
       </nav>
     </div>
@@ -75,7 +75,7 @@ export default function Navbar() {
           </nav>
     </div>
       <a href="/store" className='cart-link'>
-        <p className='cart-icon'><img src={shoppingCart} alt=""/>{orderList.length > 0 && <span class="cart-badge">{orderList.length}</span>}</p>
+        <p className='cart-icon'><img src={shoppingCart} alt=""/>{orderList.length > 0 && <span className="cart-badge">{orderList.length}</span>}</p>
       </a>
     </div>
     <div className='burger-menu'>
@@ -86,6 +86,7 @@ export default function Navbar() {
             <a href="/lubricantes">Lubricantes</a>
             <a href="/lenceria">Lencería</a>
             <a href="/about">Sobre nosotros</a>
+            <a href="/wishlist">Lista de deseos</a>
             {userLogged.length > 0 && <a href="" onClick={handleLogOut}>Cerrar Sesión</a>}
             {userLogged.length === 0 && (
               <>

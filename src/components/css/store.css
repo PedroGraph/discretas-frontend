@@ -2,8 +2,283 @@
     display:none;
 }
 
+.image-store-container{
+    max-width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative; 
+}
+
+.image-store{
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+    object-position: center;
+    position: absolute; 
+    top: 50%;
+    transform: translateY(-60%);
+}
+
+.image-store-container > span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center; 
+    font-size: 45px;
+    color: aliceblue;
+    font-weight: 700;
+}
+
+.store-section > div{
+    padding: 2em;
+    width: 35%;
+    background-color:  rgb(255, 255, 255);
+    color: rgb(77, 77, 77);
+    margin-right: 3em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.store-section > div:first-child{
+    margin-left: 3em;
+}
+
+.store-section > div:hover{
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+.store-section-active{
+    background-color: rgb(0, 0, 0) !important;
+    color: white !important;
+}
+
+.items-section{
+    background-color:  rgb(255, 255, 255);
+    width: 75%;
+}
+
+.items-table-titles{
+    background-color:   rgb(248 248 248);
+    color: rgb(77, 77, 77);
+    width: 95%;
+    font-weight: bold;
+}
+
+
+.items-table-products{
+    background-color:  rgb(255, 255, 255);
+    color: aliceblue;
+    width: 100%;
+}
+
+
+.items-table-products > div:first-child > img{
+    width: 25%;
+}
+
+.items-table-products > div:first-child > div{
+    margin-left: 1em;
+    color:rgb(29, 29, 29)
+}
+
+.items-table-products > div:first-child {
+    margin-left: 1%;
+}
+
+
+.items-table-products > div:last-child > button{
+    height: 25px;
+    padding: 1px 8px;
+    margin-left: 0.5em;
+    background-color: rgb(119, 119, 119);
+}
+
+.items-table-products > div{
+    color:rgb(29, 29, 29);
+}
+
+
+.items-section-products-quantity > button{
+    height: 25px;
+    padding: 1px 8px;
+    margin: 0 0.5em;
+    background-color: rgb(119, 119, 119);
+}
+
+.items-section-products-quantity > div > input{
+    overflow: hidden;
+    width: 45px;
+    height: 25px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+
+.items-section-products-quantity > button:hover{
+    background-color: rgb(0, 0, 0);
+}
+
+.store-section-value > div{
+    padding: 2em;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    margin-right: 3em;
+    width: 36%;
+    height: 15em;
+}
+
+.store-section-value > div:first-child{
+ margin-left: 3em;
+}
+
+.store-section-value > div:first-child > button{
+    margin-top: 1em;
+    background-color: black;
+}
+
+.store-section-value > div:first-child > input{
+    background-color: rgb(248 248 248);
+}
+
+.store-section-value > div:last-child > div{
+    border-bottom: 1px solid #000;
+    color: rgb(117, 117, 117);
+    font-weight: 500;
+    height: 30px;
+    margin-top: 0.5em;
+}
+
+.store-section-value > div:last-child > div:last-child{
+    border-bottom: 0;
+    color: red;
+}
+
+.arrow-store-section{
+    cursor: pointer;
+    display: grid;
+    align-items: center;
+}
+
 
 @media (min-width: 340px) and (max-width: 1365px) {
+
+    .image-store-container > span{
+        font-size: 20px;
+        margin-top: 2em;
+    }
+
+    .store-section {
+        flex-direction: column !important;
+    }
+
+    .store-section > div{
+        flex-direction: column !important;
+        justify-content: unset !important;
+        align-items: center;
+        width: 100%;
+        padding: 1em;
+        margin: 0 !important;
+        margin-top: 1em !important;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .products-table{
+        width: 100%;
+        padding: 0 !important;
+        align-items: unset !important;
+        justify-content: unset !important;
+    }
+
+    .items-table-titles > div:nth-child(2),
+    .items-table-titles > div:nth-child(3), 
+    .items-table-titles > div:last-child {
+        display: none !important;
+    }
+
+    .items-table-titles {
+        justify-content: space-between;
+        padding-left: 1em !important;
+        padding-right: 3em !important;
+        margin-top: 0.5em;
+    }
+
+
+    
+    .items-table-titles > div:first-child{
+        justify-content: flex-start;
+        padding-left: 0.5em !important;
+        text-align: center !important;
+    }
+
+    .items-table-titles > div:nth-child(4){
+        width: 41.67%; 
+        float: left;
+        text-align: center !important;
+        padding-left: 3em !important;
+    }
+
+
+    .items-table-products {
+        padding: 0.3em !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        justify-content: space-between;
+        gap: 10px;
+        margin: 1em 0;
+    }
+
+    .items-table-products > div:first-child{
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .items-table-products > div:nth-child(3){
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .items-table-products > div:nth-child(4){
+        display: none;
+    }
+
+    .items-table-products > div:first-child > img {
+        width: 65%;
+        margin-left: 0.5em !important;
+    }
+
+    .items-table-products > div:first-child > div {
+        width: 100%;
+    }
+
+    .items-table-products > div:first-child > div > p {
+        font-size: 12px;
+        margin: 0 !important;
+    }
+
+    .items-table-products > div:first-child > div > strong {
+        font-size: 12px;
+        margin: 0 !important;
+    }
+
+    .items-table-products > div:nth-child(2) {
+        display: flex;
+        justify-content: center;
+        font-size: 13px;
+        align-items: center !important;
+    }
+
+    .items-section{
+        width: 100% !important;
+        padding: 0.5em !important
+    }
 
 
     .total-shopping-mobile{
@@ -48,4 +323,20 @@
         border-radius: 50%;
         color: white
     }
+
+    .store-section-value{
+        flex-direction: column !important;
+        padding: 0 !important;
+    }
+
+    .store-section-value > div{
+        width: 90%;
+        margin-top: 1em;
+    }
+
+    .store-section-value > div:last-child{
+        margin-right: 0em !important;
+    }
+
+    
 }

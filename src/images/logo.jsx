@@ -1,38 +1,41 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+import React from "react";
+
+export const DsLogo = () => {
+    return (
+        
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 276 82">
-<g stroke-width="2.00" fill="white" stroke-linecap="butt">
-<path stroke="#fbfcfd" stroke-opacity="0.992" vector-effect="non-scaling-stroke" d="
+<g strokeWidth="2.00" fill="white" strokeLinecap="butt">
+<path stroke="#fbfcfd" strokeOpacity="0.992" vectorEffect="non-scaling-stroke" d="
   M 215.00 59.71
   L 214.29 60.25"
 />
-<path stroke="#fbfcfd" stroke-opacity="0.992" vector-effect="non-scaling-stroke" d="
+<path stroke="#fbfcfd" strokeOpacity="0.992" vectorEffect="non-scaling-stroke" d="
   M 211.75 63.29
   Q 210.87 63.69 211.75 63.79"
 />
-<path stroke="#d2e0d9" stroke-opacity="0.992" vector-effect="non-scaling-stroke" d="
+<path stroke="#d2e0d9" strokeOpacity="0.992" vectorEffect="non-scaling-stroke" d="
   M 257.75 60.71
   L 258.21 61.00"
 />
-<path stroke="#b3b3b6" stroke-opacity="0.855" vector-effect="non-scaling-stroke" d="
+<path stroke="#b3b3b6" strokeOpacity="0.855" vectorEffect="non-scaling-stroke" d="
   M 191.63 27.84
   C 191.85 27.12 193.79 21.34 193.55 21.15
   A 0.25 0.19 -63.9 0 0 193.23 21.31
   Q 192.17 24.41 191.53 27.61
   Q 191.20 29.22 191.63 27.84"
 />
-<path stroke="#b3b3b6" stroke-opacity="0.855" vector-effect="non-scaling-stroke" d="
+<path stroke="#b3b3b6" strokeOpacity="0.855" vectorEffect="non-scaling-stroke" d="
   M 172.50 36.39
   Q 170.95 38.68 172.44 36.48
   Q 173.83 34.42 172.50 36.39"
 />
-<path stroke="#b3b3b6" stroke-opacity="0.855" vector-effect="non-scaling-stroke" d="
+<path stroke="#b3b3b6" strokeOpacity="0.855" vectorEffect="non-scaling-stroke" d="
   M 96.42 37.12
   C 96.72 37.29 98.35 33.70 96.48 36.28
   A 0.69 0.41 -55.1 0 0 96.42 37.12"
 />
 </g>
-<path fill="#fdfdfe" fill-opacity="0.996" d="
+<path fill="#fdfdfe" fillOpacity="0.996" d="
   M 16.32 58.20
   Q 16.44 58.53 16.51 58.19
   L 24.74 16.57
@@ -64,7 +67,7 @@
   Q 24.93 57.96 29.16 53.55
   Z"
 />
-<path fill="#fdfdfe" fill-opacity="0.996" d="
+<path fill="#fdfdfe" fillOpacity="0.996" d="
   M 178.07 45.16
   C 176.30 46.87 174.11 49.42 171.84 49.89
   C 167.54 50.80 167.49 45.37 168.04 42.55
@@ -133,7 +136,7 @@
   C 154.27 52.29 139.03 65.00 140.59 67.71
   Z"
 />
-<path fill="#fdfdfe" fill-opacity="0.996" d="
+<path fill="#fdfdfe" fillOpacity="0.996" d="
   M 108.05 24.94
   L 109.92 17.55
   A 1.01 0.83 -88.5 0 1 110.52 16.86
@@ -221,7 +224,7 @@
   Q 58.13 52.84 57.19 54.68
   Z"
 />
-<path fill="#4a4b51" fill-opacity="0.710" d="
+<path fill="#4a4b51" fillOpacity="0.710" d="
   M 191.63 27.84
   Q 191.20 29.22 191.53 27.61
   Q 192.17 24.41 193.23 21.31
@@ -229,27 +232,27 @@
   C 193.79 21.34 191.85 27.12 191.63 27.84
   Z"
 />
-<rect fill="#fdfdfe" fill-opacity="0.996" x="-0.75" y="-2.54" transform="translate(240.60,32.85) rotate(38.0)" width="1.50" height="5.08" rx="0.71"/>
-<path fill="#fdfdfe" fill-opacity="0.996" d="
+<rect fill="#fdfdfe" fillOpacity="0.996" x="-0.75" y="-2.54" transform="translate(240.60,32.85) rotate(38.0)" width="1.50" height="5.08" rx="0.71"/>
+<path fill="#fdfdfe" fillOpacity="0.996" d="
   M 45.76 34.91
   C 47.56 35.96 43.44 37.97 44.44 35.37
   A 0.92 0.91 -64.2 0 1 45.76 34.91
   Z"
 />
-<ellipse fill="#fdfdfe" fill-opacity="0.996" cx="0.00" cy="0.00" transform="translate(228.65,35.67) rotate(-26.1)" rx="1.09" ry="0.81"/>
-<path fill="#4a4b51" fill-opacity="0.710" d="
+<ellipse fill="#fdfdfe" fillOpacity="0.996" cx="0.00" cy="0.00" transform="translate(228.65,35.67) rotate(-26.1)" rx="1.09" ry="0.81"/>
+<path fill="#4a4b51" fillOpacity="0.710" d="
   M 96.48 36.28
   C 98.35 33.70 96.72 37.29 96.42 37.12
   A 0.69 0.41 -55.1 0 1 96.48 36.28
   Z"
 />
-<path fill="#4a4b51" fill-opacity="0.710" d="
+<path fill="#4a4b51" fillOpacity="0.710" d="
   M 172.50 36.39
   Q 173.83 34.42 172.44 36.48
   Q 170.95 38.68 172.50 36.39
   Z"
 />
-<path fill="#fdfdfe" fill-opacity="0.996" d="
+<path fill="#fdfdfe" fillOpacity="0.996" d="
   M 110.29 44.25
   L 111.96 42.50
   L 113.97 39.90
@@ -270,7 +273,7 @@
   Q 110.22 44.86 110.29 44.25
   Z"
 />
-<path fill="#fdfdfe" fill-opacity="0.996" d="
+<path fill="#fdfdfe" fillOpacity="0.996" d="
   M 213.64 45.21
   C 211.63 47.82 204.48 55.75 203.14 46.77
   Q 202.99 45.76 202.13 46.49
@@ -345,7 +348,7 @@
   A 0.38 0.35 41.3 0 0 237.22 41.41
   Z"
 />
-<path fill="#f9fbfb" fill-opacity="0.988" d="
+<path fill="#f9fbfb" fillOpacity="0.988" d="
   M 215.00 59.71
   L 214.29 60.25
   Q 209.51 58.57 211.75 63.29
@@ -363,7 +366,7 @@
   C 210.26 62.41 217.21 57.19 212.77 55.58
   Z"
 />
-<path fill="#f9fbfb" fill-opacity="0.988" d="
+<path fill="#f9fbfb" fillOpacity="0.988" d="
   M 221.96 59.75
   L 222.04 60.00
   C 222.01 60.67 222.44 64.33 221.15 64.00
@@ -374,7 +377,7 @@
   Q 220.30 57.97 221.96 59.75
   Z"
 />
-<path fill="#daded0" fill-opacity="0.965" d="
+<path fill="#daded0" fillOpacity="0.965" d="
   M 222.04 60.00
   L 221.96 59.75
   Q 222.55 57.00 223.59 55.62
@@ -382,7 +385,7 @@
   Q 223.41 58.15 222.04 60.00
   Z"
 />
-<path fill="#f9fbfb" fill-opacity="0.988" d="
+<path fill="#f9fbfb" fillOpacity="0.988" d="
   M 237.25 61.71
   L 237.18 60.57
   L 234.96 56.50
@@ -394,7 +397,7 @@
   L 237.25 61.71
   Z"
 />
-<path fill="#f9fbfb" fill-opacity="0.988" d="
+<path fill="#f9fbfb" fillOpacity="0.988" d="
   M 242.00 54.89
   C 250.51 53.15 253.36 64.76 242.18 63.86
   A 0.57 0.56 1.7 0 1 241.65 63.31
@@ -408,7 +411,7 @@
   A 0.83 0.80 12.5 0 0 243.63 63.04
   Z"
 />
-<path fill="#f9fbfb" fill-opacity="0.988" d="
+<path fill="#f9fbfb" fillOpacity="0.988" d="
   M 257.75 60.71
   L 258.21 61.00
   L 258.13 63.76
@@ -424,7 +427,7 @@
   C 252.82 54.97 256.11 59.63 257.75 60.71
   Z"
 />
-<path fill="#acc6b8" fill-opacity="0.992" d="
+<path fill="#acc6b8" fillOpacity="0.992" d="
   M 258.21 61.00
   L 257.75 60.71
   Q 257.55 59.56 257.50 55.75
@@ -433,7 +436,7 @@
   L 258.21 61.00
   Z"
 />
-<path fill="#daded0" fill-opacity="0.965" d="
+<path fill="#daded0" fillOpacity="0.965" d="
   M 234.71 57.00
   C 235.03 58.15 232.42 63.76 237.18 60.57
   L 237.25 61.71
@@ -442,7 +445,7 @@
   C 231.21 63.69 234.30 57.76 234.71 57.00
   Z"
 />
-<path fill="#f9fbfb" fill-opacity="0.988" d="
+<path fill="#f9fbfb" fillOpacity="0.988" d="
   M 225.79 58.75
   Q 225.61 58.50 225.76 58.20
   A 0.69 0.55 20.8 0 1 226.54 57.95
@@ -450,7 +453,7 @@
   A 0.83 0.61 -26.1 0 1 225.79 58.75
   Z"
 />
-<path fill="#fdfdfe" fill-opacity="0.996" d="
+<path fill="#fdfdfe" fillOpacity="0.996" d="
   M 215.00 59.71
   C 218.64 60.95 214.91 64.42 211.75 63.79
   Q 210.87 63.69 211.75 63.29
@@ -458,7 +461,7 @@
   L 215.00 59.71
   Z"
 />
-<path fill="#f9fbfb" fill-opacity="0.988" d="
+<path fill="#f9fbfb" fillOpacity="0.988" d="
   M 225.83 63.71
   Q 225.49 63.24 225.99 62.90
   A 0.88 0.76 42.5 0 1 226.88 62.93
@@ -467,3 +470,6 @@
   Z"
 />
 </svg>
+
+    )
+}
