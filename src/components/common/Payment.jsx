@@ -60,64 +60,8 @@ Correo: ${formData.correo}
         { name: 'Nequi', imageUrl: nequi },
     ];
 
-    const handlePaymentChange = payment => {
-        setErrorSelectedPayment(false);
-        setSelectedPayment(payment);
-    };;
-
-    const handlePurchase = () => {
-        setIsCompleteForm(false);
-        handlePayment(phoneNumber, encodedMessage)
-    };
-
     return(
-    
-        <div className="image-bordered" style={{width: "100%", backgroundColor:"#eaeded"}}>
-          <Row className="text-center">
-            <h4 className="p-5 total-amount">Total a Pagar: $<Currency amount={totalAmount}/></h4>
-          </Row>
-          <Row md={3} className="text-md-right p-5 justify-content-center" >
-            <Button 
-            variant={isCompleteForm ? 'success' : 'primary'} 
-            style={{width: "94%"}}  
-            disabled={errorSelectedPayment || !canSubmit} 
-            onClick={handlePurchase}
-            > {isLoadingForm ? (
-                <Spinner animation="border" size="sm" />
-              ) : isCompleteForm ? (
-                '✅'
-              ) : (
-                <span>
-                   Comprar por Whatsapp <BsWhatsapp/>
-                </span>
-              )}
-            </Button>
-          </Row>
-          <div className="dropdown-items justify-content-center">
-            <Dropdown className="p-5" style={{width: "100%"}}>
-            <Dropdown.Toggle variant="secondary">{selectedPayment}</Dropdown.Toggle>
-              <Dropdown.Menu>
-                {paymentOptions.map(payment => (
-                  <Dropdown.Item
-                    key={payment.name}
-                    onClick={() => handlePaymentChange(payment.name)}
-                  >
-                  <img src={payment.imageUrl} className="mr-2" />
-                  { " "+payment.name}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-              {errorSelectedPayment && <div className='text-center' style={{color: "red"}}>Seleccione un método de pago</div>}
-            </Dropdown>
-          </div>
-          <div>
-          <p style={{marginLeft: "3rem", marginRight: "3rem"}}>
-            <span style={{fontWeight: "bold"}} className='text-center'>Aviso: </span>
-             Nuestra página no está usando pasarela de pago. Cuando realizas una compra tu pedido
-             se enviará a nuestra plataforma de pedidos para contactarte lo más rápido posible.
-          </p>
-          </div>
-        </div>
+    <></>
     );
 }
 

@@ -9,6 +9,7 @@ import Navbar from "./components/common/Navbar.jsx";
 import Footer from "./components/common/Footer.jsx";
 import PageNotFound from './pageNotFound/PageNotFound.jsx';
 import Login from './components/User/Login.jsx';
+import Profile from "./components/common/Profile/Profile.jsx";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <Route path="/store" element={<Store />} />
           <Route path="/wishlist" element={<Store />} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/my-profile" element={<Profile/>} />
+          <Route path="/purchases" element={<Profile/>} />
+          <Route path="/orders" element={<Profile/>} />
+          <Route path="/settings" element={<Profile/>} />
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
       <Footer/>

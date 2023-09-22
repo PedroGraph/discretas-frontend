@@ -35,7 +35,7 @@ html, body{
 
 .login-form{
     display: flex;
-    width: 50%;
+    width: 80%;
     justify-content: center;
     flex-direction: column;
 }
@@ -46,6 +46,40 @@ html, body{
     flex-direction: column;
     align-content: center;
     flex-wrap: wrap;
+}
+
+.login-button > div > button{
+    border-radius: 20px;
+    width: 50%;
+}
+
+.login-button > div {
+   
+    width: 50%;
+}
+
+.or-section{
+    margin: 0.3em 0;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    grid-column-gap: 0.5em;
+    grid-row-gap: 0.5em;
+}
+
+.or-section > div:first-child, .or-section > div:last-child{
+    height: 0.1em;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    background-color: #000000;
+}
+
+.register-here{
+    color: rgb(64, 137, 233);
+    cursor: pointer;
 }
 
 .login-form-section{

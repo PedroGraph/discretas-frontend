@@ -1,0 +1,139 @@
+
+.nav-column{
+    background-color:rgb(247, 247, 247);
+    min-height: 900px;
+    & > div:first-child{
+        padding: 2em 0 0em 0em;
+        display: flex;
+        margin-top: 7em;
+    }
+
+    & > div > a{
+        padding: 2em 0 0em 3em;
+        display: flex;
+        cursor: pointer;    
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+
+        & > p{
+            margin-left: 1em;
+            font-family: 'Roboto', sans-serif;
+        }
+    }
+    
+    & > div:hover{
+        border-left: 10px solid black;
+    }
+
+}
+
+.active-nav-column{
+    border-left: 10px solid rgb(80, 187, 65);
+}
+
+.active-nav-column:hover{
+    border-left: 10px solid rgb(80, 187, 65) !important;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > div:first-child{  
+        background-color: rgb(247, 247, 247); 
+        width: 70%;
+        height: 200px;
+        margin-top: 5%;
+        border-radius: 20px;
+
+        & > div:first-child{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            & > img{
+                width: 150px;
+                height: auto;
+                border-radius: 50%;
+            }
+        }
+
+        & > div:last-child{
+            display: flex;
+            justify-content: center;
+            align-items:  flex-start;
+            flex-direction: column;
+            padding-left: 4em;
+
+            & > p{
+                font-size: 32px;
+            }
+        }
+    }
+
+    & > div:nth-child(2){
+        background-color: rgb(247, 247, 247); 
+        width: 70%;
+        margin-top: 5%;
+        border-radius: 20px;
+
+        & > div:first-child{
+            font-size: 30px;
+           
+            & > span{
+                font-family: 'Roboto', sans-serif; 
+                border-bottom: 2px solid rgb(187, 187, 187);
+                color: rgb(97, 97, 97);
+            }
+            
+        }
+
+        & > div:nth-child(2){
+            margin: 3em 0;
+            font-size: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+           
+            & > div{
+                  display: flex;
+                  flex-direction: column;
+                  width: 70%;
+                & > input{
+                    margin: 0.5em 0;
+                    font-family: 'Roboto', sans-serif; 
+                    border: 0;
+                    border-bottom: 2px solid rgb(187, 187, 187);
+                    color: rgb(97, 97, 97);
+                }
+
+                & > select{
+                    margin: 0.5em 0;
+                    font-family: 'Roboto', sans-serif; 
+                    border: 0;
+                    height: 40px;
+                    border-bottom: 2px solid rgb(187, 187, 187);
+                    color: rgb(97, 97, 97);
+                }
+            }
+          
+            
+        }
+
+    }
+}
+
+.personal-information{
+
+    margin-bottom: 1em;
+
+    & > div:last-child{
+        display: flex;
+        justify-content: center;
+        padding: 1em;
+        & > button{
+            background-color: black;
+        }
+    }
+}

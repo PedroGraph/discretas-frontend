@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useProductContext from '../hooks/useProductContext';
-import backImage from '../../../image/pexels-cottonbro-studio-8731342.jpg'
+import imageStore1 from '../../../image/image-store1.jpg'
+import imageStore2 from '../../../image/image-store2.jpg'
 import { useNavigate, useLocation  } from 'react-router-dom';
 import Store from './Store';
 import WishList from './WishList';
@@ -21,12 +22,18 @@ const OrderSection = () => {
     else setLoading(false);
   },[modalPayment]);
   
+  const backImage = [
+    imageStore1,
+    imageStore2
+  ];
+
+  const imageSelected = Math.floor(Math.random() * backImage.length) ;
  
   return (
      
     <div style={{backgroundColor: "rgb(248 248 248)"}}>
       <div className='image-store-container'>
-        <img src={backImage} alt="" className='image-store'/>
+        <img src={backImage[imageSelected]} alt="" className='image-store'/>
         <span>{
           "/store" === location.pathname ? 'Carrito de Compras' : 'Lista de Deseos'
         }</span>

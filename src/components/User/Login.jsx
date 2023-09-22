@@ -19,7 +19,7 @@ const Login = () => {
     backgroundLogin5
   ]
 
-  const image = Math.floor(Math.random() * 5) ;
+  const image = Math.floor(Math.random() * background.length) ;
 
   return (
     <div className="login ">

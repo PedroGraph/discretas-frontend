@@ -12,16 +12,21 @@
 
 .wishlist-section-items{
     width: 100%;
+
+    & > div:first-child > a {
+        text-decoration: none;
+        color: black;
+    }
 }
 
 .wishlist-section-items > div {
     font-weight: 600;
 }
-.wishlist-section-items > div > div  {
+.wishlist-section-items > div > a > div  {
     width: 40%;
 }
 
-.wishlist-section-items > div > p  {
+.wishlist-section-items > div > a > div > p  {
     font-size: 16px;
     margin-left: 1.5em;
     font-weight: 600;
@@ -29,8 +34,10 @@
 
 .wishlist-section-items > div > button {
     font-size: 16px;
-    padding: 0.2em 0.4em;
+    padding: 0.4em 0.7em;
     background-color: black;
+    width: 120px;
+    font-size: 14px;
 }
 
 .wishlist-section-items > div > svg {
@@ -38,8 +45,8 @@
 }
 
 
-.wishlist-section-items > div > div > img {
-    width:40%;
+.wishlist-section-items > div > a > div > img {
+    width:100%;
 }
 
 
@@ -71,7 +78,7 @@
         margin-bottom: 1em;
     }
 
-    .wishlist-section-items > div > p  {
+    .wishlist-section-items > div > div > p  {
         font-size: 12px;
         margin-left: 3em;
         font-weight: 600;

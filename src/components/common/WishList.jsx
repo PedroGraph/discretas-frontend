@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import useProductContext from "../hooks/useProductContext";
 import Currency from "./CurrencyFormater";
+import { Link } from "react-router-dom";
 import '../css/wishlist.css'
 
 const WishList = () =>{
@@ -53,11 +54,15 @@ const WishList = () =>{
                         {
                             wishListItems.map((item, index) =>(
                                 <div key={index} className='d-flex p-3 justify-content-start wishlist-section-items'>
-                                    <div className="col-md-5 text-center d-flex">
+                                    <div className="col-md-5 d-flex">
+                                    <Link to={`/lubricantes/${item._id}`} className="d-flex">
                                       <div>
                                         <img src={item.image[0]} alt="" />
                                       </div>
-                                      <p>{item.name}</p>
+                                      <div className="d-flex justify-content-start">
+                                        <p className="">{item.name}</p>
+                                      </div>
+                                    </Link>
                                     </div>
                                     <div className="col-md-4 text-center ps-3">$<Currency amount={item.price}/></div>
                                     <div>

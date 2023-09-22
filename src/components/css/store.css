@@ -71,14 +71,17 @@
     background-color:  rgb(255, 255, 255);
     color: aliceblue;
     width: 100%;
+
+    & div:first-child > a{
+        text-decoration: none;
+    }
 }
 
-
-.items-table-products > div:first-child > img{
+.items-table-products > div:first-child > a > img{
     width: 25%;
 }
 
-.items-table-products > div:first-child > div{
+.items-table-products > div:first-child > a > div{
     margin-left: 1em;
     color:rgb(29, 29, 29)
 }
@@ -103,14 +106,28 @@
 .items-section-products-quantity > button{
     height: 25px;
     padding: 1px 8px;
-    margin: 0 0.5em;
     background-color: rgb(119, 119, 119);
 }
 
+.items-section-products-quantity > button:first-child{
+   margin-left: 0.5em;
+   border-bottom-right-radius: 0;
+   border-top-right-radius: 0;
+}
+
+.items-section-products-quantity > button:last-child{
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+ }
+
 .items-section-products-quantity > div > input{
     overflow: hidden;
+    text-align: center;
     width: 45px;
     height: 25px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -167,6 +184,10 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 @media (min-width: 340px) and (max-width: 1365px) {
+
+    .items-section-products-quantity{
+        justify-content: start !important;
+    }
 
     .image-store-container > span{
         font-size: 20px;
@@ -249,7 +270,7 @@ input[type=number]::-webkit-outer-spin-button {
         display: none;
     }
 
-    .items-table-products > div:first-child > img {
+    .items-table-products > div:first-child > a > img {
         width: 65%;
         margin-left: 0.5em !important;
     }
@@ -258,12 +279,12 @@ input[type=number]::-webkit-outer-spin-button {
         width: 100%;
     }
 
-    .items-table-products > div:first-child > div > p {
+    .items-table-products > div:first-child > a  > div> p {
         font-size: 12px;
         margin: 0 !important;
     }
 
-    .items-table-products > div:first-child > div > strong {
+    .items-table-products > div:first-child > a > div > strong {
         font-size: 12px;
         margin: 0 !important;
     }

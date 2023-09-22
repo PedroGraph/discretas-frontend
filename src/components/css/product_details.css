@@ -1,0 +1,80 @@
+.item-diff-color{
+    width: 50px;
+    height: 50px;
+    margin-top: 1em;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.items-diff-size > div{
+    width: 50px;
+    height: 50px;
+    /* background-color: #e9e9e9; */
+    border: 2px solid #e9e9e9;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1em;
+    margin-top: 1em;
+    cursor: pointer;
+}
+
+.item-selected-size{
+    background-color: black !important;
+    color: aliceblue;
+}
+
+.set-quantity > button {
+    font-size: 25px;
+    padding: 0 !important;
+}
+  
+
+.set-quantity > button:first-child{
+    border-right: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+  
+.set-quantity > input{
+    border-radius: 0px;
+    border: 1px solid #6c757d;
+    background-color: white;
+    border-left: 0px;
+    border-right: 0px;
+    text-align: center;
+}
+  
+.set-quantity > button:last-child{
+    border-left: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+  
+.details-section-column{
+    display: flex;
+    padding: 0.5em;
+    border-bottom: 3px solid #e9e9e9; 
+    margin-bottom: 3em;
+    width: 87%;
+}
+
+.details-section-column > div{
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.details-section-column > div:last-child{
+    display: flex;
+    justify-content: center;
+}
+
+.details-section-column > div:last-child > p {
+   margin-left: 0.5em;
+   font-size: 14px;
+   background-color: rgb(158, 158, 158);
+   padding: 0.2rem 0.6rem;
+   border-radius: 50%;
+}

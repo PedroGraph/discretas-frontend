@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Currency from "./CurrencyFormater";
 import useProductContext from "../hooks/useProductContext";
 import Checkout from "./Checkout";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 
 const Store = () =>{
@@ -64,17 +64,19 @@ const Store = () =>{
              isThereProducts ? (
                 orderItems.map((items, index) => (
                   <div key={items._id} className='items-section p-5 pt-1 pb-1 d-flex align-items-center justify-content-end'>
-                    <div className='d-flex  p-3 items-table-products'>
+                    <div className='d-flex align-items-center p-3 items-table-products'>
                       <div className='d-flex col-md-5'>
+                        <Link to={`/lubricantes/${items._id}`} className="d-flex">
                         <img src={items.image[0]} alt="" />
                         <div className='d-flex flex-column justify-content-center'>
                           <strong>{items.name}</strong>
                           {items?.size && <p>Talla: {items?.size}</p>}
                           {items?.color &&<p>Color: {items?.color}</p>}
                         </div>
+                        </Link>
                       </div>
                       <div className='text-center col-md-1'><strong>$<Currency amount={items.price}/></strong></div>
-                      <div className='col-md-4 d-flex items-section-products-quantity justify-content-start'>
+                      <div className='col-md-4 d-flex items-section-products-quantity justify-content-center'>
                         <button onClick={() => handleQuantityChange(items._id, Math.max(1, items.quantity - 1))}>-</button>
                         <div><input type="text" value={items.quantity} readOnly/></div>
                         <button onClick={() => handleQuantityChange(items._id, items.quantity + 1)}>+</button>
@@ -99,7 +101,7 @@ const Store = () =>{
               ) 
             }
           </div>
-          <div className='d-flex p-5 pt-3 align-items-center justify-content-center store-section-value'>
+          <div className='d-flex p-5 pt-1 align-items-center justify-content-center store-section-value'>
             <div>
               <strong>Cupón de Descuento</strong>
               <p>¿Tienes un código de descuento? Ingrésalo aquí</p>

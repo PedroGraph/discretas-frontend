@@ -1,80 +1,150 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import useProductContext from "../hooks/useProductContext";
-import Currency from "./CurrencyFormater";
-import nequi from '/image/nequi-2.svg'
-import paypal from '/image/paypal-3.svg'
-import '../css/checkout.css'
+import colombia from "../../../colombia.json";
+import PaymentMethod from "./PaymentMethod";
+import "../css/checkout.css";
 
 const Checkout = () => {
-    
-    const { formData, setFormData, userInfo } = useProductContext();
-    const shopping = JSON.parse(localStorage.getItem('store')) || [];
-    const [orderItems, setOrderItems] = useState(shopping);
-    const [selectedPayment, setSelectedPayment] = useState(null)
+  const { formData, setFormData, userInfo, userLogged } = useProductContext();
+  const [cities, setCities] = useState([]);
 
-    const payments = [
-        nequi,
-        paypal,
-    ];
+  useEffect(() => {
+    let ciudades = [];
+    if (userLogged.length > 0) {
+      userInfo().then((response) => {
+        response.idt = "";
+        setFormData(response);
+      });
+    }
 
-    useEffect(() => {
-        userInfo().then((response) => {
-        response.idt = '';
-        setFormData(response)
-        })
-    },[formData]);
+    if(!cities.length > 0){
+      colombia.map((departamentos) => { 
+        ciudades[departamentos.departamento] = departamentos.ciudades;
+      });
+      setCities(prevCities => {
+        return ciudades
+      });
+    }
+  }, [formData]);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    const handleSelectedPayment = (payment) => {
-        setSelectedPayment(payment);
-    };
 
-    const totalAmount = orderItems.reduce((total, item) => total + item.price * item.quantity, 0);
-
-    return(
-        <>
-        <div className="checkout-section p-5 d-flex justify-content-center ">
-            <div key={1} className="text-center">
-                <label> FINALIZA TU COMPRA </label>
-                <form>
-                    <input type="text" name="name" placeholder="Escribe tu nombre" value={formData.name} onChange={(e) => {handleChange(e)}}/>
-                    <input type="text" name="last_name" placeholder="Escribe tu Apellido" value={formData.last_name} onChange={(e) => {handleChange(e)}}/>
-                    <input type="text" name="phone" placeholder="Escribe tu teléfono" value={formData.phone} onChange={(e) => {handleChange(e)}}/>
-                    <input type="text" name="email" placeholder="Escribe tu email" value={formData.email} onChange={(e) => {handleChange(e)}}/>
-                    <input type="text" name="idt" placeholder="Escribe tu Cédula" value={formData.idt} onChange={(e) => {handleChange(e)}}/>
-                    <input type="text" name="address" placeholder="Dirección" value={formData.address} onChange={(e) => {handleChange(e)}}/>
-                    <input type="text" name="neibor" placeholder="Barrio" value={formData.neibor} onChange={(e) => {handleChange(e)}}/>
-                    <input type="text" name="city" placeholder="Ciudad" value={formData.city} onChange={(e) => {handleChange(e)}}/>
-                </form>
+  return (
+    <>
+      <div className="checkout-section p-5 pt-1 d-flex justify-content-center ">
+        <div key={1} className="text-center">
+          <label> FINALIZA TU COMPRA </label>
+          <form>
+            <input
+              type="text"
+              name="name"
+              placeholder="Escribe tu nombre"
+              value={formData.name}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            <input
+              type="text"
+              name="last_name"
+              placeholder="Escribe tu Apellido"
+              value={formData.last_name}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            <input
+              type="text"
+              name="phone"
+              placeholder="Escribe tu teléfono"
+              value={formData.phone}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            <input
+              type="text"
+              name="email"
+              placeholder="Escribe tu email"
+              value={formData.email}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            <input
+              type="text"
+              name="idt"
+              placeholder="Escribe tu Cédula"
+              value={formData.idt}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            <input
+              type="text"
+              name="address"
+              placeholder="Dirección"
+              value={formData.address}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+            />
+            <div>
+              <select
+                name="department"
+                id="department"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              >
+                <option hidden value="">
+                  Departamento
+                </option>
+                {colombia.map((department) => (
+                  <option key={department.id} value={department.departamento}>
+                    {department.departamento}
+                  </option>
+                ))}
+              </select>
             </div>
-            <div key={2} className="shopping d-flex flex-column">
-                <div className="bg-white text-center mt-4">
-                    <span>MÉTODO DE PAGO</span>
-                    <div className="d-flex justify-content-center flex-column mt-5">
-                        <span className="p-3">Selecciona un método de pago</span>
-                        <div className="mt-3 d-flex justify-content-between px-5">
-                            <img src={nequi} style={{width: "130px"}} className={selectedPayment === 'Nequi' ? 'payment-active' : ''} onClick={(e) =>{handleSelectedPayment('Nequi')}}/>
-                            <img src={paypal} style={{width: "130px"}} className={selectedPayment === 'PayPal' ? 'payment-active' : ''} onClick={(e) =>{handleSelectedPayment('PayPal')}}/>
-                        </div>
-                        {selectedPayment && (
-                            <div className="d-flex justify-content-center">
-                                <button className="w-50 mt-5 bg-success ">Pagar</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+            <div>
+              {
+                cities.length > 0 && formData.department && (
+                    <select
+                    name="city"
+                    id="city"
+                    onChange={(e) => {
+                    handleChange(e);
+                    }}
+                >
+                    <option hidden value="">
+                    Ciudad
+                    </option>
+                    {cities[formData.department].map((ciudad, index) => (
+                    <option key={index} value={ciudad}>
+                        {ciudad}
+                    </option>
+                    ))}
+                </select>
+                )
+              }
+              
             </div>
+          </form>
         </div>
-        </>
-    )
-
-}
+        <div key={2} className="shopping d-flex flex-column">
+          <PaymentMethod/>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default Checkout;

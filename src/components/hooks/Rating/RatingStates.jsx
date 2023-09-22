@@ -14,23 +14,20 @@ export const RatingStates = ({productID}) => {
 
 
     useEffect(() => {
-
-        RatingInfo({
-        productID: productID,
-        userID: userLogged
-        })
-        .then((response) => {
-            // console.log(response)
+        if(!userLogged.length===0){
+          RatingInfo({
+            productID: productID,
+            userID: userLogged
+          })
+          .then((response) => {
             setTotalRating(response?.productTotalRating);
             setTotalStars(response.averageRating);
             if(userLogged.length !== 0) setUserStars(response.productUserRating);
-    
-        })
-        .catch(error => {
+          })
+          .catch(error => {
             console.error(error);
-        })
-        
-        
+          })
+        }
     }, [productID, userStars]); 
 
     const handleCloseLoginModal = () => {
@@ -38,45 +35,45 @@ export const RatingStates = ({productID}) => {
     }
     
 
-    const handleStarClick = (selectedRating) => {
-        if(userLogged.length > 0) {
-            setUserStars(selectedRating);
-            setHasHalfStar(selectedRating - Math.floor(selectedRating) >= 0.25);
-        }else{
-            setLoginModal(true);
-        }
+    // const handleStarClick = (selectedRating) => {
+    //     if(userLogged.length > 0) {
+    //         setUserStars(selectedRating);
+    //         setHasHalfStar(selectedRating - Math.floor(selectedRating) >= 0.25);
+    //     }else{
+    //         setLoginModal(true);
+    //     }
         
-    };
+    // };
     
-    const generateRatingStars = (stars) => {
+    // const generateRatingStars = (stars) => {
     
-        const data = {
-            productID: productID,
-            stars: stars,
-            uid: userLogged
-        }
+    //     const data = {
+    //         productID: productID,
+    //         stars: stars,
+    //         uid: userLogged
+    //     }
     
-        if(stars > 0 && userLogged.length != 0) ProductRating(data);
+    //     if(stars > 0 && userLogged.length != 0) ProductRating(data);
     
-        const rating = [];
+    //     const rating = [];
     
-        for (let i = 0; i < 5; i++) {
-            if (i < stars) {
-                rating.push( <FaStar key={i} onClick={() => handleStarClick(i + 1)} style={{ cursor: 'pointer' }} /> );
-            } else if (i === Math.floor(rating) && hasHalfStar) {
-                rating.push( <FaStarHalfAlt key={i} onClick={() => handleStarClick(i + 0.5)} style={{ cursor: 'pointer' }}/>);
-            } else {
-                rating.push( <FaRegStar key={i} onClick={() => handleStarClick(i + 1)} style={{ cursor: 'pointer' }} />);
-            }
-        }
+    //     for (let i = 0; i < 5; i++) {
+    //         if (i < stars) {
+    //             rating.push( <FaStar key={i} onClick={() => handleStarClick(i + 1)} style={{ cursor: 'pointer' }} /> );
+    //         } else if (i === Math.floor(rating) && hasHalfStar) {
+    //             rating.push( <FaStarHalfAlt key={i} onClick={() => handleStarClick(i + 0.5)} style={{ cursor: 'pointer' }}/>);
+    //         } else {
+    //             rating.push( <FaRegStar key={i} onClick={() => handleStarClick(i + 1)} style={{ cursor: 'pointer' }} />);
+    //         }
+    //     }
     
-        return rating;
-    };
+    //     return rating;
+    // };
     
-    const setRatingStars = (stars) => {
+    const setRatingStars = () => {
         const setRating = [];
         for (let i = 0; i < 5; i++) {
-            if (i < stars) {
+            if (i < totalStars) {
                 setRating.push( <FaStar key={i+10} disabled="disabled"/> );
             } else if (i === Math.floor(totalRating) && hasHalfStar) {  
                 setRating.push( <FaStarHalfAlt key={i+10} disabled="disabled" /> );
@@ -88,5 +85,5 @@ export const RatingStates = ({productID}) => {
     };
     
     
-    return {userStars, totalRating, totalStars, setRatingStars, generateRatingStars, loginModal, setLoginModal, handleCloseLoginModal}
+    return {userStars, totalRating, setRatingStars, loginModal, setLoginModal, handleCloseLoginModal}
 }

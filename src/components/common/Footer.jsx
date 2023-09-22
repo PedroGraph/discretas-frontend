@@ -20,7 +20,7 @@ const Footer = () => {
     }
 
   return (
-    <footer className={hideFooter && isMobile <= 1364 ? 'd-none' : 'text-white py-5'} style={{backgroundColor: "#000", position: "relative", zIndex: "3"}}>
+    <footer className={hideFooter && isMobile <= 1364 ? 'd-none' : 'text-white py-5'} style={{backgroundColor: "#000", position: "relative", zIndex: "2"}}>
       <Container style={{margin: "0 !important"}}>
         <Row>
           <Col >

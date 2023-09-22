@@ -5,8 +5,9 @@ import useProductContext from "../useProductContext";
 export const ProductListTools = () => {
 
     const navigate = useNavigate();
-    const { handleAddStore, setIsComplete, isComplete  } = useProductContext();
+    const { handleAddStore, setIsComplete, isComplete, loadMoreProducts  } = useProductContext();
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const [loadingProducts, setLoadingProducts] = useState(false);
 
     const handleGoToDetails = (product) => {
         navigate(`/lubricantes/${product._id}`);
@@ -25,6 +26,14 @@ export const ProductListTools = () => {
         return;
     };
 
-    return {selectedProductId, setSelectedProductId, handleAddStore, handleGoToDetails, handleAddToCart, isComplete}
+    const handleMoreProducts = () => {
+        setLoadingProducts(true)
+        loadMoreProducts().then(response =>{
+            if(response==="ok") setLoadingProducts(false)
+        })
+
+    }
+
+    return {selectedProductId, setSelectedProductId, handleAddStore, handleGoToDetails, handleAddToCart, isComplete, handleMoreProducts, loadingProducts}
 
 }
