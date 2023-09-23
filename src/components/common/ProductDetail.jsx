@@ -18,13 +18,14 @@ const ProductDetail = () => {
       isLoading,
       isComplete, 
       modalPayment, 
-      productPurchased,
       handleAddStore,
       isAddedToWishList
     } = useProductContext();
 
   const {product, quantity, characteristics, handleQuantityChange, handleAddProductToWishList, handleShowModal} = Details();
   const { name, price, image, stars } = product;
+
+  console.log(Details())
 
   return (
     <>

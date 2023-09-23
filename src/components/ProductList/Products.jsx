@@ -24,7 +24,7 @@ const Products = () => {
  
 
   return (
-    <div className='p-4 product-list-container'>
+    <div className='py-1 px-4 product-list-container'>
       <div className='d-flex '>
           {highestPriceProduct && lowestPriceProduct ? ( 
             <>

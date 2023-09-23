@@ -14,12 +14,12 @@ const PaymentMethod = () =>{
     };
 
     const handlePayProducts = (e) => {
-        e.preventDefault();
-        setIsLoadingForm(true)
-        setTimeout(() => {
-            setIsLoadingForm(false);
-            setIsCompleteForm(true);
-        }, 5000);
+      e.preventDefault();
+      setIsLoadingForm(true)
+      setTimeout(() => {
+        setIsLoadingForm(false);
+        setIsCompleteForm(true);
+      }, 3000);
     }
 
     return (

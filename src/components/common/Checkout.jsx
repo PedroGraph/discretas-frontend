@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useProductContext from "../hooks/useProductContext";
+import { SecondLoader, SuccessLoader } from "./Loader";
 import colombia from "../../../colombia.json";
 import PaymentMethod from "./PaymentMethod";
 import "../css/checkout.css";
 
 const Checkout = () => {
-  const { formData, setFormData, userInfo, userLogged } = useProductContext();
+  const { formData, setFormData, userInfo, isCompleteForm, isLoadingForm, userLogged } = useProductContext();
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
@@ -140,7 +141,19 @@ const Checkout = () => {
           </form>
         </div>
         <div key={2} className="shopping d-flex flex-column">
-          <PaymentMethod/>
+        { !isCompleteForm && isLoadingForm ? ( 
+            <SecondLoader styles={'loader-checkout-form'}/>
+          ): isCompleteForm && !isLoadingForm ?(
+            <>
+            <SuccessLoader styles={'success-checkout-form'}/>
+              <div className="d-flex justify-content-center align-items-center w-100 h-100 mt-5">
+                <span>Tu compra se ha generado. Te redirigiremos a WhatsApp. ¡Gracias! :)</span>
+              </div>
+            </>
+          ):(
+            <PaymentMethod/>
+          )
+        }
         </div>
       </div>
     </>

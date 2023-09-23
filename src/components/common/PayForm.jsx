@@ -54,7 +54,7 @@ const Payform = () => {
                 <img src={productPurchased?.image[0]} alt={productPurchased.name}/>
               </div>
               <div  className="pay-form "> 
-              {page < 1 && !isLoadingForm ? (
+              {page < 1 && !isLoadingForm && !isCompleteForm ? (
                 <>
                   <div>Finaliza tu compra :)</div>
                   <input onChange={(e)=>{handleChange(e)}} type="text" name="name" placeholder="Nombre" value={formData.name}/>
@@ -105,7 +105,7 @@ const Payform = () => {
                 </select>
               </div>
               </>
-              ): !isLoadingForm ? (
+              ): !isLoadingForm && !isCompleteForm ? (
                 <div className="form-payment">
                   <div>
                     <div>
@@ -140,19 +140,19 @@ const Payform = () => {
               ): isCompleteForm && !isLoadingForm &&(
                 <>
                 <SuccessLoader styles={'success-pay-form'}/>
-                <div>
-                  <span>Tu compra se ha generado. Te redirigiremos a WhatsApp. ¡Gracias! :)</span>
-                </div>
+                  <div className="d-flex justify-content-center align-items-center w-100 h-100 mt-5">
+                    <span>Tu compra se ha generado. Te redirigiremos a WhatsApp. ¡Gracias! :)</span>
+                  </div>
                 </>
               )}
               <div className={page > 0 ? "pay-form-buttons d-flex justify-content-start" : "pay-form-buttons d-flex justify-content-end"}>
-               {page > 0 && !isLoadingForm ? (
+               {page > 0 && !isLoadingForm && !isCompleteForm ? (
                 <button onClick={(e) => {handleBackPage(e)}}>
                       <svg width="18" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
                       <path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z"/>
                       </svg>
                   </button>
-                ): !isLoadingForm && (
+                ): !isLoadingForm && !isCompleteForm && (
                   <button onClick={(e) => {handleNextPage(e)}}>
                       <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd" clipRule="evenodd">
                       <path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z"/>

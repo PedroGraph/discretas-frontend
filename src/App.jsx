@@ -10,6 +10,7 @@ import Footer from "./components/common/Footer.jsx";
 import PageNotFound from './pageNotFound/PageNotFound.jsx';
 import Login from './components/User/Login.jsx';
 import Profile from "./components/common/Profile/Profile.jsx";
+import HTMLEditor from "./components/common/TestHtml.jsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/purchases" element={<Profile/>} />
           <Route path="/orders" element={<Profile/>} />
           <Route path="/settings" element={<Profile/>} />
+          <Route path="/test" element={<HTMLEditor/>} />
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
       <Footer/>
