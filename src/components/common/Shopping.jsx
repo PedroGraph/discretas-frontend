@@ -8,7 +8,7 @@ import WishList from './WishList';
 import '../css/style_products.css'
 import '../css/store.css'
 
-const OrderSection = () => {
+const Shopping = () => {
 
   const { modalPayment  } = useProductContext()
 
@@ -52,4 +52,4 @@ const OrderSection = () => {
   );
 };
 
-export default OrderSection;
+export default Shopping;

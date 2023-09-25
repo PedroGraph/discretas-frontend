@@ -3,6 +3,7 @@ import useProductContext from "../../hooks/useProductContext";
 import UpdateUserInfo from "../../services/Auth";
 import { Spinner } from "react-bootstrap";
 import colombia from "../../../../colombia.json";
+import profilePic from "../../../../image/profile.jpg"
 
 const UserInfo = () => {
 
@@ -45,7 +46,7 @@ const UserInfo = () => {
         <> 
         <div className='d-flex'>
           <div className='col-md-3'>
-            <img src={profile.photourl} alt="" />
+            <img src={profile?.photourl || profilePic} alt="" />
           </div>
           <div className='col-md-9'>
               <p>{`${profile.name} ${profile.last_name}`}</p>
@@ -117,7 +118,7 @@ const UserInfo = () => {
             </div>
           </div>
           <div>
-            <button onClick={(e)=>{handleSaveChanges(e)}}>
+            <button onClick={(e)=>{handleSaveChanges(e)}} className="save-infouser-button">
               {
                 !isComplete ? (
                   <span>Guardar Cambios</span>

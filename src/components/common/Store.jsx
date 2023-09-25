@@ -140,7 +140,7 @@ const Store = () =>{
               </div>
             ):(
               isThereProducts && (
-                <Checkout/>
+                <Checkout items={shopping}/>
               )
             )
           }

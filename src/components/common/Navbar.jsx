@@ -107,6 +107,9 @@ export default function Navbar() {
             ☰
           </button>
           <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
+            <a href="/my-profile">Ver Perfil</a>
+            <a href="/wishlist">Lista de deseos</a>
+            <a href="/orders">Mis Pedidos</a>
             <a href="/lubricantes">Lubricantes</a>
             <a href="/lenceria">Lencería</a>
             <a href="/about">Sobre nosotros</a>

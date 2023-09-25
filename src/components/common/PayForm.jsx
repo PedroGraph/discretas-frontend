@@ -131,7 +131,7 @@ const Payform = () => {
                     }
                     <div className="separator"></div>
                     <div className="payment-method">
-                      <PaymentMethod/>
+                      <PaymentMethod userInfo={formData} products={[productPurchased]}/>
                     </div>
                   </div>
                 </div>

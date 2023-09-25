@@ -3,7 +3,7 @@ import { Button, Spinner, Form } from 'react-bootstrap';
 import useProductContext from '../hooks/useProductContext';
 import Characteristics from './Characteristics'
 import Currency from './CurrencyFormater';
-import InfoUser from './FormModal'
+import WhatsappBubble from './WhatsappBubble';
 import Rating from './ProductDetails/Rating'
 import Carousel from './ProductDetails/Carousel';
 import "../css/style_products.css"
@@ -24,8 +24,6 @@ const ProductDetail = () => {
 
   const {product, quantity, characteristics, handleQuantityChange, handleAddProductToWishList, handleShowModal} = Details();
   const { name, price, image, stars } = product;
-
-  console.log(Details())
 
   return (
     <>
@@ -127,6 +125,7 @@ const ProductDetail = () => {
           </div>
         </div>
       )}
+      <WhatsappBubble/>
     </>
   );
 };

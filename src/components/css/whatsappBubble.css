@@ -1,0 +1,13 @@
+.whatsapp-bubble{
+    position: fixed;
+    z-index: 100;
+    right: 3%;
+    bottom: 6%;
+    padding: 1em;
+    background-color: #40C351;
+    border-radius: 50%;
+    > svg{
+        height: 50px;
+        width: 50px;
+    }
+}

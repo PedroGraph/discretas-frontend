@@ -1,7 +1,7 @@
 import React from "react";
 import { FaStar, FaRegStar } from 'react-icons/fa';
 import '../css/comments.css';
-const CommentSection = ({comments, userInfo}) => {
+const CommentSection = ({comments, saveComment, userInfo}) => {
 
     const handleStars = (stars) => {
         const rating = [];
@@ -17,11 +17,28 @@ const CommentSection = ({comments, userInfo}) => {
 
     const ratingPercentage = (stars) => {
         let coincidences = 0;
-        comments.map( (comment) => {
-            if(comment.stars === stars) coincidences++
+        comments.map((comment) => {
+            if(parseInt(comment.stars) === stars) coincidences++
         })
         const percentage = (coincidences / comments.length) * 100;
-        return (<span>{percentage}%</span>)
+        return (<span>{percentage.toFixed(1)}%</span>)
+    }
+
+    const handleAddComments = (e) => {
+        e.preventDefault();
+
+        const name = e.target[0].value;
+        const email = e.target[1].value;
+        const comment = e.target[2].value;
+        const userComment = {
+            productID: comments[0].productID,
+            name: name,
+            email: email,
+            photourl: "https://i0.wp.com/christopherscottedwards.com/wp-content/uploads/2018/07/Generic-Profile.jpg?ssl=1",
+            comment: comment,
+            stars: 3,
+        }
+        saveComment(userComment);
     }
 
     return (
@@ -34,7 +51,7 @@ const CommentSection = ({comments, userInfo}) => {
                  <div className="col-mb-3">
                     <img src={comment.photourl} alt="" />
                     <span>{comment.name}</span>
-                    <div className="d-flex">
+                    <div className="d-flex pt-5">
                         {handleStars(comment.stars)}
                     </div>
                  </div>
@@ -86,6 +103,7 @@ const CommentSection = ({comments, userInfo}) => {
                 </div>
             </div>
             <div>
+                <form onSubmit={(e) => {handleAddComments(e)}}>
                 <span className="mx-3">*Tu correo no se mostrará en las sección de comentarios*</span>
                 <div className="d-flex mt-3 px-3">
                     <input type="text" name="name" id="" placeholder="Nombre"/>
@@ -97,6 +115,7 @@ const CommentSection = ({comments, userInfo}) => {
                 <div className="px-3 d-flex justify-content-end">
                     <button className="bg-black">Enviar Comentario</button>
                 </div>
+                </form>
             </div>
           </div>
         </div>

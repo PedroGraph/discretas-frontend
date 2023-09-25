@@ -17,15 +17,17 @@
         overflow: hidden;
 
         & > img{
+            object-fit: cover;
             width: 70px;
             height: 70px;
             border-radius: 50%;
         }
 
         & > div{
+            
             position: absolute;
             bottom: 5%;
-
+            
             & >span{
                 margin-right: 1em;
             }
@@ -65,8 +67,7 @@
 }
 
 .comments-likes{
-    position: static;
-    bottom: 0;
+
     > div {
         cursor: pointer;
     }

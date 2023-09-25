@@ -101,7 +101,7 @@ html, body{
     display:flex;
     width: 100px;
     position: relative;
-    animation: fly 5.5s linear infinite;
+    animation: sidetoside 5.5s linear infinite;
     margin-bottom: 0.5em;
 }
 
@@ -109,7 +109,7 @@ html, body{
     display: none;
 }
   
-@keyframes fly {
+@keyframes sidetoside {
     0%, 100% {
       left: 0%;
     }

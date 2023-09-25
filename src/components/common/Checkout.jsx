@@ -5,7 +5,7 @@ import colombia from "../../../colombia.json";
 import PaymentMethod from "./PaymentMethod";
 import "../css/checkout.css";
 
-const Checkout = () => {
+const Checkout = ({items}) => {
   const { formData, setFormData, userInfo, isCompleteForm, isLoadingForm, userLogged } = useProductContext();
   const [cities, setCities] = useState([]);
 
@@ -26,7 +26,7 @@ const Checkout = () => {
         return ciudades
       });
     }
-  }, [formData]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -117,7 +117,7 @@ const Checkout = () => {
             </div>
             <div>
               {
-                cities.length > 0 && formData.department && (
+                formData.department && (
                     <select
                     name="city"
                     id="city"
@@ -151,7 +151,7 @@ const Checkout = () => {
               </div>
             </>
           ):(
-            <PaymentMethod/>
+            <PaymentMethod userInfo={formData} products={items}/>
           )
         }
         </div>
