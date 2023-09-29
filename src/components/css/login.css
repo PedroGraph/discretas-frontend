@@ -136,6 +136,11 @@ html, body{
         padding-top: 0 !important;
     }
 
+    .login-button > div {
+        width: 70%;
+       
+    }
+
     .login-button > div > button{
         font-size: 12px;
         width: 17em;
@@ -146,9 +151,8 @@ html, body{
         color: black;
     }
 
-     .login-button > div:last-child > button{
-        background-color: aliceblue !important;
-        color: black;
+     .login-button > div:last-child {
+        color: #fff;
     }
 
     /* .navbar-container{
@@ -198,7 +202,23 @@ html, body{
     .logo-gif > img{
         width: 100% !important;
     }
+
+    .or-section { 
+      color: white;
+      > div{
+        background-color: #fff !important;
+        height: 1em;
+      }
+    }
     
+    .submit-register > button{
+        background-color: #fff;
+        color: #000;
+    }
+
+    .register-form > div:last-child{
+        color: #fff;
+    }
 }
 
 .error-message {

@@ -42,8 +42,8 @@ const CommentSection = ({comments, saveComment, userInfo}) => {
     }
 
     return (
-    <div className="d-flex">
-        <div className="p-5 pt-0 col-md-7">
+    <div className="d-flex comment-section-container">
+        <div className="pt-0 col-md-7">
           <div className="px-5">
             {
               comments.map((comment, index) => (
@@ -57,7 +57,7 @@ const CommentSection = ({comments, saveComment, userInfo}) => {
                  </div>
                  <div className="col-mb-9">
                     <p>{comment.comment}</p>
-                    <div className="d-flex comments-likes">
+                    {/* <div className="d-flex comments-likes">
                         <div className="mx-5">
                         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-thumb-up-filled" width={24} height={24} viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -72,7 +72,7 @@ const CommentSection = ({comments, saveComment, userInfo}) => {
                             <path d="M5 14.008a1 1 0 0 0 .993 -.883l.007 -.117v-9a1 1 0 0 0 -.883 -.993l-.117 -.007h-1a2 2 0 0 0 -1.995 1.852l-.005 .15v7a2 2 0 0 0 1.85 1.994l.15 .005h1z" strokeWidth={0} fill="rgb(252, 73, 73)"></path>
                         </svg>
                         </div>
-                    </div>
+                    </div> */}
                  </div>
                 </div>
               ))

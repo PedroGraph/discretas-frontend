@@ -11,3 +11,15 @@
         width: 50px;
     }
 }
+
+@media (min-width: 350px) and (max-width:1365px){
+    .whatsapp-bubble{
+    
+        padding: 0.5em;
+        > svg{
+            height: 30px;
+            width: 30px;
+        }
+    }
+    
+}

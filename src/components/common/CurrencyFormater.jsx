@@ -8,7 +8,7 @@ function CurrencyFormatter({ amount }) {
     maximumFractionDigits: 0, 
   });
 
-  return <span>{formattedAmount.replace("COP", "")}</span>;
+  return <span>${formattedAmount.replace("COP", "")}</span>;
 }
 
 export default CurrencyFormatter;

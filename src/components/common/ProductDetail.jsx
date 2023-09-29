@@ -56,7 +56,7 @@ const ProductDetail = () => {
                   <div className=' price-rating d-flex'>
                     <div>
                       <h4 className="text-muted">
-                        $<Currency amount={price} className='mt-3'/>
+                        <Currency amount={price} className='mt-3'/>
                       </h4>
                     </div>
                   </div>

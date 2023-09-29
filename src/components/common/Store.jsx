@@ -75,14 +75,14 @@ const Store = () =>{
                         </div>
                         </Link>
                       </div>
-                      <div className='text-center col-md-1'><strong>$<Currency amount={items.price}/></strong></div>
+                      <div className='text-center col-md-1'><strong><Currency amount={items.price}/></strong></div>
                       <div className='col-md-4 d-flex items-section-products-quantity justify-content-center'>
                         <button onClick={() => handleQuantityChange(items._id, Math.max(1, items.quantity - 1))}>-</button>
                         <div><input type="text" value={items.quantity} readOnly/></div>
                         <button onClick={() => handleQuantityChange(items._id, items.quantity + 1)}>+</button>
                       </div>
                       <div className='col-md-1 text-center'>
-                        <strong>$<Currency amount={items.price * items.quantity}/></strong>
+                        <strong><Currency amount={items.price * items.quantity}/></strong>
                        
                       </div>
                       <div className="col-md-1 d-flex justify-content-center" onClick={()=> handleDeleteItem(index)}> 
@@ -112,19 +112,19 @@ const Store = () =>{
               <strong>Detalles de Pago</strong>
               <div className='d-flex justify-content-between'>
                 <span>Subtotal Carrito</span>
-                <p>$<Currency amount={totalAmount}/></p>
+                <p><Currency amount={totalAmount}/></p>
               </div>
               <div className='d-flex justify-content-between'>
                 <span>Subtotal descuento</span>
-                <p>$<Currency amount={0}/></p>
+                <p><Currency amount={0}/></p>
               </div>
               <div className='d-flex justify-content-between'>
                 <span>Subtotal envío</span>
-                <p>$<Currency amount={12000}/></p>
+                <p><Currency amount={12000}/></p>
               </div>
               <div className='d-flex justify-content-between'>
                 <span>Valor total</span>
-                <p>$<Currency amount={totalAmount + shipment}/></p>
+                <p><Currency amount={totalAmount + shipment}/></p>
               </div>
             </div>
           </div>

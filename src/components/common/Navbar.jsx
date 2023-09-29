@@ -12,12 +12,13 @@ export default function Navbar() {
   const { orderList, userLogged, setUserLogged, hideFooter, isMobile } = useProductContext();
   const [menuOpen, setMenuOpen] = useState(false);
   const [logOut, setLogOut] = useState(false);
+  const [navOptions, setNavOptions] = useState('');
 
   useEffect(() => {
     function changeToggleStatus(event) {
       if (event.target.className === 'menu-button' || event.target.className.baseVal === 'user-info') {
         setMenuOpen((prevMenuOpen) => !prevMenuOpen);
-      } else {
+      } if(event.target.id !== 'options') {
         setMenuOpen(false);
       }
     }
@@ -30,7 +31,13 @@ export default function Navbar() {
   }, [userLogged]);
   
 
-  const handleLogOut = () => {
+  const handleOpenOptions = (option) => {
+    if(option === navOptions) setNavOptions('');
+    else setNavOptions(option);
+  }
+
+  const handleLogOut = (e) => {
+    e.preventDefault()
     setLogOut(true);
     setTimeout(() => {
       firebaseConfig.auth().signOut();
@@ -96,7 +103,7 @@ export default function Navbar() {
           <a href="/my-profile"><p>Ver Perfil</p></a>
           <a href="/wishlist"><p>Lista de deseos</p></a>
           <a href="/orders"><p>Mis Pedidos</p></a>
-          <a onClick={handleLogOut}><p>Cerrar Sesión</p></a>
+          <a onClick={(e) => {handleLogOut(e)}}><p>Cerrar Sesión</p></a>
         </div>
       </div>
     </nav>
@@ -107,14 +114,26 @@ export default function Navbar() {
             ☰
           </button>
           <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
-            <a href="/my-profile">Ver Perfil</a>
-            <a href="/wishlist">Lista de deseos</a>
-            <a href="/orders">Mis Pedidos</a>
-            <a href="/lubricantes">Lubricantes</a>
-            <a href="/lenceria">Lencería</a>
+            <div className="label-option" >
+               <label htmlFor="" id="options" onClick={()=>{handleOpenOptions('profile')}}>Perfil</label>
+              <div className={`options ${navOptions==='profile' ? 'open-option' : 'd-none'}`}>
+                <a href="/my-profile">Ver Perfil</a>
+                <a href="/wishlist">Lista de deseos</a>
+                <a href="/orders">Mis Pedidos</a>
+              </div>
+            </div>
+           
+            <div className="label-option">
+              <label htmlFor="" id="options" onClick={()=>{handleOpenOptions('products')}}>Productos</label>
+              <div className={`options ${navOptions==='products' ? 'open-option' : 'd-none'}`}> 
+                <a href="/lubricantes">Lubricantes</a>
+                <a href="/lenceria">Lencería</a>
+              </div>
+            </div>
+            
             <a href="/about">Sobre nosotros</a>
             <a href="/wishlist">Lista de deseos</a>
-            {userLogged.length > 0 && <a href="" onClick={handleLogOut}>Cerrar Sesión</a>}
+            {userLogged.length > 0 && <a href="" onClick={(e) => {handleLogOut(e)}}>Cerrar Sesión</a>}
             {userLogged.length === 0 && (
               <>
                 <a href="/login">Iniciar Sesión</a>

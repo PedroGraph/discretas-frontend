@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { Link, useLocation  } from 'react-router-dom';
+import useProductContext from '../../hooks/useProductContext';
 import UserInfo from './UserInfo';
 import Orders from './Orders';
 import '../../css/profile.css';
 
 
 const Profile = () => {
-
+    const {userLogged} = useProductContext();
     const [pathname, setPathname] = useState('');
     const [activeOptionsMobile, setActiveOptionsMobile] = useState(false);
     const location = useLocation();
@@ -20,7 +21,7 @@ const Profile = () => {
     }, [location.pathname]);
 
     return(
-        <div className='d-flex'>
+        <div className='d-flex profile-section-container-main'>
             <div className={`col-md-2 nav-column ${activeOptionsMobile ? 'burger-profile-options' : ''}`}>
                 <div className='profile-options-phone' onClick={handleActiveOptions}><p>☰</p></div>
                 <div className={pathname === '/purchases' ? 'active-nav-column profile-options' : 'profile-options'}>

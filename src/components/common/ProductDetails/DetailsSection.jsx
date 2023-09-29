@@ -32,7 +32,7 @@ const Details = () =>{
                 </div>
             </div>
         </div>
-        <div className="p-5 pt-0">
+        <div className="p-1 pt-0">
         {
           sectionSelected === "0_pdt" && (
             <ProductDescription/>

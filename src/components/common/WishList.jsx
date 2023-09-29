@@ -64,7 +64,7 @@ const WishList = () =>{
                                       </div>
                                     </Link>
                                     </div>
-                                    <div className="col-md-4 text-center ps-3">$<Currency amount={item.price}/></div>
+                                    <div className="col-md-4 text-center ps-3"><Currency amount={item.price}/></div>
                                     <div>
                                         <button onClick={() =>{handleAddProductToStore(item, index)}}>
                                             Añadir al carrito

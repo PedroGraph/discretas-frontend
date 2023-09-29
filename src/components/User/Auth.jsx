@@ -33,7 +33,7 @@ const Auth = ({form}) => {
 
     useEffect(() => {
         if (userLogged.length > 0)window.location.href="/";
-    }, [userLogged]);
+    },[userLogged]);
 
     const registerAndLogin = async (e, action) => {
         try{
@@ -204,7 +204,7 @@ const Auth = ({form}) => {
                 <div className="form-group">
                     <input type="password" placeholder='Confirmar contraseña' name="repeat_password" onChange={(e)=>{setInformation(e)}} />
                 </div>
-                <div className='d-flex justify-content-center flex-column'>
+                <div className='d-flex justify-content-center flex-column submit-register'>
                     {
                         isRegistered && <div className="text-danger text-center"><p>{isRegistered}</p></div>
                     }

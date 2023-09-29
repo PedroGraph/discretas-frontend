@@ -18,6 +18,10 @@
 
 .more-products{
   cursor: pointer;
+  margin-bottom: 1em;
+  >button{
+    background-color: #000;
+  }
 }
 
 /* Estilos generales para el contenedor */
@@ -367,7 +371,7 @@
 .cards-list{
   width: calc(100% - 10px);
   margin-top: 1em;
-  height: 420px;
+  min-height: 420px;
 }
 
 .product-col {
@@ -705,7 +709,7 @@
     width: 11em;
     margin: 0 !important;
     margin-top: 0.5em !important;
-    height: 250px;
+    min-height: 250px;
   }
 
 
@@ -737,6 +741,27 @@
     background-color: #000;
     width: 100%;
     padding: 20px;
+  }
+
+  .star-items{
+    position: absolute;
+    bottom:1%;
+    width: 100%; 
+
+    > div:first-child > span{
+      font-size: 20px;
+    }
+    .wishlist-activated > svg{
+      width: 90%;
+
+    }
+  }
+
+  .order-by{
+    position: fixed;
+    top: 90px;
+    z-index:4;
+    left: 3%;
   }
 
   .nav-links a {
@@ -784,7 +809,7 @@
 
   .product-list-box{
     margin: 0 !important;
-    margin-top: 5em !important;
+    margin-top: 9em !important;
     margin-left: 0 !important;
   }
 

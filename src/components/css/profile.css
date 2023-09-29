@@ -1,4 +1,8 @@
 
+.profile-section-container-main{
+    min-height: 800px;
+}
+
 .nav-column{
     background-color:rgb(247, 247, 247);
     min-height: 900px;

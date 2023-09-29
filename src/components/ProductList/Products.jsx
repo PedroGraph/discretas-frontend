@@ -32,7 +32,8 @@ const Products = () => {
               <FilterParams onFilter={handleFilter} lower={lowestPriceProduct} higher={highestPriceProduct} /> 
             </div>
              <div className='p-5 ms-5 product-list col-md-9 align-items-center'>
-             <span className='mr-2 order-by'>Ordenar por: </span>
+              <div className='d-flex align-items-center order-by'>
+              <span className='mr-2 order-by-filter'>Ordenar por: </span>
                  <select 
                    className='form-control' 
                    style={{'display': 'flex', width: '10em', marginLeft: '1em'}} 
@@ -47,6 +48,7 @@ const Products = () => {
                    <option value='starsHigh'>Mayor Valoración</option>
                    <option value='starsLow'>Menor Valoración</option>
                  </select>
+              </div>
                <div 
                  className='d-flex align-items-center mt-2 me-5 product-list-filter' 
                  style={{ justifyContent: 'flex-end' }}

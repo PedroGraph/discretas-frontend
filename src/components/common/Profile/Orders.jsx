@@ -19,7 +19,7 @@ const OrdersSection = () => {
   }
 
     return(
-      <div className="d-flex justify-content-center flex-column w-50 p-5 pt-0">
+      <div className="d-flex justify-content-center flex-column w-50 p-5 pt-0 orders-section-container">
         {orders.length > 0 && (
           orders.map((order, index) =>(
             <div key={index} className="order-items">
