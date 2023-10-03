@@ -31,7 +31,7 @@ const Products = () => {
             <div className='p-5 filter-params'>
               <FilterParams onFilter={handleFilter} lower={lowestPriceProduct} higher={highestPriceProduct} /> 
             </div>
-             <div className='p-5 ms-5 product-list col-md-9 align-items-center'>
+             <div className='p-5 ms-5 product-list col-md-9 flex-column'>
               <div className='d-flex align-items-center order-by'>
               <span className='mr-2 order-by-filter'>Ordenar por: </span>
                  <select 

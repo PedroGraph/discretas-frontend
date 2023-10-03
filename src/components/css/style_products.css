@@ -2,6 +2,10 @@
   margin: 1em 0;
 }
 
+.input-seacher{
+  width: 300px;
+}
+
 .card-img-top {
   height: 200px; /* Ajusta aquí el tamaño deseado */
   width: 100%;
@@ -80,7 +84,12 @@
 
 .item-group-container{
   cursor: pointer;
+  
+  >div{
+   min-height: 70px;
+  }
 }
+
 
 .item-group-container:hover{
   background-color: #8bbff7;
@@ -399,7 +408,9 @@
 /* Navbar left side */
 .navbar-left {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: 1100px;
 }
 
 .logo {
@@ -411,6 +422,7 @@
 .nav-links {
   display: inline; 
   text-decoration: none;
+  /* width: 100%; */
 }
 
 .nav-links > a {
@@ -575,6 +587,10 @@
 
 /* ProductList.css */
 @media (min-width: 340px) and (max-width: 1365px) {
+
+  .navbar-left {
+    width: 100px;
+  }
 
   .image-bordered > div{
     padding: 0.3em 3em !important;

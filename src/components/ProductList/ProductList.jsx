@@ -29,18 +29,7 @@ const ProductList = ({ products }) => {
                 <Card.Text><Currency amount={product.price}/></Card.Text>
                 </Card.Body>
                 </Link>
-                <div className="star-items d-flex px-2">
-                  <div>
-                  {[1, 2, 3, 4, 5].map(stars => (
-                    <span
-                      key={stars}
-                      className={`star ${stars <= product.stars ? 'selected' : ''}`}
-                    >
-                      ★
-                    </span>
-                  ))}
-                  </div>
-                  <div className={!isAddedToWishList(product._id) ? 'wishlist' : 'wishlist-activated'} onClick={(e) => {handleAddProductToWishList(product)}}>
+                <div className={!isAddedToWishList(product._id) ? 'wishlist' : 'wishlist-activated'} onClick={(e) => {handleAddProductToWishList(product)}}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                       <path d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"/>
                     </svg>
@@ -53,6 +42,18 @@ const ProductList = ({ products }) => {
                     }
                     </span>
                   </div>
+                <div className="star-items d-flex px-2">
+                  <div>
+                  {[1, 2, 3, 4, 5].map(stars => (
+                    <span
+                      key={stars}
+                      className={`star ${stars <= product.stars ? 'selected' : ''}`}
+                    >
+                      ★
+                    </span>
+                  ))}
+                  </div>
+                 
                 </div>
                 <div className='p-1 look-product-button'>
                   <Button className='p-2' onClick={() => { handleGoToDetails(product); }}>Ver producto</Button>

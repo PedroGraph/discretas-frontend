@@ -16,8 +16,8 @@ const ProductDescription = ({description}) => {
             </p>
             {Object.keys(product).length > 0 && (
                 <>
-                    <img src={product.image[0]} alt="" style={{width: "50%", height: "50%"}}/>
-                    <img src={product.image[1]} alt="" style={{width: "50%", height: "50%"}}/>
+                    {/* <img src={product.image[0]} alt="" style={{width: "600px", height: "400px"}}/> */}
+                    {/* <img src={product.image[1]} alt="" style={{width: "600px", height: "400px"}}/> */}
                 </>
             )}
         </div>

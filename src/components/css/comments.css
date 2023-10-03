@@ -1,6 +1,12 @@
+.comment-section-container{
+    >div{
+        margin: 0 3em;
+    }
+}
+
 .comment-section{
     display: flex;
-    height: 130px;
+    height: auto;
     border: 2px solid rgb(196, 196, 196);
     border-radius: 20px;
     margin-bottom: 1em;
@@ -29,7 +35,8 @@
 
         & > div{
             position: absolute;
-            top: 0%;
+            bottom: 85%;
+            height: auto;
 
             & >span{
                 margin-right: 2em;
@@ -58,7 +65,8 @@
 }
 
 .clients-rating{
-    margin-bottom: 1em;
+    margin: 0 1em 1em 1em;
+
     > svg {
         width: 25px !important;
         height: 25px !important;
@@ -70,10 +78,37 @@
     }
 }
 
+.rating-section{
+    /* padding: 0 7em 0 0; */
+}
+
 .comments-likes{
     position: static;
     bottom: 0;
     > div {
         cursor: pointer;
     }
+}
+
+@media (min-width: 340px) and (max-width: 1365px) {
+    .comment-section-container{ 
+        display: flex;
+        flex-direction: column;
+        >div{
+            margin: 0 !important; 
+        } 
+
+    }
+
+    .comment-section{
+        width: 100%;
+        height: auto;
+    }
+
+    .comments-form{
+        >span{
+            font-size: 0.79rem;
+        }
+    }
+    
 }

@@ -28,7 +28,7 @@ const Details = () =>{
                 </div>
                 <div className="col-md-6 text-center">
                     <span  id="1_pdt" onClick={(e)=>{handleChange(e)}}>Comentarios y Calificaciones</span>
-                    <p>{usersComments.length}</p>
+                    <p>{usersComments ? usersComments.length : 0}</p>
                 </div>
             </div>
         </div>
@@ -38,9 +38,8 @@ const Details = () =>{
             <ProductDescription/>
           )
         }
-          
         {
-          sectionSelected === "1_pdt" && usersComments.length > 0 && (
+          sectionSelected === "1_pdt" && (
             <CommentSection comments={usersComments || []} saveComment={handleSaveComment}/>
           )
         }

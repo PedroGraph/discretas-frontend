@@ -89,8 +89,8 @@ const  FilterParams = ({ onFilter, lower, higher }) => {
             renderThumb={({ props }) => <div {...props} className="thumb" />}
           />
         <div className='price-filter mt-2' style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <span>$<Currency amount={lower.price}/></span>
-          <span>$<Currency amount={higher.price}/></span>
+          <Currency amount={lower.price}/>
+          <Currency amount={higher.price}/>
         </div>
       </div>
       <div className="star-filter mt-2">

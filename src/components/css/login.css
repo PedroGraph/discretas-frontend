@@ -236,3 +236,11 @@ html, body{
 .register-button:hover{
     background-color: #525252 !important;
 }
+
+@media (min-width: 340px) and (max-width: 1365px) {
+
+    .register-button{
+        background-color: #FFF !important;
+        padding: 2em !important;
+    }
+}

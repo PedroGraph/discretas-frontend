@@ -16,11 +16,12 @@ const CommentSection = ({comments, saveComment, userInfo}) => {
     }
 
     const ratingPercentage = (stars) => {
+        if(comments.length === 0) return (<span>0%</span>)
         let coincidences = 0;
         comments.map((comment) => {
             if(parseInt(comment.stars) === stars) coincidences++
         })
-        const percentage = (coincidences / comments.length) * 100;
+        const percentage = (coincidences / comments.length) * 100 ;
         return (<span>{percentage.toFixed(1)}%</span>)
     }
 
@@ -44,7 +45,7 @@ const CommentSection = ({comments, saveComment, userInfo}) => {
     return (
     <div className="d-flex comment-section-container">
         <div className="pt-0 col-md-7">
-          <div className="px-5">
+          <div className="">
             {
               comments.map((comment, index) => (
                 <div key={index} className="comment-section">
@@ -79,8 +80,8 @@ const CommentSection = ({comments, saveComment, userInfo}) => {
             }
           </div>
         </div>
-        <div className="p-5 pt-0 col-md-5">
-          <div className="px-5">
+        <div className="p-1 pt-0 col-md-4">
+          <div className="">
             <h3>Opiniones de los clientes</h3>
             <div>
                 <span>Calificación total: {comments.length}</span>
@@ -103,7 +104,7 @@ const CommentSection = ({comments, saveComment, userInfo}) => {
                 </div>
             </div>
             <div>
-                <form onSubmit={(e) => {handleAddComments(e)}}>
+                <form onSubmit={(e) => {handleAddComments(e)}} className="comments-form">
                 <span className="mx-3">*Tu correo no se mostrará en las sección de comentarios*</span>
                 <div className="d-flex mt-3 px-3">
                     <input type="text" name="name" id="" placeholder="Nombre"/>

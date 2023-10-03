@@ -1,24 +1,80 @@
 .item{
     width: 100%;
-    > img{
+    margin: 0 1em;
+    >a {
+        width: 100%;
+    }
+    > a > img{
         width: 90%;
         height: 300px;
         object-fit: cover;
     }
 
-    > div{
-        font-size: 20px;
-        position: absolute;
-        top: 70%;
-        height: 100px;
-        background-color: rgba(129, 129, 129, 0.5);
-        width: 90%;
-        display: flex;
-        flex-direction: column;
+    > a > div{
+        display: none;
+    }
 
-        > span{
-            color: aliceblue;
-            margin: 0 auto;
+    > a:hover{
+            > div{
+                display: flex;
+            flex-direction: column;
+            font-size: 20px;
+            position: absolute;
+            top: 70%;
+            height: 30%;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 90%;
+            animation: slide-top 5s alternate infinite ease;
+            
+            > span{
+                color: rgb(255, 255, 255);
+                margin: 0em auto;
+                text-shadow: 
+                2px 0px 0px rgb(0, 0, 0),
+                0px 2px 0px rgb(0, 0, 0),
+                -1px 0px 0px rgb(0, 0, 0),
+                0px -2px 0px rgb(0notas, 0, 0);
+            }
         }
+    }
+
+  
+  
+}
+
+@media (min-width: 340px) and (max-width: 1365px) {
+
+    .item{
+        margin: 0;
+
+        > a > img{
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        > a > div{
+            display: flex;
+            flex-direction: column;
+            font-size: 20px;
+            position: absolute;
+            top: 70%;
+            height: 30%;
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            animation: slide-top 5s alternate infinite ease;
+            text-decoration: none;
+
+            > span{
+                color: rgb(255, 255, 255);
+                margin: 0em auto;
+                text-shadow: 
+                2px 0px 0px rgb(0, 0, 0),
+                0px 2px 0px rgb(0, 0, 0),
+                -1px 0px 0px rgb(0, 0, 0),
+                0px -2px 0px rgb(0notas, 0, 0);
+            }
+        }
+
     }
 }

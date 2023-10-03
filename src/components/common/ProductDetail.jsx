@@ -125,7 +125,7 @@ const ProductDetail = () => {
           </div>
         </div>
       )}
-      <WhatsappBubble/>
+      {/* <WhatsappBubble/> */}
     </>
   );
 };

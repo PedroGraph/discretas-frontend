@@ -16,18 +16,22 @@ export default function Navbar() {
 
   useEffect(() => {
     function changeToggleStatus(event) {
-      if (event.target.className === 'menu-button' || event.target.className.baseVal === 'user-info') {
-        setMenuOpen((prevMenuOpen) => !prevMenuOpen);
-      } if(event.target.id !== 'options') {
+      const { className, id } = event.target;
+      const isMenuButtonOrUserInfo = className === 'menu-button' || className.baseVal === 'user-info';
+    
+      if (isMenuButtonOrUserInfo) {
+        setMenuOpen(prevMenuOpen => !prevMenuOpen);
+      } else if (id !== 'options') {
         setMenuOpen(false);
       }
     }
-  
+    
     document.addEventListener('click', changeToggleStatus);
-
+    
     return () => {
       document.removeEventListener('click', changeToggleStatus);
     };
+    
   }, [userLogged]);
   
 
@@ -59,7 +63,7 @@ export default function Navbar() {
         <img className='logo' src={logo} alt='Logo'></img>
       </a>
       <SearchBar />
-      <nav className='d-flex ms-5'>
+      <nav className='nav-options d-flex ms-5'>
         <div className='nav-links'>
           <a href="/lubricantes">Lubricantes</a>
         </div>
