@@ -69,9 +69,7 @@ export const ShopProvider = ({ children }) => {
   const userInfo = async () => {
     console.log(userLogged);
     return await axios
-      .post(`${__BACKEND_URL__}users/userinfo`, {
-        userId: userLogged,
-      })
+      .get(`${__BACKEND_URL__}api/users/getuser/${userLogged}`)
       .then((response) => {
         return response.data;
       })
@@ -88,20 +86,17 @@ export const ShopProvider = ({ children }) => {
     });
   }, [hideFooter, isMobile]);
 
-  const canSubmit = [...Object.values(formData)].every(Boolean);
+  const canSubmit = formData?.length > 0 && [...Object.values(formData)].every(Boolean);
 
   useEffect(() => {
     firebaseConfig.auth().onAuthStateChanged((user) => {
-      if (user) setUserLogged(user.uid);
+      if (user) setUserLogged(user.email);
     });
   }, [userLogged]);
 
   useEffect(() => {
     axios
-      .post(`${__BACKEND_URL__}products/allProducts`,{
-        limit: 8,
-        skip: 0 
-      })
+      .get(`${__BACKEND_URL__}api/products/all`,)
       .then((response) => {
         setProducts(response.data);
         setFilters(response.data);
@@ -218,17 +213,17 @@ export const ShopProvider = ({ children }) => {
 
   const handleAddWishList = (product) => {
     let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const list = !product._id ? productPurchased : product;
+    const list = !product.id ? productPurchased : product;
     let newWishList = null;
 
     if (!wishlist || wishlist.length === 0) {
       newWishList = [list];
     } else {
-      const isItemExist = wishlist.find((item) => item._id === list._id);
+      const isItemExist = wishlist.find((item) => item.id === list.id);
       if (!isItemExist) {
         newWishList = [...wishlist, list];
       } else {
-        const index = wishlist.findIndex((item) => item._id === list._id);
+        const index = wishlist.findIndex((item) => item.id === list.id);
         wishlist.splice(index, 1);
         newWishList = wishlist;
       }
@@ -239,7 +234,7 @@ export const ShopProvider = ({ children }) => {
 
   const isAddedToWishList = (productId) => {
     const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    return wishlist.find((item) => item._id === productId);
+    return wishlist.find((item) => item.id === productId);
   };
 
   const handlePayment = (phoneNumber, encodedMessage) => {
@@ -266,8 +261,8 @@ export const ShopProvider = ({ children }) => {
   const userDatabase = async (data) => {
     //If the user id exists in data object, it creates a new user otherwise login to the portal
     const url = !data.uid
-      ? `${__BACKEND_URL__}users/login`
-      : `${__BACKEND_URL__}users/register`;
+      ? `${__BACKEND_URL__}api/users/login`
+      : `${__BACKEND_URL__}api/users/signup`;
     console.log(url)
     return await axios
       .post(url, data)

@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from "react";
 import useProductContext from "../../hooks/useProductContext";
-import UpdateUserInfo from "../../services/Auth";
+import {UpdateUserInfo} from "../../services/Auth";
 import { Spinner } from "react-bootstrap";
 import colombia from "../../../../colombia.json";
 import profilePic from "../../../../image/profile.jpg"

@@ -6,7 +6,7 @@ import lubricant from "../../../image/lubricant.png";
 import google from "../../../image/google.svg";
 import facebook from "../../../image/facebook.svg";
 import dsGif from '../../../image/logo-login.gif'
-import UpdateUserInfo from '../services/Auth';
+import {UpdateUserInfo} from '../services/Auth';
 
 const Auth = ({form}) => {
 

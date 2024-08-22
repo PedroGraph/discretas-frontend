@@ -15,10 +15,8 @@ export const MainLoader = ({styles}) =>{
 }
 
 export const SecondLoader = ({styles}) => {
-    return (
-      <div>
-        <div class={`${styles } loader`}></div>
-      </div>
+    return (    
+      <span class={`${styles } loader`}></span>
     )
 }
 

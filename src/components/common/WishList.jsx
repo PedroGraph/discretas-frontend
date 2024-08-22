@@ -55,7 +55,7 @@ const WishList = () =>{
                             wishListItems.map((item, index) =>(
                                 <div key={index} className='d-flex p-3 justify-content-start wishlist-section-items'>
                                     <div className="col-md-5 d-flex">
-                                    <Link to={`/lubricantes/${item._id}`} className="d-flex">
+                                    <Link to={`/lubricante/${item._id}`} className="d-flex">
                                       <div>
                                         <img src={item.image[0]} alt="" />
                                       </div>

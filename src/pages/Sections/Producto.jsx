@@ -10,11 +10,11 @@ const Producto = () => {
       <div className='first-section'>
         <ProductDetail/>
       </div>
-      <div className='second-section'>
+      {/* <div className='second-section'>
         <Details/>
-      </div>
+      </div> */}
       <div>
-        <RelatedProduct/>
+        {/* <RelatedProduct/> */}
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ export const SearchBar = () => {
   };
 
   const handleOptionClick = (productId) => {
-    window.location.href = '/lubricantes/' + productId;
+    window.location.href = '/lubricante/' + productId;
   };
 
   const handleOutsideClick = (e) => {

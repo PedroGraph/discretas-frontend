@@ -10,7 +10,7 @@ export const ProductListTools = () => {
     const [loadingProducts, setLoadingProducts] = useState(false);
 
     const handleGoToDetails = (product) => {
-        navigate(`/lubricantes/${product._id}`);
+        navigate(`/lubricante/${product.id}`);
         return;
     };
 

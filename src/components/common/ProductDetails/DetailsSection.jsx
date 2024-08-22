@@ -39,9 +39,9 @@ const Details = () =>{
           )
         }
         {
-          sectionSelected === "1_pdt" && (
-            <CommentSection comments={usersComments || []} saveComment={handleSaveComment}/>
-          )
+          // sectionSelected === "1_pdt" && (
+          //   <CommentSection comments={usersComments || []} saveComment={handleSaveComment}/>
+          // )
         }
         </div>
         </>

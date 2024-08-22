@@ -38,10 +38,6 @@ const Shopping = () => {
           "/store" === location.pathname ? 'Carrito de Compras' : 'Lista de Deseos'
         }</span>
       </div>
-      <div className='store-section p-5 d-flex justify-content-center'>
-        <div className={"/store" === location.pathname ? 'store-section-active' : ''} onClick={(e)=>{navigate('/store')}}>Productos</div>
-        <div className={"/wishlist" === location.pathname ? 'store-section-active' : ''}onClick={(e)=>{navigate('/wishlist')}}>Lista de Deseos</div>
-      </div>
       {"/store" === location.pathname && (
           <Store/>
       )}

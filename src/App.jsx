@@ -18,9 +18,9 @@ function App() {
      <Navbar/>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/lubricantes" element={<Lubricantes />} />
+          <Route path="/lubricante" element={<Lubricantes />} />
           <Route path="/Lenceria" element={<Lubricantes />} />
-          <Route path="/lubricantes/:productId" element={<Producto />} />
+          <Route path="/lubricante/:productId" element={<Producto />} />
           <Route path="/store" element={<Store />} />
           <Route path="/wishlist" element={<Store />} />
           <Route path="/login" element={<Login/>} />
@@ -31,7 +31,7 @@ function App() {
           <Route path="/test" element={<HTMLEditor/>} />
           <Route path="*" element={<PageNotFound/>} />
         </Routes>
-      <Footer/>
+      {/* <Footer/> */}
     </BrowserRouter>
   );
 }

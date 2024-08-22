@@ -16,8 +16,8 @@ const RelatedProduct = () => {
     
     const items = relatedProducts ? relatedProducts.map((product, index) =>{
         return (
-          <div className="item " key={index}>
-            <a href={`/lubricantes/${product._id}`}>
+          <div className="item" key={index}>
+            <a href={`/lubricante/${product._id}`}>
               <img src={product.image[0]} alt="image" />
               <div>
                 <span className="mx-5 text-center">{product.name}</span>

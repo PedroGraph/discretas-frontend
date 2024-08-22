@@ -16,7 +16,6 @@ const ShareButton = () => {
 
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-
   const shareOnFacebook = () => {
     if (isMobile) {
         window.open(`fb-messenger://share/?link=${encodeURIComponent(url)}`, '_blank');

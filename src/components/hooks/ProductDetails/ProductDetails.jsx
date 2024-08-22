@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import useProductContext from "../useProductContext";
 import ProductDetailService from "../../services/ProductDetails";
-
+import { GetUserInfo } from "../../services/Auth";
+import {addProductToCart} from "../../services/Shopping";
 export const Details = () => {
 
     const { 
@@ -9,6 +10,7 @@ export const Details = () => {
         setModalPayment,
         setProductPurchased,
         handleAddWishList,
+        userLogged
     } = useProductContext();
     
     const url = window.location.href;
@@ -18,6 +20,13 @@ export const Details = () => {
     const [quantity, setQuantity] = useState(1);
     const [characteristics, setCharacteristics] = useState({}); 
     const [product, setProduct] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
+    const [selectedColor, setSelectedColor] = useState("");
+    const [selectedSize, setSelectedSize] = useState("");
+    const [quantityToAdd, setQuantityToAdd] = useState(1);
+    const [error, setError] = useState(null);
+
 
     useEffect(() => {
         ProductDetailService(productID).then(response => {
@@ -26,7 +35,7 @@ export const Details = () => {
           setProductDetail(response);
           setProduct(response);
           setCharacteristics(response.characteristics)
-          setProductPurchased(productSelected);
+          setProductPurchased(response);
         });
       }, [productID]); 
   
@@ -36,6 +45,7 @@ export const Details = () => {
         ...prevProduct,
         quantity: newQuantity<=0 ? 1 : newQuantity
       }));
+
     };
   
     const handleShowModal = () => {
@@ -47,6 +57,54 @@ export const Details = () => {
       handleAddWishList(product)
     }
 
-    return {product, quantity, characteristics, handleQuantityChange, handleAddProductToWishList, handleShowModal}
+    const handleAddToCart = async() => {
+      try{
+        setIsLoading(true);
+        const userInfo = await GetUserInfo(userLogged);
+        const userId = userInfo.id;
+        const order = {
+          userId,
+          products: [{
+            productID: product.id,
+            price: product.price,
+            quantity: quantityToAdd,
+            color: selectedColor,
+            size: selectedSize
+            }]
+        }
+        const response = await addProductToCart(order);
+        if(!response.info) console.error(response);
+        setIsLoading(false);
+        setIsComplete(true);
+        setTimeout(() => {
+          setIsComplete(false);
+        }, 2000)
+      }catch(error){
+        console.error(error);
+      }finally{
+        setIsLoading(false);
+      }    
+    }
+
+    return {
+      product, 
+      quantity, 
+      characteristics, 
+      selectedColor, 
+      setSelectedColor, 
+      selectedSize, 
+      setSelectedSize, 
+      quantityToAdd, 
+      setQuantityToAdd, 
+      error, 
+      setError,
+      setIsComplete, 
+      setIsLoading, 
+      isComplete, 
+      isLoading, 
+      handleQuantityChange, 
+      handleAddProductToWishList, 
+      handleShowModal, 
+      handleAddToCart}
     
 }

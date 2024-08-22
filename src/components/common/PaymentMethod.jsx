@@ -3,6 +3,7 @@ import nequi from "/image/nequi-2.svg";
 import paypal from "/image/paypal-3.svg";
 import useProductContext from "../hooks/useProductContext";
 import { Orders } from "../hooks/Orders/Orders";
+import { GetUserInfo } from "../services/Auth";
 import "../css/checkout.css";
 
 const PaymentMethod = ({userInfo, products}) =>{
@@ -14,53 +15,61 @@ const PaymentMethod = ({userInfo, products}) =>{
         setSelectedPayment(payment);
     };
 
-    const handlePayProducts = (e) => {
-
-      e.preventDefault();
+    const handlePayProducts = async (e) => {
       setIsLoadingForm(true);
-
-      const currentDate = new Date();
-      const orderDate = currentDate.toISOString();
-
+      e.preventDefault();
       const items = [];
       let totalPrice = 0;
+
       products.map(product =>{
         items.push(product);
-        totalPrice+=product.price;
+        totalPrice += product.price;
       })
 
+      const userInfo = await GetUserInfo(userLogged);
+
       const order = {
-        userID: userLogged,
+        userId: userInfo.id,
         products: items,
-        shippingAddress:{
+        shippingAddress: {
           address: userInfo.address,
           city: userInfo.city,
-          state: userInfo.state,
-          fullName: userInfo.name+' '+userInfo.last_name,
+          fullName: userInfo.firstName+' '+userInfo.lastName,
         },
-        orderDate: orderDate,
-        totalPrice:totalPrice
       }
 
       handleSetOrders(order).then(response =>{
-        if(response==="Added orders"){
-          setIsLoadingForm(false);
+        if(response.info.orderId){
           setIsCompleteForm(true);
-          setTimeout(()=>{setIsCompleteForm(false);},5000)
-        }
+        } 
       }).catch(e =>{
-        console.log(e)
+        console.log(e);
+      }).finally(() =>{
+        setIsLoadingForm(false);
       })
     }
 
     return (
         <>
           <div className="text-center mt-4">
-            <span>MÉTODO DE PAGO</span>
-            <div className="d-flex justify-content-center flex-column mt-5">
-              <span className="p-3">Selecciona un método de pago</span>
-              <div className="mt-3 d-flex justify-content-between px-5">
-                <img
+            <div className="d-flex justify-content-center flex-column">
+              <div className=" d-flex justify-content-between px-5">
+                <select onChange={handleSelectedPayment} name="paymentOptions" id="paymentOptions" className="w-100 h-9 rounded ps-2">
+                  <option value="" className='text-black w-50' hidden selected>Selecciona un método de pago</option>
+                  <option value="PayPal" className='text-black w-50'>AV Villas</option>
+                  <option value="Bancolombia" className='text-black w-50'>Bancolombia</option>
+                  <option value="Banagrario" className='text-black w-50'>Banagrario</option>
+                  <option value="Banco de Bogotá" className='text-black w-50'>Banco de Bogotá</option>
+                  <option value="Banco de Occidente" className='text-black w-50'>Banco de Occidente</option>
+                  <option value="Banco Caja Social" className='text-black w-50'>Banco Caja Social</option>
+                  <option value="Banco Popular" className='text-black w-50'>Banco Popular</option>
+                  <option value="BBVA" className='text-black w-50'>BBVA</option>
+                  <option value="Scotiabank" className='text-black w-50'>Scotiabank</option>
+                  <option value="Davivienda" className='text-black w-50'>Davivienda</option>
+                  <option value="Daviplata" className='text-black w-50'>Daviplata</option>
+                  <option value="Nequi" className='text-black w-50'>Nequi</option>
+                </select>
+                {/* <img
                   src={nequi}
                   style={{ width: "130px" }}
                   className={
@@ -79,11 +88,11 @@ const PaymentMethod = ({userInfo, products}) =>{
                   onClick={(e) => {
                     handleSelectedPayment("PayPal");
                   }}
-                />
+                /> */}
               </div>
               {selectedPayment && (
                 <div className="d-flex justify-content-center">
-                  <button className="w-50 mt-5 bg-success" onClick={(e) => {handlePayProducts(e)}}>Realizar compra</button>
+                  <button className="w-50 mt-3 rounded bg-success" onClick={(e) => {handlePayProducts(e)}}>Realizar compra</button>
                 </div>
               )}
             </div>
