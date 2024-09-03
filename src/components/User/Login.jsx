@@ -22,14 +22,14 @@ const Login = () => {
   const image = Math.floor(Math.random() * background.length) ;
 
   return (
-    <div className="login ">
-    <div className='w-50 logo-login column' >
-        <img src={background[image]} alt="login image background"/>
-        <DsLogo/>
-    </div>
-    <div className='login-form-section column pt-5' >
-     <Auth form={false}/>
-    </div>
+    <div className="xs:grid xs:h-screen lg:h-[50vh] lg:flex ">
+      <div className='relative xs:hidden lg:block w-2/6'>
+          <img src={background[image]} alt="login_image_background" className='xs:hidden lg:block lg:w-full lg:h-[100vh] xl:h-[91.3vh] lg:object-cover'/>
+          <div className='absolute bottom-10 left-2 z-[10000] xs:block lg:hidden'><DsLogo/></div>
+      </div>
+      <div className='flex flex-col justify-center items-center xs:bg-black lg:bg-gray-200 lg:w-4/6 lg:h-[100vh] xl:h-[91.3vh]'>
+        <Auth form={false}/>
+      </div>
     </div>
   );
 };

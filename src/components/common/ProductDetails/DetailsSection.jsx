@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from "react";
-import ProductDescription from "../ProductDescription";
-import CommentSection from "../CommentsSection";
 import {Comments} from "../../hooks/Comments/Comments";
 import '../../css/product_details.css'
 
@@ -21,28 +19,7 @@ const Details = () =>{
 
     return(
         <>
-        <div className="d-flex align-items-center flex-column">
-            <div className='details-section-column '>
-                <div className="col-md-6 text-center" >
-                    <span id="0_pdt" onClick={(e)=>{handleChange(e)}} >Detalles del Produto</span>
-                </div>
-                <div className="col-md-6 text-center">
-                    <span  id="1_pdt" onClick={(e)=>{handleChange(e)}}>Comentarios y Calificaciones</span>
-                    <p>{usersComments ? usersComments.length : 0}</p>
-                </div>
-            </div>
-        </div>
-        <div className="p-1 pt-0">
-        {
-          sectionSelected === "0_pdt" && (
-            <ProductDescription/>
-          )
-        }
-        {
-          // sectionSelected === "1_pdt" && (
-          //   <CommentSection comments={usersComments || []} saveComment={handleSaveComment}/>
-          // )
-        }
+        <div className="flex justify-center w-full xs:flex-col lg:flex-row">
         </div>
         </>
     )

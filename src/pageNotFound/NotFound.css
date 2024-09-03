@@ -1,69 +1,74 @@
-.not-found-container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .not-found-content {
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 0;
-  }
-  
-  .not-found-content h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-  
-  .not-found-content p {
-    font-size: 1rem;
-    margin-bottom: 20px;
-  }
-  
-  .not-found-content button {
-    font-size: 1rem;
-  }
-  
-  .plane {
-    width: 200px;
-    height: 20px;
-    position: absolute;
-    top: calc(79% - 20px);
-    left: calc(50% - 50px);
-    animation: fly 5.5s linear infinite;
-  }
-  
-  @keyframes fly {
-    from { transform: rotate(0deg)  translate(-50px) rotate(0deg); }
-    to { transform: rotate(360deg) translate(-50px) rotate(-360deg); }
-  }
 
-@media (min-width: 769px) {
 
-    .not-found-container {
-        height: 95vh;
-      }
-
-    .not-found-container .row{
-        top: 0 !important;
-        width: 70%;
-        height: 400px !important;
-    }
-    .not-found-content{
-        height: 300px;
-        display: grid;
-        align-items: center;
-    }
-
-    .not-found-content button {
-        width: 300px;
-      }
-    
+.not-found {
+  width: 560px;
+  height: 225px;
+  margin-right: -10px;
 }
-  
+.starry-sky {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.notfound-copy {
+  color: #fff;
+  position: fixed;
+  top: 25px;
+  right: 10%;
+  text-align: right;
+}
+
+
+/* change to alternating star opacities */
+.all-stars {
+  animation: blinkblink 7s linear infinite;
+}
+
+@keyframes blinkblink {  
+  50% { opacity: 0.1; }
+}
+
+.moon{
+  position: fixed;
+  top: 20%;
+  left: 20%;
+  transform: translate(18%, -29%);
+  animation: jump 7s ease-in-out infinite;
+}
+
+@keyframes jump {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(700px, -100px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+
+input[type=text]:focus {
+  border-color:none; 
+  border-bottom:2px solid #ccc;
+}
+
+@media screen and (max-width: 1024px) {
+  .moon{
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(0%, 0%);
+    animation: none;
+  }
+}
+
+@media (max-width: 647px) { 
+  .moon {
+    position: relative;
+    padding-top: -500px;
+  }
+}

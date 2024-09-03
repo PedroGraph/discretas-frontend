@@ -392,10 +392,6 @@ h2 {
   transform: rotate(180deg);
 }
 
-.slick-slider {
-  width: 225px !important;
-}
-
 .likebutton{
   margin-left: 2em;
   background-color: transparent;

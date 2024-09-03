@@ -14,7 +14,7 @@ export const useStoreHook = () => {
     const [discount, setDiscount] = useState({discount: 0, code: ''});
     const [errorCoupon, setErrorCoupon] = useState(null);
 
-    const { userLogged } = useProductContext();
+    const { userLogged, getAllItemsFromStore, orderList, setOrderList } = useProductContext();
 
     const isThereProducts = orderItems?.length > 0 && !ordered;
 
@@ -40,18 +40,19 @@ export const useStoreHook = () => {
       }
       else await SettingOrder(dataShopping);
     }
-
+    
     useEffect(() => {
-        const gettingItems = async () => {
-            if(!userLogged) return;
-            const userInfo = await GetUserInfo(userLogged);
-            const storedItems = await StoreItems(userInfo.id);
-            await setOrderItems(storedItems); 
-            console.log(orderItems);
-            await setLoading(false);
-        }
-        gettingItems();
-       
+      if(!userLogged) return;
+      getAllItemsFromStore()
+        .then((response) => {
+          setOrderItems(response || []);
+          setOrderList(response || []);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setLoading(false);
+        });
     }, [userLogged]);
 
     const handleDiscount = async (e) => {
@@ -68,6 +69,7 @@ export const useStoreHook = () => {
     const handleQuantityChange = async (id, newQuantity) => {
         try{
             setOrderItems(prevItems => prevItems.map(item => (item.id === id ? { ...item, quantity: newQuantity } : item)));
+            setOrderList(prev => prev.map(item => (item.id === id ? { ...item, quantity: newQuantity } : item)));
             const userInfo = await GetUserInfo(userLogged);
             await updateQuantity({userId:userInfo.id, productId: id, quantity: newQuantity});
         }catch(error){
@@ -80,11 +82,8 @@ export const useStoreHook = () => {
       try{
         const userInfo = await GetUserInfo(userLogged);
         await deleteProductFromCart({userId: userInfo.id, productId: id});
-        setOrderItems(prevItems =>{
-            const newArray = [...prevItems]; 
-            newArray.splice(id, 1); 
-            return newArray; 
-        });
+        setOrderItems(prevItems => prevItems.filter(item => item.id !== id));
+        setOrderList(prev => prev.filter(item => item.id !== id));
       }catch(error){
         console.log(error);
       }

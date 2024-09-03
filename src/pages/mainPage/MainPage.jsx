@@ -1,12 +1,13 @@
 import React from "react";
 import "./MainPage.css";
-import MainLenceria from "../../components/common/MainImage";
-
+import RelatedProduct from "../../components/common/RelatedProducts";
+import HomeSlider from "../../components/common/HomeSlider";
 
 const MainPage = () => {
   return (
     <>
-      <MainLenceria/>
+      <HomeSlider />
+      <RelatedProduct />
     </>
   );
 };

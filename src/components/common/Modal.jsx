@@ -60,12 +60,9 @@ const InfoModal = ({show, styles}) => {
   }
 
   return (
-    <div className='info-modal xs:w-full xs:left-0 xs:top-0 xl:h-screen'>
-        <div className=' d-flex items-center justify-center xs:block lg:hidden rounded-full absolute xs:top-3 xs:right-5 xl:right-[22%]  z-[1200] text-black text-center' onClick={handleCloseModal}> 
-          <span className='font-bold xs:text-white text-lg xl:text-black'>x</span>
-        </div>
-        <div className='info-modal-form'>
-          <div>
+    <div className='bg-[rgba(0,0,0,0.5)] flex absolute items-center justify-center z-1000 xs:w-full xs:left-0 xs:top-0 xl:h-screen'>
+        <div className=''>
+          <>
             {userLogged.length > 0 ? (
                 <Payform product={show}/>
               ):(
@@ -92,7 +89,7 @@ const InfoModal = ({show, styles}) => {
                 <span className='text-white text-center px-5 pt-3'>¿No te has registrado?<a href="/signup" className='text-blue-400'> Registrarme </a></span>
               </div>
             )}
-          </div>
+          </>
         </div>
     </div>
   );

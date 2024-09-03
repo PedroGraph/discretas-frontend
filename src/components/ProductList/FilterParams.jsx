@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { filtersProduct } from '../services/Products';
+import { filtersProduct, getProducts } from '../services/Products';
 import useProductContext from '../hooks/useProductContext';
+import Slider from '@mui/material/Slider';
 import "../css/style_products.css";
+import { set } from 'lodash';
 
 const  FilterParams = () => {
-
-  const { setPriceFilter, setProducts } = useProductContext();
-  const [ priceFiltered, setPriceFiltered ] = useState("");
+  const { setProducts } = useProductContext();
+  const [ priceRange, setPriceRange ] = useState([10000, 522000]);
   const [ open, setOpen ] = useState(false);
-
   const handleOpen = () => setOpen(!open);
 
-  const handlePriceChange = async (values) => {
-    const newProductList = await filtersProduct({ productPrice: values });
-    setProducts(newProductList)
-    setPriceFilter(values);
+  const handleSliderChange = (event, newValue) => {
+    setPriceRange(newValue);
   };
 
-  const selectedStars = Math.floor(Math.random() * 5) + 1;
+  const handleFilter = async () => {
+    setProducts([])
+    const filteredProducts = await filtersProduct({ productPrice: priceRange });
+    setProducts(filteredProducts);
+  }
 
   return (
     <>
       <p className='text-center font-bold xs:pb-1 lg:pb-2 d-flex items-center gap-0.5 justify-center' onClick={handleOpen}>Filtrar por
-      <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="15px" height="15px" viewBox="0 0 36.678 36.678" xmlSpace="preserve">
+      <svg className='xs:block lg:hidden' fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="15px" height="15px" viewBox="0 0 36.678 36.678" xmlSpace="preserve">
         <g>
           <path d="M29.694,20.074c0.087,0.16,0.08,0.356-0.02,0.512L19.393,36.449c-0.089,0.139-0.241,0.224-0.406,0.229
             c-0.004,0-0.009,0-0.014,0c-0.159,0-0.31-0.074-0.403-0.206L6.997,20.609c-0.111-0.152-0.127-0.354-0.042-0.521
@@ -33,27 +35,33 @@ const  FilterParams = () => {
       </svg>
       </p>
       <div className={`d-flex xs:flex-col sm:flex-row lg:flex-col gap-1 xs:px-2 sm:px-0 ${!open ? 'xs:hidden': 'menu-slide-down'}`}>
-        <div className={`lg:flex flex-column align-items-end mt-2 border border-gray-300 xs:w-full sm:w-1/3 lg:w-full p-3 rounded sm:mb-2 ${!open ? 'xs:hidden': 'xs:d-flex'}`}>
-          <span className='font-bold mb-2 text-sm text-gray-700 mr-auto'>Precio</span>
-          <input type="number" className='h-8' value={priceFiltered} onChange={e => setPriceFiltered(e.target.value > 0 ? e.target.value : "")} placeholder={`$324.009`}/>
-          <button className='mt-2 w-20 px-2 py-1 bg-black text-sm' onClick={() => handlePriceChange(priceFiltered)}>Aplicar</button>
-        </div>
-        <div className={`lg:flex flex-column align-items-end mt-2 border border-gray-300 xs:w-full sm:w-1/3 lg:w-full p-3 rounded sm:mb-2 ${!open ? 'xs:hidden': 'xs:d-flex'}`}>
-          <span className='font-bold mb-2 text-sm text-gray-700 mr-auto'>Calificación</span>
+        <div className={`lg:flex flex-column align-items-end mt-2 xs:w-full sm:w-1/3 lg:w-full p-3 rounded sm:mb-2 ${!open ? 'xs:hidden': 'xs:d-flex'}`}>
+          <h1 className='font-bold mb-2 xs:text-xs lg:text-sm text-gray-700 mr-auto'>Rango de precio</h1>
+          <Slider
+            sx={{
+              color: "black", 
+              '& .MuiSlider-thumb': { 
+                backgroundColor: 'black',
+              },
+              '& .MuiSlider-track': {  
+                backgroundColor: 'black',
+              },
+              '& .MuiSlider-rail': {  
+                backgroundColor: '#cccccc',  
+              },
+            }}
+            value={priceRange}
+            onChange={handleSliderChange}
+            valueLabelDisplay="auto"
+            min={10000}
+            max={522000}
+            step={1000}
+          />
           <div className='d-flex justify-between w-full'>
-          {
-            [1, 2, 3, 4, 5].map((value) => (
-              <span key={value}  className={`star ${value <= selectedStars ? 'selected' : ''}`} style={{fontSize: "24px"}}
-              >
-                ★
-              </span>
-            ))
-          }
+            <input type="number" className='h-8 w-2/6 xs:text-xs lg:text-sm' value={priceRange[0]} onChange={e => setPriceRange([e.target.value, priceRange[1]])}/>
+            <input type="number" className='h-8 w-2/6 xs:text-xs lg:text-sm' value={priceRange[1]} onChange={e => setPriceRange([priceRange[0], e.target.value])}/>
           </div>
-          <button className='mt-2 w-20 px-2 py-1 bg-black text-sm' onClick={() => handlePriceChange(priceFiltered)}>Aplicar</button>
-        </div>
-        <div className={`lg:flex flex-column align-items-end mt-2 border border-gray-300 xs:w-full sm:w-1/3 lg:w-full p-3 rounded sm:mb-2 ${!open ? 'xs:hidden': 'xs:d-flex'}`}>
-         <span>AQUI VA UN NUEVO FILTRO</span>
+          <button className='bg-black xs:mt-2 lg:mt-4 py-1 px-3 rounded text-sm' onClick={handleFilter}>Aplicar</button>
         </div>
       </div>
       

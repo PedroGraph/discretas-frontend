@@ -2,6 +2,11 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import firebaseConfig from "../../firebase";
 import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { filtersProduct, getProducts } from "../components/services/Products";
+import { GetUserInfo } from "../components/services/Auth";
+import { StoreItems } from "../components/services/Store";
+import Cookies from "js-cookie";
+import { includes } from "lodash";
 
 const ShoppingProvider = createContext({});
 
@@ -16,12 +21,7 @@ export const ShopProvider = ({ children }) => {
   const [highestPriceProduct, setHighestPriceProduct] = useState(null); //Set default highest price in products list
   const [productDetail, setProductDetail] = useState(null); //Set selected product detail
   const [productPurchased, setProductPurchased] = useState(null); //Set default product purchase in product details
-  const [orderList, setOrderList] = useState(
-    JSON.parse(localStorage.getItem("store")) || []
-  ); //Set default product purchase in product details
-  const [wishList, setWishList] = useState(
-    JSON.parse(localStorage.getItem("wishList")) || []
-  );
+  const [orderList, setOrderList] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false); //Spinner for loading
   const [isComplete, setIsComplete] = useState(false); //Verify if product purchase is complete
@@ -66,6 +66,21 @@ export const ShopProvider = ({ children }) => {
     setImageModal(false);
   };
 
+  useEffect(() => {
+    getAllItemsFromStore().then((items) => {
+      setOrderList(items);
+    }).catch((error) => {
+      console.error(error);
+    });
+  }, [userLogged])
+  
+  const getAllItemsFromStore = async () => {
+    if(userLogged.length === 0) return;
+    const userInfo = await GetUserInfo(userLogged);
+    const items = await StoreItems(userInfo.id);
+    return items;
+  };
+
   const userInfo = async () => {
     console.log(userLogged);
     return await axios
@@ -88,28 +103,41 @@ export const ShopProvider = ({ children }) => {
 
   const canSubmit = formData?.length > 0 && [...Object.values(formData)].every(Boolean);
 
+  //Verify if user is logged
   useEffect(() => {
-    firebaseConfig.auth().onAuthStateChanged((user) => {
+    const user = Cookies.get('userLogged');
+    if (!user) {
+      firebaseConfig.auth().onAuthStateChanged((user) => {
       if (user) setUserLogged(user.email);
-    });
+      });
+    }else{
+      console.log(user, "userFromCookie");
+      setUserLogged(user);
+    }
   }, [userLogged]);
 
+  //Get all products
   useEffect(() => {
-    axios
-      .get(`${__BACKEND_URL__}api/products/all`,)
-      .then((response) => {
-        setProducts(response.data);
-        setFilters(response.data);
-
-        const lowestPrice = response.data.reduce((min, product) => product.price < min.price ? product : min);
+    const section = window.location.pathname?.replace("/", "");
+    if(section && section !== 'productos' && section,includes('?')){
+      filtersProduct({ productCategory: section[0].toUpperCase() + section.slice(1) }).then((products => {
+        setProducts(products)
+        setFilters(products)
+        const lowestPrice = products.reduce((min, product) => product.price < min.price ? product : min);
         setLowestPriceProduct(lowestPrice);
-
-        const highestPrice = response.data.reduce((max, product) => product.price > max.price ? product : max);
+        const highestPrice = products.reduce((max, product) => product.price > max.price ? product : max);
         setHighestPriceProduct(highestPrice);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }))
+    }else{
+      getProducts().then((products => {
+        setProducts(products) 
+        setFilters(products)
+        const lowestPrice = products.reduce((min, product) => product.price < min.price ? product : min);
+        setLowestPriceProduct(lowestPrice);
+        const highestPrice = products.reduce((max, product) => product.price > max.price ? product : max);
+        setHighestPriceProduct(highestPrice);
+      }));
+    }
   }, []);
 
   const loadMoreProducts = async () =>{
@@ -176,60 +204,6 @@ export const ShopProvider = ({ children }) => {
       );
     });
     setProducts(filteredProducts);
-  };
-
-  const handleAddStore = (product) => {
-    let store = JSON.parse(localStorage.getItem("store")) || [];
-    const shoppingCart = !product._id ? productPurchased : product;
-    let newCart = JSON.parse(localStorage.getItem("store"));
-
-    if (store.length === 0) {
-      newCart = [shoppingCart];
-    } else {
-      const isItemExist =
-        store.find(
-          (item) =>
-            item.size === shoppingCart.size &&
-            item.color == shoppingCart.color &&
-            item.name === shoppingCart.name
-        ) || store.find((item) => item.name === shoppingCart.name);
-      if (!isItemExist) newCart = [...store, shoppingCart];
-
-      setIsLoading(true);
-
-      setTimeout(() => {
-        setIsLoading(false);
-        setIsComplete(true);
-
-        setTimeout(() => {
-          setIsComplete(false);
-        }, 1000);
-      }, 1000);
-    }
-
-    localStorage.setItem("store", JSON.stringify(newCart));
-    setOrderList(newCart);
-  };
-
-  const handleAddWishList = (product) => {
-    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const list = !product.id ? productPurchased : product;
-    let newWishList = null;
-
-    if (!wishlist || wishlist.length === 0) {
-      newWishList = [list];
-    } else {
-      const isItemExist = wishlist.find((item) => item.id === list.id);
-      if (!isItemExist) {
-        newWishList = [...wishlist, list];
-      } else {
-        const index = wishlist.findIndex((item) => item.id === list.id);
-        wishlist.splice(index, 1);
-        newWishList = wishlist;
-      }
-    }
-    localStorage.setItem("wishlist", JSON.stringify(newWishList));
-    setWishList(newWishList);
   };
 
   const isAddedToWishList = (productId) => {
@@ -418,11 +392,6 @@ export const ShopProvider = ({ children }) => {
 
         orderList,
         setOrderList,
-        wishList,
-        setWishList,
-        handleAddStore,
-        handleAddWishList,
-        isAddedToWishList,
 
         userDatabase,
 
@@ -441,6 +410,8 @@ export const ShopProvider = ({ children }) => {
         userInfo,
         validateEmail,
         validateData,
+
+        getAllItemsFromStore,
       }}
     >
       {children}

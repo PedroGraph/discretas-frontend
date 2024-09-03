@@ -5,7 +5,7 @@ import useProductContext from "../useProductContext";
 export const ProductListTools = () => {
 
     const navigate = useNavigate();
-    const { handleAddStore, setIsComplete, isComplete, loadMoreProducts  } = useProductContext();
+    const { setIsComplete, isComplete, loadMoreProducts  } = useProductContext();
     const [selectedProductId, setSelectedProductId] = useState(null);
     const [loadingProducts, setLoadingProducts] = useState(false);
 
@@ -14,17 +14,7 @@ export const ProductListTools = () => {
         return;
     };
 
-    const handleAddToCart = (product) => {
-        setIsComplete(true);
-        product.quantity = 1;
-        delete product.characteristics;
-        handleAddStore(product);
-        setTimeout(() => {
-        setIsComplete(false);
-        }, 1000);
-
-        return;
-    };
+  
 
     const handleMoreProducts = () => {
         setLoadingProducts(true)
@@ -34,6 +24,6 @@ export const ProductListTools = () => {
 
     }
 
-    return {selectedProductId, setSelectedProductId, handleAddStore, handleGoToDetails, handleAddToCart, isComplete, handleMoreProducts, loadingProducts}
+    return {selectedProductId, setSelectedProductId, handleGoToDetails, handleAddToCart, isComplete, handleMoreProducts, loadingProducts}
 
 }

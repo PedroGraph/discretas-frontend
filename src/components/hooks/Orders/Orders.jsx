@@ -2,12 +2,14 @@ import React, {useState, useEffect} from "react";
 import {GettingOrders, SettingOrder} from "../../services/Orders";
 import { GetUserInfo } from "../../services/Auth";
 import useProductContext from "../useProductContext";
+import { useLocation } from "react-router-dom";
 
 export const Orders = () => {
 
+    const location = useLocation();
     const { userLogged } = useProductContext();
-
     const [orders, setOrders] = useState([]);
+    const selectedSection = location.pathname;
 
     const handleUserInfo = async () => {
       return await GetUserInfo(userLogged).then((response) =>{
@@ -35,6 +37,6 @@ export const Orders = () => {
     }
 
 
-    return {orders, handleSetOrders};
+    return {orders, handleSetOrders, selectedSection};
 
 }

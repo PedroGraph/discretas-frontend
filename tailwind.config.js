@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'dancing-script': ['Dancing Script', 'sans-serif'],
+      },
+    },
     screens: {
       'xs': '320px',
       // => @media (min-width: 320px) { ... }
@@ -37,7 +41,4 @@ module.exports = {
       // => @media (min-width: 3840px) { ... }
     }
   },
-  plugins: [
-    require('@tailwindcss/line-clamp'),
-  ],
 }

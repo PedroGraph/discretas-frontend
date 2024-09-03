@@ -1,5 +1,15 @@
 import axios from "axios";
 
+export const getProducts = async () => {
+   return await  axios.get(`${__BACKEND_URL__}api/products/all`,)
+   .then((response) => {
+      return response.data;
+   })
+   .catch((error) => {
+      console.error(error);
+   });
+}
+
 export const searchProducts = async name => {
     return await axios.get(`${__BACKEND_URL__}products/search/${name}`)
          .then(response =>{

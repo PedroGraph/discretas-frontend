@@ -1,58 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import useProductContext from '../hooks/useProductContext';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import logo from "/assets/logo.svg"
-import { FaFacebook, FaTiktok } from 'react-icons/fa';
-import { BsInstagram } from 'react-icons/bs';
-import { useLocation } from 'react-router-dom';
+import { Facebook, Instagram, Mail, MapPin, Phone, Twitter } from "lucide-react"
 
-
-const Footer = () => {
-
-  const { hideFooter, isMobile } = useProductContext();
- 
-  useEffect(() => {
-
-  },[hideFooter, isMobile]);
-
-    const style = {
-        height: "5em",
-    }
-
+export default function StoreFooter() {
   return (
-    <footer className={hideFooter && isMobile <= 1364 ? 'd-none' : 'text-white py-5'} style={{backgroundColor: "#000", position: "relative", zIndex: "2", width: "100%"}}>
-      <Container style={{margin: "0 !important"}}>
-        <Row>
-          <Col >
-            {/* Logo de la empresa */}
-            <img style={style} src={logo} alt="Logo de la empresa" />
-            <Col className=" d-none" style={{marginLeft: "1em"}}>
-                <a href="https://www.facebook.com/profile.php?id=100092280625219" target="_blank"  style={{marginRight: "1em"}}><FaFacebook size={30} color="white" /></a>
-                <a href="https://www.instagram.com/discretaseduccionbga" target="_blank"  style={{marginRight: "1em", textDecoration: "none"}}> <BsInstagram  size={30} color="white" /> </a>
-                <a href="https://www.tiktok.com/@discretaseduccionbga" target="_blank" > <FaTiktok size={30} color="white" /></a>
-            </Col>
-          </Col>
-          <Col md={7}>
-            {/* Suscripción al newsletter */}
-            <h6>¿Quieres recibir actualizaciones de nuestros productos?</h6>
-            <Form className="mt-3">
-              <Form.Group controlId="newsletterEmail">
-                <Form.Control type="email" placeholder="Ingresa tu correo electrónico" className='w-50'/>
-              </Form.Group>
-              <Button className="mt-3"  variant="primary" type="submit">Suscribirse</Button>
-            </Form>
-          </Col>
-        </Row>
-        <hr />
-        {/* Información de la empresa */}
-        <Row>
-          <Col md={3}>
-            <p>Derechos de autor © {new Date().getFullYear()} Discreta Seducción</p>
-          </Col>
-        </Row>
-      </Container>
-    </footer>
-  );
-};
+    <footer className="bg-black text-gray-600 py-12 h-auto">
+      <div className="xl:container xl:mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Enlaces rápidos */}
+          <div>
+            <h3 className="font-bold text-lg mb-4 text-white">Enlaces rápidos</h3>
+            <ul className="space-y-2">
+              <li><a href="/" className="hover:text-primary text-white">Inicio</a></li>
+              <li><a href="/lenceria" className="hover:text-primary text-white">Productos</a></li>
+              <li><a href="/about" className="hover:text-primary text-white">Sobre nosotros</a></li>
+              <li><a href="#" className="hover:text-primary text-white">Contacto</a></li>
+              <li><a href="#" className="hover:text-primary text-white">Política de privacidad</a></li>
+            </ul>
+          </div>
 
-export default Footer;
+          {/* Información de contacto */}
+          <div>
+            <h3 className="font-bold text-lg mb-4 text-white">Contacto</h3>
+            <ul className="space-y-2">
+              <li className="flex items-center text-white">
+                <MapPin className="w-5 h-5 mr-2" />
+                <span>123 Calle Tienda, Ciudad, País</span>
+              </li>
+              <li className="flex items-center text-white">
+                <Phone className="w-5 h-5 mr-2" />
+                <span>+1 234 567 890</span>
+              </li>
+              <li className="flex items-center text-white">
+                <Mail className="w-5 h-5 mr-2" />
+                <span className="max-w-[10px] w-full">info@discretaseduccion.com</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Suscripción al boletín */}
+          <div>
+            <h3 className="font-bold text-lg mb-4 text-white">Suscríbete a nuestro boletín</h3>
+            <p className="mb-4 text-white">Recibe las últimas ofertas y novedades directamente en tu correo.</p>
+            <form className="flex flex-col space-y-2">
+              <input type="email" placeholder="Tu correo electrónico" />
+              <button type="submit" className="bg-primary text-white px-4 py-2 rounded">Suscribirse</button>
+            </form>
+          </div>
+
+          {/* Redes sociales */}
+          <div>
+            <h3 className="font-bold text-lg mb-4 text-white">Síguenos</h3>
+            <div className="flex space-x-4">
+              <a href="#" className="hover:text-primary text-white">
+                <Facebook className="w-6 h-6" />
+                <span className="sr-only">Facebook</span>
+              </a>
+              <a href="#" className="hover:text-primary text-white">
+                <Instagram className="w-6 h-6" />
+                <span className="sr-only">Instagram</span>
+              </a>
+              <a href="#" className="hover:text-primary text-white">
+                <Twitter className="w-6 h-6" />
+                <span className="sr-only">Twitter</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Derechos de autor */}
+        <div className="mt-8 pt-8 border-t border-gray-200 text-center">
+          <p>&copy; {new Date().getFullYear()} Mi Tienda. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  )
+}

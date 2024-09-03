@@ -1,31 +1,44 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import useProductContext from '../hooks/useProductContext';
 import Currency from '../common/CurrencyFormater';
 // import { ProductListTools } from '../hooks/ProductList/ProductList';
+import { useLocation  } from 'react-router-dom';
 import { filtersProduct } from '../services/Products';
+import { SecondLoader } from '../common/Loader';
 import '../css/style_products.css';
 import '../css/product_list.css'
-import { SecondLoader } from '../common/Loader';
 
 const ProductList = ({ products }) => {
   
   const { setProducts } = useProductContext();
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+
   // const { selectedProductId, setSelectedProductId, handleGoToDetails, handleAddToCart, isComplete, handleMoreProducts, loadingProducts } = ProductListTools();
+
+
+  useEffect(() => {
+    if(location.search){
+      const params = new URLSearchParams(location.search);
+      const paramsObject = Object.fromEntries(params.entries());
+      filtersProduct(paramsObject).then(products => {
+        setProducts(products)
+    });
+    }
+  }, []);
 
   const orderBySettings = async (event) =>{
     setLoading(true)
     const filteredProducts = await filtersProduct({ orderBy: event.target.value });
-    console.log(filteredProducts)
     setProducts(filteredProducts);
     setLoading(false);
   }
 
   return (
    
-    <div className='pb-1 w-100 lg:4/6 xl:w-[80%] h-screen'>
-      <div className='py-1 w-100 d-flex justify-between px-2 border-b-1 shadow-md'>
+    <div className={`pb-1 w-100 lg:4/6 xl:w-[80%] h-auto`}>
+      <div className='py-1 w-100 d-flex justify-between px-2 border-b-1 shadow-md bg-gray-200'>
         <span className='py-1 px-1 text-sm'>Pagina 
           <span className='font-bold'>{" "} 1 {" "}</span>
            de {" "}
@@ -45,20 +58,21 @@ const ProductList = ({ products }) => {
         </select>
       </div>
       {!loading > 0 ? (
-        <div className='xs:d-flex md:flex-column md:grid md:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 4xl:grid-cols-5 5xl:grid-cols-6 w-100 mb-3 px-2 pt-2 gap-1'>
+        <div className='xs:d-flex md:flex-column md:grid w-100 mb-3 pe-2 pt-2 gap-2'>
         {products.map((product, index) => {
+          if(!location.pathname.includes(product.category.toLowerCase()) && !location.search && !location.pathname.includes('productos')) return;
           const randomStars = Math.floor(Math.random() * 5) + 1;
           return(
-          <Link to={`/${product.category}/${product.id}`} key={index} className='px-1 min-h-3 bg-white w-100 d-flex border rounded'>
-            <div className='py-1 w-40'>
+          <Link to={`/${product.category}/${product.id}`} key={index} className='px-1 min-h-3 bg-gray-50 w-100 flex gap-4 border rounded'>
+            <div className='py-1 xs:w-40 lg:w-80 lg:h-60'>
               <img src={product.images[0].imageName} alt={product.name} className='w-full h-full border rounded object-cover'/>
             </div>
-            <div className='d-flex flex-column ps-2 pb-3 pt-1 font-bold w-60 '>
-              <span className='w-100 text-[12px]'>{product.name}</span>
-              <span className='font-light text-[12px] pt-1'>+{Math.floor(Math.random() * 5) + 1}00 ventas durante el mes </span>
+            <div className='d-flex flex-column ps-2 pb-3 pt-1 font-bold w-full '>
+              <h1 className='w-100 xs:text-[12px] lg:text-lg font-light'>{product.name}</h1>
+              <span className='font-light xs:text-[12px] lg:text-[16px] pt-1'>+{Math.floor(Math.random() * 5) + 1}00 ventas durante el mes </span>
               <div className="d-flex align-content-center">
                 <div>
-                <span className='font-light pe-1 text-xs '>({randomStars})</span>
+                <span className='font-light pe-1 xs:text-xs lg:text-sm'>({randomStars})</span>
                 {[1, 2, 3, 4, 5].map(stars => (
                   <span
                     key={stars}
@@ -69,8 +83,8 @@ const ProductList = ({ products }) => {
                 ))}
                 </div>
               </div>
-              <Currency amount={product.price} className={"text-[14px]"} currency={true}/>
-              <p className='font-light text-[12px] pt-1'>Disponible con el <span className='font-bold'>{Math.floor(Math.random() * 99) + 1}%</span> de descuento</p>
+              <Currency amount={product.price} className={"xs:text-[14px] lg:text-[20px]"} currency={true}/>
+              <p className='font-light xs:text-[12px] lg:text-[16px] pt-1'>Disponible con el <span className='font-bold'>{Math.floor(Math.random() * 99) + 1}%</span> de descuento</p>
             </div>
           </Link>
         )}

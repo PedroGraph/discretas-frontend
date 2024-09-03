@@ -1,13 +1,11 @@
 import React from 'react';
 import ProductDetail from '../../components/common/ProductDetail';
-import Details from '../../components/common/ProductDetails/DetailsSection';
-import RelatedProduct from '../../components/common/RelatedProducts';
 import './FailPageEarly.css'
 
 const Producto = () => {
   return (
     <div className='container-detail'>
-      <div className='first-section'>
+      <div className='lg:mt-10 xl:mt-0'>
         <ProductDetail/>
       </div>
       {/* <div className='second-section'>

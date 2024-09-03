@@ -9,8 +9,6 @@ const WishList = () =>{
     const [wishListItems, setWishListItems] = useState(wishlist);
 
     const {
-        handleAddStore,
-        handleAddWishList,
     } = useProductContext();
 
     const handleDeleteWishLitProduct = (index) =>{
@@ -24,15 +22,7 @@ const WishList = () =>{
     }
 
     const handleAddProductToStore = (product, index) =>{
-        product.quantity = 1;
-        delete product.characteristics;
-        handleAddStore(product);
-        setWishListItems(prevItems =>{
-            const items = [...prevItems];
-            items.splice(index, 1); 
-            localStorage.setItem('wishlist', JSON.stringify(items));
-            return items; 
-        })
+       return;
     }
 
     return(

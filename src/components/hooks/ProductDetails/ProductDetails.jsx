@@ -10,7 +10,8 @@ export const Details = () => {
         setModalPayment,
         setProductPurchased,
         handleAddWishList,
-        userLogged
+        userLogged,
+        setOrderList
     } = useProductContext();
     
     const url = window.location.href;
@@ -26,7 +27,7 @@ export const Details = () => {
     const [selectedSize, setSelectedSize] = useState("");
     const [quantityToAdd, setQuantityToAdd] = useState(1);
     const [error, setError] = useState(null);
-
+    const [enabledSection, setEnableSection] = useState("Description");
 
     useEffect(() => {
         ProductDetailService(productID).then(response => {
@@ -47,6 +48,17 @@ export const Details = () => {
       }));
 
     };
+    
+  useEffect(() => {
+    if (product?.characteristics){
+      setSelectedColor(product?.characteristics[0]?.color);
+      setSelectedSize(product?.characteristics[0]?.size[0]);
+    }
+  }, [product]);
+    
+  useEffect(() => {
+    handleQuantityChange(quantityToAdd);
+  }, [quantityToAdd]);
   
     const handleShowModal = () => {
       setModalPayment(true);
@@ -72,6 +84,7 @@ export const Details = () => {
             size: selectedSize
             }]
         }
+        setOrderList(prev => [...prev, order]);
         const response = await addProductToCart(order);
         if(!response.info) console.error(response);
         setIsLoading(false);
@@ -105,6 +118,9 @@ export const Details = () => {
       handleQuantityChange, 
       handleAddProductToWishList, 
       handleShowModal, 
-      handleAddToCart}
+      handleAddToCart,
+      enabledSection,
+      setEnableSection
+    }
     
 }

@@ -8,7 +8,7 @@ import "../css/checkout.css";
 
 const PaymentMethod = ({userInfo, products}) =>{
    const { handleSetOrders } = Orders();
-   const {setIsLoadingForm, setIsCompleteForm, userLogged} = useProductContext();
+   const { setIsLoadingForm, setIsCompleteForm } = useProductContext();
    const [selectedPayment, setSelectedPayment] = useState(null);
 
     const handleSelectedPayment = (payment) => {
@@ -25,36 +25,38 @@ const PaymentMethod = ({userInfo, products}) =>{
         items.push(product);
         totalPrice += product.price;
       })
-
-      const userInfo = await GetUserInfo(userLogged);
-
+      console.log(userInfo)
       const order = {
         userId: userInfo.id,
         products: items,
         shippingAddress: {
-          address: userInfo.address,
+          address: `${userInfo?.address} ${userInfo?.city} ${userInfo?.state}`,
           city: userInfo.city,
           fullName: userInfo.firstName+' '+userInfo.lastName,
         },
       }
 
-      handleSetOrders(order).then(response =>{
-        if(response.info.orderId){
-          setIsCompleteForm(true);
-        } 
-      }).catch(e =>{
-        console.log(e);
-      }).finally(() =>{
-        setIsLoadingForm(false);
-      })
+      console.log(order)
+
+      // handleSetOrders(order).then(response =>{
+      //   if(response.info.orderId){
+      //     setIsCompleteForm(true);
+      //   }
+ 
+      // }).catch(e =>{
+      //   console.log(e);
+      // }).finally(() =>{
+      //   setIsLoadingForm(false);
+      // })
+      setIsLoadingForm(false)
     }
 
     return (
         <>
           <div className="text-center mt-4">
             <div className="d-flex justify-content-center flex-column">
-              <div className=" d-flex justify-content-between px-5">
-                <select onChange={handleSelectedPayment} name="paymentOptions" id="paymentOptions" className="w-100 h-9 rounded ps-2">
+              <div className=" d-flex justify-between w-full gap-4">
+                <select onChange={handleSelectedPayment} name="paymentOptions" id="paymentOptions" className="w-2/4 h-9 rounded ps-2">
                   <option value="" className='text-black w-50' hidden selected>Selecciona un método de pago</option>
                   <option value="PayPal" className='text-black w-50'>AV Villas</option>
                   <option value="Bancolombia" className='text-black w-50'>Bancolombia</option>
@@ -89,12 +91,12 @@ const PaymentMethod = ({userInfo, products}) =>{
                     handleSelectedPayment("PayPal");
                   }}
                 /> */}
-              </div>
               {selectedPayment && (
-                <div className="d-flex justify-content-center">
-                  <button className="w-50 mt-3 rounded bg-success" onClick={(e) => {handlePayProducts(e)}}>Realizar compra</button>
+                <div className="d-flex justify-start w-2/4">
+                  <button className="rounded bg-black flex items-center h-9" onClick={(e) => {handlePayProducts(e)}}>Realizar compra</button>
                 </div>
               )}
+              </div>
             </div>
           </div>
         </>

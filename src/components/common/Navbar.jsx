@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SearchBar } from "./Search";
+import  SearchBar from "./Search";
 import useProductContext from '../hooks/useProductContext';
 import firebaseConfig from '../../../firebase.js';
 import shoppingCart from '../../../image/shopping.svg'
@@ -10,7 +10,8 @@ import { MainLoader } from './Loader'
 import '../css/navbar.css'
 
 export default function Navbar() {
-  const { orderList, userLogged, setUserLogged, hideFooter, isMobile } = useProductContext();
+  const { orderList, userLogged, setUserLogged } = useProductContext();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [logOut, setLogOut] = useState(false);
   const [navOptions, setNavOptions] = useState('');
@@ -58,31 +59,40 @@ export default function Navbar() {
           <MainLoader />
         </div>
       )}
-      <div className={hideFooter && isMobile <= 1364 ? 'd-none' : 'navbar-container'}>
-        <div className='navbar-left'>
+      <div className="bg-black flex justify-between items-center w-full xs:px-2 lg:px-5">
+        <div className='flex xs:justify-between lg:justify-start gap-4 items-center xs:w-[95%] lg:w-[85%] lg:me-4'>
           <a href="/">
-            <img className='logo' src={logoMobile} alt='Logo'></img>
+            <img className='xs:h-[40px] lg:h-[60px]' src={logoMobile} alt='Logo' loading='lazy'></img>
           </a>
-          <nav className='nav-options d-flex ms-5'>
-            <div className='nav-links'>
+          <ul className='flex items-center w-full gap-4'>
+            <li className='max-w-[600px] w-full'>
+              <SearchBar />
+            </li>
+            <li className='text-white xs:hidden xs:text-[14px] xl:text-[16px] lg:block'>
+              <a href="/productos">Todos los productos</a>
+            </li>
+            <li className='text-white xs:hidden xs:text-[14px] xl:text-[16px] lg:block'>
               <a href="/lubricante">Lubricantes</a>
-            </div>
-            <div className='nav-links'>
+            </li>
+            <li className='text-white xs:hidden xs:text-[14px] xl:text-[16px] lg:block'>
               <a href="/lenceria">Lencería</a>
-            </div>
-            <div className='nav-links'>
+            </li>
+            <li className='text-white xs:hidden xs:text-[14px] xl:text-[16px] lg:block'>
               <a href="/about">Sobre nosotros</a>
-            </div>
-          </nav>
+            </li>
+          </ul>
         </div>
-        <div className='navbar-right'>
-          <a href="/store" className='cart-link'>
-            <p className='cart-icon'><img src={shoppingCart} alt="" />{orderList.length > 0 && <span className="cart-badge">{orderList.length}</span>}</p>
+        <div className='xs:hidden lg:flex items-center justify-end xs:w-[5%] lg:w-[15%] gap-4'>
+          <a href="/store" className='relative'>
+            <p className='bg-white py-2 px-3 rounded'>
+              <img src={shoppingCart} alt="" className='h-[30px]' loading='lazy'/>
+              {orderList && orderList.length > 0 && <span className="absolute -top-3 -right-2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs">{orderList?.length}</span>}
+            </p>
           </a>
-          <div className='burger-menu-desktop'>
+          <div className=''>
             {userLogged.length === 0 ? (
               <Link to="/login">
-                <div className='menu-button-desktop'>
+                <div className=''>
                   <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3" />
                     <circle cx="12" cy="10" r="3" />
@@ -91,7 +101,7 @@ export default function Navbar() {
                 </div>
               </Link>
             ) : (
-              <div className='menu-button-desktop user-info'>
+              <div className=''>
                 <svg className='user-info' xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path className='user-info' d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3" />
                   <circle className='user-info' cx="12" cy="10" r="3" />
@@ -99,21 +109,12 @@ export default function Navbar() {
                 </svg>
               </div>
             )}
-
             <nav className={`nav-links-desktop ${menuOpen ? 'active' : ''}`}>
-              <div className='log-buttons'>
-                <div>
-                  <a href="/my-profile"><p>Ver Perfil</p></a>
-                  <a href="/wishlist"><p>Lista de deseos</p></a>
-                  <a href="/orders"><p>Mis Pedidos</p></a>
-                  <a onClick={(e) => { handleLogOut(e) }}><p>Cerrar Sesión</p></a>
-                </div>
-              </div>
             </nav>
           </div>
         </div>
         <div className='burger-menu'>
-          <button className='menu-button'>
+          <button className='xs:block lg:hidden text-3xl'>
             ☰
           </button>
           <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
@@ -141,7 +142,7 @@ export default function Navbar() {
               </>
             )}
             <div className='cart-link-container'>
-              {orderList.length > 0 &&
+              {orderList && orderList.length > 0 &&
                 <span className="cart-badge">{orderList.length}</span>}
               <a href="/store" className='cart-link'>
                 <p className='cart-icon'><img src={shoppingCart} alt="" />

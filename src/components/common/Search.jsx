@@ -1,91 +1,148 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ListGroup } from 'react-bootstrap';
-import search from '../../../image/buscar.svg'
-import Currency from './CurrencyFormater'
-import {searchProducts} from '../services/Products'
-import {SecondLoader} from './Loader'
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { SearchIcon, XIcon } from "lucide-react";
+import { filtersProduct } from '../services/Products';
+import debounce from 'lodash/debounce';
 
-export const SearchBar = () => {
+// Función para obtener sugerencias de productos
+const fetchProductsSuggestions = async (query) => {
+  return await filtersProduct({ productName: query });
+};
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const listGroupRef = useRef(null);
+export default function Component() {
+  const [query, setQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const handleInputChange = (e) => {
-    const {value} = e.target
-    setIsLoading(true)
-    searchProducts([])
-    setSearchTerm(value)
-    searchProducts(value)
-    .then(products =>  {
-      setSearchResults(products)
-    })
-    .finally(setIsLoading(false))
-  };
+  // Caché local para almacenar sugerencias
+  const cache = useRef({});
 
-  const handleOptionClick = (productId) => {
-    window.location.href = '/lubricante/' + productId;
-  };
+  // Función debounced para buscar sugerencias
+  const fetchSuggestions = useCallback(
+    debounce(async (input) => {
+      if (cache.current[input]) {
+        setSuggestions(cache.current[input]);
+        return;
+      }
 
-  const handleOutsideClick = (e) => {
-    const {target} = e
-    setSearchResults(!(listGroupRef.current && !listGroupRef.current.contains(target))); 
-  };
+      const fetchedSuggestions = await fetchProductsSuggestions(input);
+      cache.current[input] = fetchedSuggestions.map(suggestion => suggestion.name);
+      setSuggestions(cache.current[input]);
+    }, 300),
+    []
+  );
 
   useEffect(() => {
-    document.addEventListener('click', handleOutsideClick);
-    return () => {
-      document.removeEventListener('click', handleOutsideClick);
-    };
+    if (query.length > 0) {
+      fetchSuggestions(query);  // Usar función debounced
+      setShowSuggestions(true);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [query, fetchSuggestions]);
 
-  }, []);
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setQuery(suggestion);
+    setShowSuggestions(false);
+    if (isFullScreen) {
+      setIsFullScreen(false);
+    }
+  };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen(!isFullScreen);
+  };
+
+  const searchProducts = () => {
+    if (!query) return (window.location.href = `/productos`);
+    window.location.href = `/productos?productName=${query}`;
+  };
 
   return (
-    <div className='input-seacher mt-2 me-5' style={{ position: 'relative' }}>
-      <div style={{width: "100%"}}>
-        <label className='input-label'>
-          <img src={search} alt='Imagen de ejemplo' />
-        </label>
-        <input
-          type="text"
-          placeholder=""
-          value={searchTerm}
-          onChange={handleInputChange}
-          className='input-with-image text-search'
-        />
-      </div>
-        <ListGroup ref={listGroupRef} className='list-group-container'>
-        {
-        searchResults?.length > 0 && !isLoading ? (
-            searchResults.map((item, index) => (
-              <ListGroup.Item key={index} onClick={() => handleOptionClick(item._id)} className='item-group-container'>
-                <div className='d-flex justify-content-between'>
-                  <div className='d-flex justify-content-between'>
-                    <div>
-                      <img src={item.image[0]} alt="" style={{maxWidth: "65px", maxHeight: "65px"}}/>
-                    </div>
-                    <div className='px-3'><strong>{item.name}</strong></div>
-                  </div>
-                 
-                  <div className='p-3'><span><Currency amount={item.price}/></span></div>
-                </div>
-              </ListGroup.Item>
-            ))
-        ): searchResults.length === 0 && searchTerm && !isLoading ? (
-          <ListGroup.Item  className='item-group-container'>
-            <div className='d-flex justify-content-center'>
-              <div className='p-3'><strong>No encontramos un producto con ese nombre :(</strong></div>
-            </div>
-          </ListGroup.Item>
-      ): isLoading && searchResults.length === 0 &&(
-          <ListGroup.Item  className='item-group-container'>
-            <div className='d-flex justify-content-center'>
-              <SecondLoader/>
-            </div>
-          </ListGroup.Item>
+    <div className="xl:bg-black transition-colors duration-300">
+      <div className="relative max-w-[600px] w-full lg:p-4 xs:p-0">
+        <div className="flex">
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            value={query}
+            onChange={handleInputChange}
+            className="flex-grow rounded-r-none border-r-0 border-gray-300 px-4 py-2 focus:outline-none hidden lg:block lg:bg-white lg:text-black"
+          />
+          <button
+            className=" xs:hidden lg:block rounded-l-none rounded-r-full xs:bg-black lg:bg-orange-500 hover:bg-orange-600 xs:p-0 lg:px-4 lg:py-2 text-white"
+            onClick={searchProducts}
+          >
+            <SearchIcon className="xs:h-6 xs:w-7 lg:h-4 lg:w-4" />
+          </button>
+          <button
+            className="xs:block lg:hidden rounded-l-none rounded-r-full xs:bg-black lg:bg-orange-500 hover:bg-orange-600 xs:p-0 lg:px-4 lg:py-2 text-white"
+            onClick={toggleFullScreen}
+          >
+            <SearchIcon className="xs:h-6 xs:w-7 lg:h-4 lg:w-4" />
+          </button>
+        </div>
+        {showSuggestions && suggestions.length > 0 && !isFullScreen && (
+          <ul className="absolute max-w-[570px] w-full z-10  bg-white xl:bg-gray-800 border border-gray-300 xl:border-gray-700 mt-1 rounded-md shadow-lg">
+            {suggestions.slice(0, 3).map((suggestion, index) => (
+              <li
+                key={index}
+                className="px-4 py-2 hover:bg-gray-100 xl:hover:bg-gray-300 cursor-pointer xl:text-black border-t-[1px] border-gray-300"
+                onClick={() => handleSuggestionClick(suggestion)}
+              >
+                {suggestion}
+              </li>
+            ))}
+            <li
+              className="px-4 py-2 hover:bg-gray-100 xl:hover:bg-gray-300 cursor-pointer border-t-[1px] border-gray-300 text-center text-gray-500"
+              onClick={searchProducts}
+            >
+              Ver todos los resultados
+            </li>
+          </ul>
         )}
-        </ListGroup>
+      </div>
+
+      {isFullScreen && (
+        <div className="fixed inset-0 bg-white z-50 p-4 flex flex-col items-center">
+          <div className="w-full max-w-2xl mt-8">
+            <div className="flex mb-4">
+              <input
+                type="text"
+                placeholder="Buscar productos..."
+                value={query}
+                onChange={handleInputChange}
+                className="flex-grow rounded-r-none border-r-0 border-gray-300 px-4 py-2 focus:outline-none"
+                autoFocus
+              />
+              <button
+                className="xs:block lg:hidden rounded-l-none rounded-r-full bg-orange-500 hover:bg-orange-600 px-4 py-2 text-white"
+                onClick={toggleFullScreen}
+              >
+                <XIcon className="h-4 w-4" />
+              </button>
+            </div>
+            {showSuggestions && suggestions.length > 0 && (
+              <ul className="w-full bg-white border border-gray-300 rounded-md shadow-lg">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+}
