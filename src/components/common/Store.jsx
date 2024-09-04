@@ -56,7 +56,7 @@ const Store = () => {
                     <div className="w-full flex gap-3">
                        <img src={items.images[0]?.imageName} alt={items.name} className=" max-h-[90px] object-cover xs:w-[90px] xl:w-[150px] pt-1" />
                         <div className='flex flex-col xl:justify-center xl:w-[55%] xs:w-[90%]'>
-                          <strong className='line-clamp-2 xs:text-xs lg:text-sm max-w-[300px]'>{items.name}</strong>
+                          <strong className='line-clamp-2 xs:text-xs lg:text-sm xs:max-w-[100px] lg:max-w-[300px]'>{items.name}</strong>
                           {items?.size && <p className="xs:text-xs lg:text-sm">Talla: {items?.size}</p>}
                           {items?.color && <p className="xs:text-xs lg:text-sm">Color: {items?.color}</p>}
                         </div>

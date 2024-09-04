@@ -46,12 +46,12 @@ const ProductDetail = () => {
           <MainLoader/>
         </div>
       ):(
-        <div className='grid grid-cols-1 xs:mt-5 lg:mt-0 place-items-center bg-gray-200 w-full'>
-          <div className='xs:w-full lg:w-3/4 bg-white flex xs:flex-col lg:flex-row xs:justify-center gap-10 xs:px-4 lg:px-10 max-w-[2000px]'>
+        <div className='grid grid-cols-1 place-items-center bg-gray-200 w-full'>
+          <div className='xs:w-full lg:w-3/4 bg-white flex xs:flex-col lg:flex-row xs:gap-4 lg:gap-10 xs:px-4 lg:px-10 max-w-[2000px]'>
             <div className='flex justify-center gap-4 lg:w-2/4 xs:w-full'>
               <Carousel pics={images.map((photo) => { return photo.imageName })} slides={images?.length}/>
             </div>
-            <div className='flex flex-col lg:mt-[4.2em] lg:w-2/4 xs:w-full gap-3'>
+            <div className='flex flex-col lg:mt-[1em] lg:w-2/4 xs:w-full gap-3'>
               <span className='w-full ps-2 lg:text-2xl lg:font-bold sm:text-xl'>{name}</span>
               <div className='flex gap-2 items-end'>
                 <Currency amount={price} className={"text-2xl font-bold ps-2 pb-0 mb-0"} currency={true}/>
@@ -144,7 +144,7 @@ const ProductDetail = () => {
             </div>
             <div className={`flex flex-col gap-3 ${enabledSection === 'Comments' ? 'block' : 'hidden'}`}>
               <span>{product.description}</span>
-              <img className="h-full w-[500px]" src={product.images[1].imageName} alt={product.name+"_"+product.id}/>
+              <img className="h-full w-[500px]" src={product?.images[1]?.imageName} alt={product.name+"_"+product.id}/>
             </div>
           </section>
           <section className='pt-10 xs:w-full lg:w-3/4 bg-white flex xs:flex-col gap-10 px-10 max-w-[2000px] justify-between'>

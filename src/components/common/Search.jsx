@@ -34,7 +34,7 @@ export default function Component() {
 
   useEffect(() => {
     if (query.length > 0) {
-      fetchSuggestions(query);  // Usar función debounced
+      fetchSuggestions(query);  
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
@@ -49,9 +49,6 @@ export default function Component() {
   const handleSuggestionClick = (suggestion) => {
     setQuery(suggestion);
     setShowSuggestions(false);
-    if (isFullScreen) {
-      setIsFullScreen(false);
-    }
   };
 
   const toggleFullScreen = () => {
@@ -81,7 +78,7 @@ export default function Component() {
             <SearchIcon className="xs:h-6 xs:w-7 lg:h-4 lg:w-4" />
           </button>
           <button
-            className="xs:block lg:hidden rounded-l-none rounded-r-full xs:bg-black lg:bg-orange-500 hover:bg-orange-600 xs:p-0 lg:px-4 lg:py-2 text-white"
+            className="xs:block lg:hidden ml-auto rounded-l-none rounded-r-full xs:bg-black lg:bg-orange-500 hover:bg-orange-600 xs:p-0 lg:px-4 lg:py-2 text-white"
             onClick={toggleFullScreen}
           >
             <SearchIcon className="xs:h-6 xs:w-7 lg:h-4 lg:w-4" />
@@ -110,8 +107,14 @@ export default function Component() {
 
       {isFullScreen && (
         <div className="fixed inset-0 bg-white z-50 p-4 flex flex-col items-center">
-          <div className="w-full max-w-2xl mt-8">
-            <div className="flex mb-4">
+          <div className="w-full max-w-2xl mt-8 relative">
+            <div className="flex">
+            <button
+                className="xs:block lg:hidden rounded-l-none rounded-r-full bg-orange-500 hover:bg-orange-600 px-4 py-2 text-white"
+                onClick={toggleFullScreen}
+              >
+                <XIcon className="h-4 w-4" />
+              </button>
               <input
                 type="text"
                 placeholder="Buscar productos..."
@@ -120,15 +123,10 @@ export default function Component() {
                 className="flex-grow rounded-r-none border-r-0 border-gray-300 px-4 py-2 focus:outline-none"
                 autoFocus
               />
-              <button
-                className="xs:block lg:hidden rounded-l-none rounded-r-full bg-orange-500 hover:bg-orange-600 px-4 py-2 text-white"
-                onClick={toggleFullScreen}
-              >
-                <XIcon className="h-4 w-4" />
-              </button>
+            <button className='bg-orange-500 hover:bg-orange-600 px-4 py-2 text-xs text-white ml-auto' onClick={searchProducts}>Buscar producto</button>
             </div>
             {showSuggestions && suggestions.length > 0 && (
-              <ul className="w-full bg-white border border-gray-300 rounded-md shadow-lg">
+              <ul className="w-full bg-white border border-gray-300 rounded-md shadow-lg absolute top-10">
                 {suggestions.map((suggestion, index) => (
                   <li
                     key={index}

@@ -19,7 +19,7 @@ export default function Navbar() {
   useEffect(() => {
     function changeToggleStatus(event) {
       const { className, id } = event.target;
-      const isMenuButtonOrUserInfo = className === 'menu-button' || className.baseVal === 'user-info';
+      const isMenuButtonOrUserInfo = className.baseVal === 'user-info' || className.includes('burger-icon');
 
       if (isMenuButtonOrUserInfo) {
         setMenuOpen(prevMenuOpen => !prevMenuOpen);
@@ -43,7 +43,8 @@ export default function Navbar() {
   }
 
   const handleLogOut = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setMenuOpen(false);
     setLogOut(true);
     setTimeout(() => {
       firebaseConfig.auth().signOut();
@@ -92,7 +93,7 @@ export default function Navbar() {
           <div className=''>
             {userLogged.length === 0 ? (
               <Link to="/login">
-                <div className=''>
+                <div className='cursor-pointer'>
                   <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3" />
                     <circle cx="12" cy="10" r="3" />
@@ -100,8 +101,8 @@ export default function Navbar() {
                   </svg>
                 </div>
               </Link>
-            ) : (
-              <div className=''>
+              ):(
+              <div className='cursor-pointer'>
                 <svg className='user-info' xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path className='user-info' d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3" />
                   <circle className='user-info' cx="12" cy="10" r="3" />
@@ -109,15 +110,21 @@ export default function Navbar() {
                 </svg>
               </div>
             )}
-            <nav className={`nav-links-desktop ${menuOpen ? 'active' : ''}`}>
+            <nav className={`absolute top-[8%] right-0 bg-black ps-14 pe-6 py-6 w-1/4 z-[1000] rounded-b ${menuOpen ? 'block' : 'hidden'}`}>
+              <ul className='flex flex-col items-end py-2 gap-3'>
+                <a href="/orders"><li className='text-white hover:text-red-500'>Ordenes</li></a>
+                <a href="/wishlist"><li className='text-white'>Lista de deseos</li></a>
+                <a href="/my-profile"><li className='text-white'>Mi perfil</li></a>
+                <a href="/"><li className='text-white' onClick={handleLogOut}>Cerrar sesión</li></a>
+              </ul>
             </nav>
           </div>
         </div>
         <div className='burger-menu'>
-          <button className='xs:block lg:hidden text-3xl'>
+          <button className='xs:block lg:hidden text-3xl burger-icon'>
             ☰
           </button>
-          <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
+          <nav className={`absolute top-[6%] flex flex-col items-end right-0 bg-black py-6 ps-14 pe-6 w-full z-[10000] ${menuOpen ? 'xs:flex lg:hidden' : 'xs:hidden lg:hidden'}`}>
             <div className="label-option pb-2" >
               <label htmlFor="" id="options" onClick={() => { handleOpenOptions('profile') }} className={`${navOptions === 'profile' ? 'text-center w-100' : ''}`}>Perfil</label>
               <div className={`options menu-slide-down bg-gray-300 p-2 rounded ${navOptions === 'profile' ? 'open-option' : 'd-none'}`}>
@@ -133,14 +140,10 @@ export default function Navbar() {
                 <a href="/lenceria" className='text-black font-bold'>Lencería</a>
               </div>
             </div>
-            <a href="/about" className='pb-2'>Sobre nosotros</a>
-            <a href="/wishlist" className='pb-2'>Lista de deseos</a>
-            {userLogged.length > 0 && <a href="" className='pb-2' onClick={(e) => { handleLogOut(e) }}>Cerrar Sesión</a>}
-            {userLogged.length === 0 && (
-              <>
-                <a href="/login" className='pb-2'>Iniciar Sesión</a>
-              </>
-            )}
+            <a href="/about" className='pb-2 text-white'>Sobre nosotros</a>
+            <a href="/wishlist" className='pb-2 text-white'>Lista de deseos</a>
+            {userLogged.length > 0 && <a href="" className='pb-2 text-white' onClick={(e) => { handleLogOut(e) }}>Cerrar Sesión</a>}
+            {userLogged.length === 0 && <a href="/login" className='pb-2'>Iniciar Sesión</a> }
             <div className='cart-link-container'>
               {orderList && orderList.length > 0 &&
                 <span className="cart-badge">{orderList.length}</span>}

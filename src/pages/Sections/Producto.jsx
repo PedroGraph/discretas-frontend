@@ -5,7 +5,7 @@ import './FailPageEarly.css'
 const Producto = () => {
   return (
     <div className='container-detail'>
-      <div className='lg:mt-10 xl:mt-0'>
+      <div className=''>
         <ProductDetail/>
       </div>
       {/* <div className='second-section'>

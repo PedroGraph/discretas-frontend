@@ -15,16 +15,24 @@ const RelatedProduct = ({ relatedProducts }) => {
     autoplay: true,
     autoplaySpeed: 6000,
     pauseOnHover: true,
+    arrow: false,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1366,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
           slidesToScroll: 1,
         }
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 550,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1
@@ -35,17 +43,17 @@ const RelatedProduct = ({ relatedProducts }) => {
 
   return (
     <section className='bg-white w-full py-4'>
-      <h1 className='text-3xl font-bold  text-black py-4 text-center'>Productos Recomendados</h1>
-      <div className="w-[95%] mx-auto">
+      <h1 className='text-xl lg:text-3xl font-bold  text-black py-4 text-center px-2'>Productos Recomendados</h1>
+      <div className="xs:w-[95%]  mx-auto">
         <Slider {...settings}>
           {products.length > 0 ? (
             products.slice(4, 12).map((product) => (
               <a key={product.id} className='px-2' href={`/${product.category}/${product.id}`}>
                 <div className='bg-white rounded border'>
                   <img src={product.images[0].imageName} alt={product.name} className='h-[250px] w-full object-cover rounded-t' />
-                  <span className="line-clamp-1 text-black px-3 mt-2 w-full text-xl">{product.name}</span>
+                  <span className="line-clamp-1 text-black px-3 mt-2 w-full text-sm lg:text-lg">{product.name}</span>
                   <div className="flex items-center px-3 py-2 gap-2">
-                    <CurrencyFormatter amount={product.price} className="font-bold" currency={true} />
+                    <CurrencyFormatter amount={product.price} className="font-bold text-xs" currency={true} />
                     <span className="text-xs mt-1 text-primary">#{Math.floor(Math.random() * 10) + 1} más vendidos</span>
                   </div>
                 </div>
