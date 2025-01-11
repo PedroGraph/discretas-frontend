@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'dancing-script': ['Dancing Script', 'sans-serif'],
+      keyframes: {
+        appears: {
+          '0%': { transform: 'translateY(0%)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+      },
+      animation: {
+        appears: 'appears 0.5s ease-in-out',
       },
     },
     screens: {
@@ -41,4 +48,5 @@ module.exports = {
       // => @media (min-width: 3840px) { ... }
     }
   },
-}
+  plugins: [require('@tailwindcss/line-clamp')],
+};
