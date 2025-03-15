@@ -1,41 +1,34 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { addProductToShoppingCart } from '../../services/shoppingCartService';
 import Loader from '../loader';
-import { shoppingCartFormat } from '../../utils/formats';
+import { ShoppingBag, X, CheckIcon } from "lucide-react";
 
-export default function AddProductToCart({product}) {
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [isDone, setIsDone] = useState(false);
-    const [isError, setIsError] = useState(null);
-
-    const handleAddProductToCart = async () => {
-        setIsLoading(true);
-        try {
-            const shoppingCartData = shoppingCartFormat({userId: "dec0acd7-49d9-48df-ba81-fb927f2e9ea7", ...product});
-            await addProductToShoppingCart(shoppingCartData);
-            setIsDone(true);
-            setTimeout(() => {
-                setIsDone(false);
-            }, 2000);
-        } catch (error) {
-            setIsError(error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
-    return(
-        <button className={`xs:w-full 2xl:w-1/4 h-10 ${isLoading ? "bg-[#000]" : "bg-[#8941ff]"}  text-white rounded`} onClick={handleAddProductToCart}>
-            {isLoading && <Loader className={"h-5 w-5"}/>}
-            {isError && "❌"}
-            {isDone && "✅"}
-            {!isLoading && !isDone && "Añadir al carrito"}
+export default function AddProductToCart({ handleAddProductToCart, isDone, loadingButton, errorButton, className }) {
+    const baseClasses = `h-10 text-white rounded flex justify-center items-center lg:gap-0 xl:gap-2 ${className}`;
+    const buttonClasses = loadingButton ? "bg-black" : "bg-[#8941ff]";
+    
+    return (
+        <button
+            className={`${baseClasses} ${buttonClasses}`}
+            onClick={handleAddProductToCart}
+            aria-label={loadingButton ? "Añadiendo al carrito" : "Añadir al carrito"}
+            disabled={loadingButton}
+        >
+            {loadingButton && <Loader className="h-5 w-5" />}
+            {errorButton && <X className="text-red-500" />}
+            {isDone && <CheckIcon className="text-green-500" />}
+            {!loadingButton && !isDone && !errorButton && (
+                <>
+                    <ShoppingBag className="h-3" />
+                    <span className='xl:text-base lg:text-xs'>Añadir al carrito</span>
+                </>
+            )}
         </button>
-    )
+    );
 }
 
 AddProductToCart.propTypes = {
-    product: PropTypes.object.isRequired
-}
+    handleAddProductToCart: PropTypes.func.isRequired,
+    isDone: PropTypes.bool,
+    loadingButton: PropTypes.bool,
+    errorButton: PropTypes.bool
+};

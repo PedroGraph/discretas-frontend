@@ -18,12 +18,14 @@ export const useProductDetails = () => {
     if (navigationState) {
       setProductDetails(navigationState);
       console.log(navigationState)
-      setSelectedCharactetiristic({
-        color: navigationState.characteristics[0].color,
-        size: navigationState.characteristics[0].sizes[0].size,
-        quantity: 1,
-        ...navigationState
-      });
+      if(navigationState.characteristics) {
+        setSelectedCharactetiristic({
+          color: navigationState?.characteristics[0].color ? navigationState?.characteristics[0].color : "",
+          size: navigationState?.characteristics[0].size? navigationState?.characteristics[0].size : "",
+          quantity: 1,
+          ...navigationState
+        });
+      }
       setLoading(false);
     } else {
       const fetchProductDetails = async () => {
@@ -31,12 +33,16 @@ export const useProductDetails = () => {
           const productId = extractProductId(location.pathname);
           const fetchedProductDetails = await getProduct(productId);
           setProductDetails(fetchedProductDetails);
-          setSelectedCharactetiristic({
-            color: fetchedProductDetails.characteristics[0].color,
-            size: fetchedProductDetails.characteristics[0].sizes[0].size,
-            quantity: 1,
-            ...fetchedProductDetails
-          });
+          if(fetchedProductDetails.characteristics) {
+              console.log(fetchedProductDetails)
+              setSelectedCharactetiristic({
+                color: fetchedProductDetails?.characteristics[0].color ? fetchedProductDetails?.characteristics[0].color : "",
+                size: fetchedProductDetails?.characteristics[0].size? fetchedProductDetails?.characteristics[0].size : "",
+                quantity: 1,
+                ...fetchedProductDetails
+              });
+          }
+        
           setLoading(false);
         } catch (err) {
           setError(err);
@@ -47,10 +53,6 @@ export const useProductDetails = () => {
       fetchProductDetails();
     }
   }, [location.pathname, location.state]);
-
-  useEffect(() => {
-    document.title = productDetails && productDetails.name;
-  }, [productDetails]);
 
   return { productDetails, loading, error, selectedCharactetiristic, modal, setModal, setSelectedCharactetiristic };
 };

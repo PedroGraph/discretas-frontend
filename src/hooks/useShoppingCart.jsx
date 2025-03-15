@@ -15,7 +15,7 @@ export const useShoppingCart = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getShoppingCart({ userId: "dec0acd7-49d9-48df-ba81-fb927f2e9ea7" })
+    getShoppingCart({ userId: "61439ecb-de5e-45ea-8f3f-661961ffb192" })
       .then((response) => {
         setShoppingCart(response);
       })
@@ -27,7 +27,7 @@ export const useShoppingCart = () => {
         setLoading(false);
       });
 
-    getUserInfo("dec0acd7-49d9-48df-ba81-fb927f2e9ea7")
+    getUserInfo("61439ecb-de5e-45ea-8f3f-661961ffb192")
       .then((response) => {
         setUserInfo(response);
       })
@@ -36,10 +36,6 @@ export const useShoppingCart = () => {
         console.log("Error getting user info", error);
       });
   }, []);
-
-  useEffect(() => {
-    document.title = `Carrito de compras (${shoppingCart.length})`;
-  }, [shoppingCart]);
 
   const handleSubtotal = useCallback(() => {
     return shoppingCart.reduce((acc, product) => {

@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 
 const CardPreview = ({ cardData }) => {
   return (
-    <div className="relative w-96 h-56 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 p-6 text-white shadow-xl">
+    <div className="relative lg:w-96 lg:h-56 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 p-6 text-white shadow-xl">
       <div className="absolute top-4 right-4">
         <svg
-          className="w-12 h-12 text-white/80"
+          className="lg:w-12 lg:h-12 xs:w-6 text-white/80"
           viewBox="0 0 24 24"
           fill="currentColor"
         >
@@ -14,7 +14,7 @@ const CardPreview = ({ cardData }) => {
       </div>
 
       <div className="mt-8">
-        <div className="text-2xl tracking-wider font-mono">
+        <div className="lg:text-2xl tracking-wider font-mono">
           {cardData.number || "•••• •••• •••• ••••"}
         </div>
       </div>
@@ -22,14 +22,14 @@ const CardPreview = ({ cardData }) => {
       <div className="mt-8 flex justify-between">
         <div>
           <div className="text-xs text-white/60">Titular de la tarjeta</div>
-          <div className="font-medium tracking-wide">
+          <div className="font-medium xs:text-xs lg:text-md tracking-wide">
             {cardData.name || "NOMBRE TITULAR"}
           </div>
         </div>
 
         <div>
           <div className="text-xs text-white/60">Expira</div>
-          <div className="font-medium">{cardData.expiry || "MM/YY"}</div>
+          <div className="font-medium xs:text-xs lg:text-md tracking-wide">{cardData.expiry || "MM/YY"}</div>
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ const ProductDetails = ({ productId }) => {
 
   return (
     <div>
-      <ProductImage images={product.images} />
+      <ProductImage images={product.images} className={"rounded max-w-[600px] w-full xs:h-[400px] lg:h-[600px] object-cover"}/>
       <ProductInfo
         name={product.name}
         description={product.description}

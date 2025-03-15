@@ -1,90 +1,43 @@
-
+import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Navbar from "./components/navbar";
 import Loader from "./components/loader";
-import './css/mainpage.css'
+import Footer from "./components/footer";
+import './css/mainpage.css';
+import { routes } from "./config/routes";
 
 function App() {
-
-  const Orders = lazy(() => import("./pages/orders/order"));
-  const ProductDetails = lazy(() => import("./pages/productDetails/productDetails"));
-  const ProductSection = lazy(() => import("./pages/products/productsection"));
-  const Login = lazy(() => import("./pages/login/login"));
-  const MainPage = lazy(() => import("./pages/main/mainpage"))
-  const ShoppingCart = lazy(() => import("./pages/shoppingCart/shoppinCart"))
+  const components = {
+    MainPage: lazy(() => import("./pages/main/mainpage")),
+    Login: lazy(() => import("./pages/login/login")),
+    ProductSection: lazy(() => import("./pages/products/productsection")),
+    ProductDetails: lazy(() => import("./pages/products/productDetails/details")),
+    Orders: lazy(() => import("./pages/orders/order")),
+    OrderDetails: lazy(() => import("./pages/orders/ordersDetails/details")),
+    ShoppingCart: lazy(() => import("./pages/shopping/shoppinCart")),
+    CompletedPayment: lazy(() => import("./pages/completedPayment/completedpayment")),
+    Profile: lazy(() => import("./pages/profile/profile")),
+    NotFound: lazy(() => import("./pages/404/404")),
+  };
 
   return (
     <>
       <BrowserRouter>
-        <Navbar/>
-          <Routes>
-            <Route path="/" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <MainPage />
-              </Suspense>
-            } />
-            <Route path="/register" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <Login />
-              </Suspense>
-            } />
-            <Route path="/login" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <Login />
-              </Suspense>
-            } />
-            <Route path="/tienda" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <ProductSection />
-              </Suspense>
-            } />
-            <Route path="/lenceria" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <ProductSection />
-              </Suspense>
-            } />
-            <Route path="/lubricante" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <ProductSection />
-              </Suspense>
-            } />
-            <Route path="/:category/:name" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <ProductDetails />
-              </Suspense>
-            } />
-            <Route path="/ordenes" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <Orders />
-              </Suspense>
-            } />
-            <Route path="/cancelados" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <Orders />
-              </Suspense>
-            } />
-            <Route path="/entregados" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <Orders />
-              </Suspense>
-            } />
-            <Route path="/carrito" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <ShoppingCart />
-              </Suspense>
-            } />
-             <Route path="/completarpago" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <ShoppingCart />
-              </Suspense>
-            } />
-             <Route path="/process_payment" element={
-              <Suspense fallback={<Loader section={true}/>}>
-                <ShoppingCart />
-              </Suspense>
-            } />
-          </Routes>
+        <Navbar />
+        <Routes>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Suspense fallback={<Loader section={true} />}>
+                  {React.createElement(components[route.component])}
+                </Suspense>
+              }
+            />
+          ))}
+        </Routes>
         {/* <Footer/> */}
       </BrowserRouter>
     </>

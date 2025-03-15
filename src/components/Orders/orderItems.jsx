@@ -1,110 +1,82 @@
 import PropTypes from "prop-types";
-import PackageIcon from "../icons/package";
-import DateIcon from "../icons/date";
-import InvoiceIcon from "../icons/invoice";
-import LocationIcon from "../icons/location";
-import DeliverPointIcon from "../icons/deliverpoint";
-import { currencyFormat } from "../../utils/formats";
+import { Truck, Package, Clock, PackageCheck, PackagePlus, MapPinned, Navigation, Calendar, ReceiptText } from "lucide-react";
+import Loader from "../loader";
+import ReceiptPopup from "./orderPopup";
 
-export default function OrderItems({ orders }) {
+export default function OrderItems({ orders, handleDownloadOrder, isLoadingDownloadButton }) {
+
+  const status = {
+    "PENDIENTE" : {
+      icon: <Package className="w-6 h-6" />,
+      progressBar: 20,
+      cartIcon: 17,
+      cartIconTablet: 96,
+      cartIconMobile: 14
+    },
+    "ENVIADO" : {
+      icon: <PackageCheck className="w-6 h-6" />,
+      progressBar: 40,
+      cartIcon: 37,
+      cartIconTablet: 96,
+      cartIconMobile: 34
+    },
+    "EN TRANSITO": {
+      icon: <Navigation className="w-6 h-6" />,
+      progressBar: 60,
+      cartIcon: 57,
+      cartIconTablet: 96,
+      cartIconMobile: 54
+    },
+    "EN REPARTO": {
+      icon: <Truck className="w-6 h-6" />,
+      progressBar: 80,
+      cartIcon: 77,
+      cartIconTablet: 96,
+      cartIconMobile: 74
+    },
+    "ENTREGADO": {
+      icon: <MapPinned className="w-6 h-6" />,
+      progressBar: 100,
+      cartIcon: 97,
+      cartIconTablet: 96,
+      cartIconMobile: 94
+    }
+  }
+
   return (
     <>
-      <section className="flex justify-center w-full bg.white h-screen">
-        <div className="xs:w-full lg:w-4/6 flex flex-col xs:p-2 lg:pt-8 lg:px-8 rounded rounded-t-none gap-2">
+      <section className="flex justify-center w-full bg-white min-h-[80vh] dark:bg-gray-900 lg:pb-10 px-4 xs:py-10">
+        <div className="xs:w-full lg:w-4/6 flex flex-col xs:p-2 lg:pt-8 lg:px-8 rounded rounded-t-none gap-16">
           {orders.map((order, index) => (
             <div
               key={index}
-              className="flex flex-col gap-2 border-[1px] border-gray-400 rounded "
+              className="flex relative flex-col gap-2 dark:border-2 dark:border-gray-700 border-[1px] border-gray-400 rounded"
             >
-              <div className="bg-gray-100 grid md:grid-cols-5 gap-2 py-2 px-4 border-gray-400 border-b-2">
-                <div className="flex xs:flex-col md:flex-row gap-2 xs:justify-start md:items-start md:justify-start xs:hidden md:flex">
-                  <PackageIcon className={`lg:w-8 lg:h-8 xs:w-6 flex`} />
-                  <div className="flex flex-col">
-                    <span className="md:text-xs 2xl:text-sm font-bold xs:hidden lg:block">
-                      Orden #
-                    </span>
-                    <span className="md:text-xs 2xl:text-sm">
-                      {order.orderId}
-                    </span>
-                  </div>
+              <span className="bg-[#8941FF] xs:text-xs lg:text-sm text-white absolute -left-0.5 xs:-top-5 lg:-top-6 px-4 py-1 rounded-full rounded-l-none flex gap-4 items-center">{status["ENVIADO"].icon} En reparto</span>
+              <div className="bg-gray-200 dark:bg-slate-700 grid xs:flex xs:flex-col lg:grid lg:grid-cols-4 xl:grid-cols-5 xs:justify-between xs:gap-4 lg:gap-2 xs:p-4 lg:p-6 dark:border-none border-gray-400 border-b-2">
+                <div className="flex gap-4 items-center lg:col-span-2">
+                  <Calendar className="w-6 h-6 text-gray-600 dark:text-gray-300 " />
+                  <span className="xs:text-xs lg:text-sm dark:text-white">Fecha de entrega estimada: {new Date(order.createdAt).toDateString()}</span>
                 </div>
-                <div className="flex xs:flex-col md:flex-row gap-2 xs:justify-start md:items-start xs:hidden md:flex">
-                  <LocationIcon className={`lg:w-8 lg:h-8 xs:w-6`} />
-                  <div className="flex flex-col">
-                    <span className="md:text-xs 2xl:text-sm font-bold xs:hidden lg:block">
-                      Dirección
-                    </span>
-                    <div className="line-clamp-2">
-                      <span className="md:text-xs 2xl:text-sm">
-                        {order.shippingAddress.address}{" "}
-                      </span>
-                      <span className="md:text-xs 2xl:text-sm">
-                        {order.shippingAddress.city} -{" "}
-                        {order.shippingAddress.state}
-                      </span>
-                    </div>
+                <div className="relative flex gap-4 w-full items-center lg:col-span-2 xl:col-span-3">
+                  <div className="relative h-4 w-full overflow-hidden rounded-full bg-white dark:bg-gray-200 ">
+                    <div
+                      className="h-full bg-[#8941FF] absolute left-0 top-0"
+                      style={{ width: `${status["ENVIADO"].progressBar}%` }}
+                    ></div>
                   </div>
-                </div>
-                <div className="flex xs:flex-col md:flex-row gap-2 xs:justify-start md:items-start md:justify-center xs:hidden md:flex">
-                  <DateIcon className={`lg:w-8 lg:h-8 xs:w-6`} />
-                  <div className="flex flex-col justify-center">
-                    <span className="md:text-xs 2xl:text-sm font-bold xs:hidden lg:block">
-                      Fecha de compra
-                    </span>
-                    <span className="md:text-xs 2xl:text-sm">
-                      {new Date(order.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex xs:flex-col md:flex-row gap-2 xs:justify-start md:items-start md:justify-end xs:hidden md:flex">
-                  <DeliverPointIcon className={`lg:w-10 lg:h-10 xs:w-6`} />
-                  <div className="flex flex-col">
-                    <span className="md:text-xs 2xl:text-sm font-bold xs:hidden lg:block">
-                      Fecha de entrega
-                    </span>
-                    <span className="md:text-xs 2xl:text-sm">
-                      {new Date(
-                        new Date(order.createdAt).setDate(
-                          new Date(order.createdAt).getDate() + 7
-                        )
-                      ).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex xs:flex-col md:flex-row gap-2 xs:justify-start md:items-start md:justify-end xs:hidden md:flex">
-                  <InvoiceIcon className={`lg:w-8 lg:h-8 xs:w-6`} />
-                  <div className="flex flex-col">
-                    <span className="md:text-xs 2xl:text-sm font-bold xs:hidden lg:block">
-                      Total
-                    </span>
-                    <span className="md:text-xs 2xl:text-sm">
-                      {currencyFormat(
-                        order.products.reduce(
-                          (a, b) => (a + b.price) * b.quantity,
-                          0
-                        )
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div className="xs:flex md:hidden justify-between">
-                  <div className="flex gap-4 items-center">
-                    <DeliverPointIcon className={`lg:w-8 lg:h-8 xs:w-8`} />
-                    <span className="font-bold text-sm">Enviado</span>
-                  </div>
-                  <button className="bg-[#7b2cfa] text-white rounded xs:text-xs lg:text-sm lg:px-2 xs:min-w-[100px]">
-                    Ver detalles
-                  </button>
+                  <Truck className="absolute left-50 text-gray-900 dark:text-white xs:hidden lg:flex" style={{ left: `${status["ENVIADO"].cartIcon}%`, top: "-20", transition: "left 0.3s ease" }} />
+                  <Truck className="absolute left-50 text-gray-900 dark:text-white xs:flex lg:hidden h-4 w-4" style={{ left: `${status["ENVIADO"].cartIconMobile}%`, top: "0", transition: "left 0.3s ease" }} />
                 </div>
               </div>
               {order.products.map((item, index) => (
-                <div key={index} className="flex gap-4 px-4 py-2 w-full">
+                <div key={index} className="flex xs:gap-2 lg:gap-4 px-4 py-2 w-full">
                   <img
-                    src={"https://via.placeholder.com/200x200"}
+                    src={item.images[0].imageName}
                     alt={`image_${item.name}`}
-                    className="h-[100px] max-w-[200px] rounded object-cover lg:w-1/6"
+                    className="h-[100px] min-w-[100px] max-w-[100px] rounded object-cover lg:w-1/6"
                   />
-                  <h1 className="text-[#7b2cfa] lg:w-2/4 text-sm line-clamp-2">
+                  <h1 className="text-[#7b2cfa] dark:text-white lg:w-2/4 text-sm line-clamp-2">
                     <a
                       href={`/${item.category.toLowerCase()}/${item.name}_${
                         item.id
@@ -118,7 +90,7 @@ export default function OrderItems({ orders }) {
                       index === 0 ? "xs:hidden lg:flex" : "hidden"
                     }`}
                   >
-                    <button className="bg-[#7b2cfa] h-8 text-white rounded xs:text-xs lg:text-sm lg:px-2 xs:min-w-[100px]">
+                    <button className="bg-[#7b2cfa] h-8 text-white rounded xs:text-xs lg:text-sm lg:px-2 xs:min-w-[100px]" onClick={() => window.location.href = `/ordenes/${order.orderId}`}>
                       Ver detalles
                     </button>
                     <button className="bg-gray-600 h-8 text-white rounded xs:text-xs lg:text-sm text-sm lg:px-2 xs:min-w-[100px]">
@@ -130,9 +102,14 @@ export default function OrderItems({ orders }) {
                   </div>
                 </div>
               ))}
+              <button className="absolute -bottom-7 -right-0.5 bg-gray-600 w-[170px] flex gap-4 items-center py-2 px-4 text-white text-xs rounded-full rounded-r-none" onClick={() => handleDownloadOrder(order.orderId)}>
+                <ReceiptText className="w-6 h-6 text-white dark:text-gray-100 " />
+               {isLoadingDownloadButton ? <Loader className="w-4 h-4" /> : " Descargar recibo "}
+              </button>
             </div>
           ))}
         </div>
+        {isLoadingDownloadButton && <ReceiptPopup />}
       </section>
     </>
   );

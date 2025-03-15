@@ -15,3 +15,11 @@ export const userInfoValidation = (userInfo) => {
     if(userInfo.phoneNumber.length < 12) return  'El teléfono debe tener al menos 10 caracteres'
     if(!userInfo.bank) return 'Selecciona un método de pago'
 }
+
+export const ordersValidation = (orders) => {
+    const orderResult = orders.map((order) => {
+        const {createdAt, product, id, updatedAt, ...orderInfo } = order;
+        return orderInfo;
+    });
+    return orderResult;
+}

@@ -12,7 +12,7 @@ function Hero({text}) {
           alt="image-order"
           className="xs:max-h-[100px] lg:max-h-[200px] object-cover w-full "
         />
-        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-1 font-bold text-white lg:text-4xl">
+        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-1 font-bold text-white xs:text-xl lg:text-4xl">
           {text}
         </span>
       </section>

@@ -9,7 +9,7 @@ env.config()
 export default defineConfig({
   define:{
     __BACKEND_URL__:`"${process.env.BACKEND_URL}"`,
-    __MERCADO_PAGO__: `"${process.env.MERCADO_PAGO}"`
+    __TOKEN_MERCADO_PAGO__: `"${process.env.TOKEN_MERCADOPAGO}"`
   },
   plugins: [react()],
   build: {
@@ -17,7 +17,15 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 4000
+    port: 4000,
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+      port: 24678,
+      clientPort: 24678,
+      timeout: 1000,
+      overlay: false
+    }
   },
   resolve: {
     alias: {

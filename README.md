@@ -1,8 +1,38 @@
-# React + Vite
+# Discreta Seducción Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Instalación
 
-Currently, two official plugins are available:
+1. Clona el repositorio
+2. Ejecuta `npm install` para instalar las dependencias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Estructura del Proyecto
+
+- `src/`: Contiene el código fuente de la aplicación
+  - `api/`: Lógica relacionada con las llamadas a la API
+  - `assets/`: Recursos estáticos como imágenes y fuentes
+  - `components/`: Componentes reutilizables
+  - `css/`: Estilos globales o específicos
+  - `hooks/`: Hooks personalizados
+  - `pages/`: Páginas principales de la aplicación
+  - `services/`: Servicios como autenticación, base de datos, etc.
+  - `stores/`: Lógica de gestión del estado
+  - `utils/`: Funciones utilitarias
+  - `__tests__/`: Pruebas unitarias y de integración
+
+## Ejecución de Pruebas
+
+Para ejecutar las pruebas, utiliza el siguiente comando:
+
+```bash
+npm test
+```
+
+## Contribución
+
+Si deseas contribuir al proyecto, sigue estos pasos:
+
+1. Haz un fork del repositorio
+2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`)
+3. Realiza tus cambios y haz commit (`git commit -am 'Añade nueva funcionalidad'`)
+4. Haz push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request

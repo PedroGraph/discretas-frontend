@@ -1,82 +1,129 @@
-import { Suspense, lazy, useState, useEffect } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import LoaderCard from "../../components/loaderCard";
-import ErrorPage from "../../components/error";
-import { getProducts } from "../../services/productsService";
-import PropTypes from 'prop-types';
+import ErrorPage from "../../components/errorProducts";
+import ProductCard from "../../components/productcard";
+import useProductStore from "../../stores/productStore";
+import { useUserStore } from "../../stores/userStore";
+import PropTypes from "prop-types";
+import { useLocation } from "react-router-dom";
+import { LayoutGrid, List } from "lucide-react";
+import Filters from "./filters";
+import Navigator from "./navigator";
+
+const MemoizedFilters = memo(Filters);
+const MemoizedNavigator = memo(Navigator);
+const MemoizedProductCard = memo(ProductCard);
+
 export default function ProductSection() {
+  const location = useLocation();
+  const {
+    products,
+    isLoading,
+    isError,
+    fetchProducts,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    setQueryProducts,
+    queryProducts,
+  } = useProductStore();
 
-    const [products, setProducts] = useState([]);
-    const [isError, setIsError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
+  const { wishlist, getWishlist, setWishlist } = useUserStore();
+  const [listOrGrid, setListOrGrid] = useState("list");
 
-    useEffect(() => {
-        getProducts().then((response) => {
-            setIsLoaded(true);
-            if(response.length === 0) setIsError(true)
-            else setProducts(response);
-        }).catch((error) => {
-            setIsError(error);
-        }).finally(() => {
-            setIsLoaded(false);
-        });
-    }, []);
+  useEffect(() => {
+    const loadProducts = async () => {
+      const parameters = new URLSearchParams(location.search);
+      const query = {
+        ...(parameters.get("size") && { size: parameters.get("size") }),
+        ...(parameters.get("color") && { color: parameters.get("color") }),
+        ...(parameters.get("category") && { category: parameters.get("category") })
+      };
+      
+      setQueryProducts(query);
+      await fetchProducts({ page: currentPage, location, query });
+      await getWishlist(true);
+    };
 
-    useEffect(() => {
-        document.title = "Tienda";
-    }, []);
-    
+    loadProducts();
+  }, [currentPage, location, setQueryProducts, fetchProducts, getWishlist]);
 
-    const ProductCard = lazy(() => import("../../components/productcard"));
+  const handlePageChange = useCallback((page) => {
+    setCurrentPage(page);
+    fetchProducts({ page, location });
+  }, [setCurrentPage, fetchProducts, location]);
 
-    return (
-        <div className="flex flex-col items-center bg-white">
-        <div className="bg-gray-200 py-2 px-4 w-full flex justify-between">
-            <span className="xs:text-[12px] lg:text-sm font-normal flex items-center">Productos más populares</span>
-            <select className="w-full h-8 border rounded max-w-[170px] xs:text-[12px] lg:text-sm font-normal">
-            <option value="" className="text-black font-normal" hidden selected>
-                Ordenar por
-            </option>
-            <option value="productPrice-DESC" className="text-black font-normal">
-                Precio: Mayor a menor
-            </option>
-            <option value="productPrice-ASC" className="text-black font-normal">
-                Precio: Menor a mayor
-            </option>
-            <option value="productName-ASC" className="text-black font-normal">
-                Nombre: A-Z
-            </option>
-            <option value="productName-DESC" className="text-black font-normal">
-                Nombre: Z-A
-            </option>
-            <option value="productPopular-ASC" className="text-black font-normal">
-                Más populares
-            </option>
-            </select>
-        </div>
-        <div className="flex flex-col w-full justify-center gap-1 p-2">
-            {
-                isError ? <ErrorPage/>
-                : isLoaded && !isError ? <LoaderCard cards={6}/>
-                : (
-                    <Suspense fallback={<LoaderCard cards={6} />}>
-                        <ProductCard products={products} />
-                    </Suspense>
-                )
-            }
-        </div>
-        </div>
+  const handleGridClick = useCallback(() => setListOrGrid("grid"), []);
+  const handleListClick = useCallback(() => setListOrGrid("list"), []);
+
+  const categories = ["Lubricante", "Lenceria"];
+  const sizes = ["XS", "S", "M", "L", "XL"];
+  const colors = ["black", "white", "red", "blue", "green"];
+
+  if (isError) return <ErrorPage />;
+
+  return (
+    <main className="flex flex-col items-center bg-gray-200 dark:bg-gray-900 min-h-screen">
+      <div className="items-center justify-end gap-4 w-full xs:hidden lg:px-10 lg:py-4 lg:flex">
+        <LayoutGrid
+          className={`w-8 h-8 dark:text-white border-2 rounded cursor-pointer p-1 ${
+            listOrGrid === "list"
+              ? "border-gray-400"
+              : "border-[#8941ff] bg-[#8941ff]"
+          }`}
+          onClick={handleGridClick}
+        />
+        <List
+          className={`w-8 h-8 dark:text-white border-2 rounded cursor-pointer p-1 ${
+            listOrGrid === "list"
+              ? "border-[#8941ff] bg-[#8941ff]"
+              : "border-gray-400"
+          }`}
+          onClick={handleListClick}
+        />
+      </div>
+      <div className="flex lg:flex-row xs:flex-col w-full xs:py-4 lg:py-0 lg:px-8 gap-4">
+        <MemoizedFilters
+          categories={categories}
+          sizes={sizes}
+          colors={colors}
+          setFilters={setQueryProducts}
+          filters={queryProducts}
+        />
+        {isError ? (
+          <ErrorPage />
+        ) : isLoading ? (
+          <LoaderCard listOrGrid={listOrGrid} cards={6} />
+        ) : (
+          <MemoizedProductCard
+            products={products}
+            listOrGrid={listOrGrid}
+            wishlist={wishlist}
+            setWishlist={setWishlist}
+          />
+        )}
+      </div>
+
+      {totalPages > 1 && (
+        <MemoizedNavigator
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
+        />
+      )}
+    </main>
   );
 }
 
 ProductSection.propTypes = {
-    products: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        images: PropTypes.arrayOf(PropTypes.string).isRequired,
-        category: PropTypes.string.isRequired
-      })
-    )
-}
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      images: PropTypes.arrayOf(PropTypes.string).isRequired,
+      category: PropTypes.string.isRequired,
+    })
+  ),
+};

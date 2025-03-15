@@ -1,7 +1,8 @@
 import firebaseConfig from "../../firebase";
 import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { googleFieldsValidation } from "../utils/formats";
 
-export const login = (form) => {
+export const loginFirebase = (form) => {
     return new Promise((resolve, reject) => {
        form.preventDefault();
        const email = form.target.email.value;
@@ -23,7 +24,6 @@ export const register = (form) => {
        form.preventDefault();
        const email = form.target.email.value;
        const password = form.target.password.value;
-
        firebaseConfig.auth().createUserWithEmailAndPassword(email, password)       
        .then((response) => {
           if(response.error) return {error: response.error};
@@ -41,7 +41,8 @@ export const loginWithGoogle = () => {
        const provider = new GoogleAuthProvider();
        firebaseConfig.auth().signInWithPopup(provider)
        .then((response) => {
-          resolve(response);
+          const validatedGoogleData = googleFieldsValidation(response);
+          resolve(validatedGoogleData);
        })
        .catch((error) => {
           console.log(error);
